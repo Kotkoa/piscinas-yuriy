@@ -1,4 +1,4 @@
-# CLAUDE.md — piscina-services
+# CLAUDE.md — piscinas-yuriy
 
 Guide for Claude Code (or any developer/agent) working on this project.
 Design goal: the repo must be trivial to edit by any AI agent — no build step, no dependencies,
@@ -17,14 +17,16 @@ flat structure.
 - **Exception:** code itself and code comments must always be in English, regardless of the chat
   language.
 
-### Docs (this file, PLAN.md)
+### Docs
 - Written in English, single language, no mixing.
+- `ADR.md` = why (append-only decision log, read it before proposing architecture changes).
+  `CLAUDE.md` = what is true now. `PLAN.md` = what to do next. Never duplicate across the three.
 
 ## What it is
-One-page landing site for a **new service line** of a client who builds pools:
-**installation of prefabricated water filtration, purification, and softening systems** for pools
-and homes. The module comes pre-assembled and connects to existing plumbing (plug-and-play
-installation in a single visit).
+One-page site for **Piscinas Yuriy, S.L.**, a pool builder in Pego (Alicante). Pool construction is
+the core proposition; **installation of prefabricated water filtration, purification and softening
+systems** (pre-assembled, plug-and-play onto existing plumbing) is a first-class service block
+within it, not the headline. See ADR-005.
 
 ## Brand identity
 - **Legal name:** Piscinas Yuriy, Sociedad Limitada. **CIF (tax ID):** `B56728777`.
@@ -39,30 +41,32 @@ installation in a single visit).
   `TARJETA DE IDENTIFICACIÓN FISCAL.pdf` (not versioned).
 
 ## Fixed decisions
+Reasoning and trade-offs for each of these are in `ADR.md`; only the outcome is restated here.
+
 - **Market / language:** Spain, Spanish (`es-ES`) site copy. Phone +34, currency €.
 - **Geography:** Valencia / Alicante provinces (based in Pego, Alicante).
-- **Stack:** HTML5 + CSS + vanilla JS, minimal. **No framework, no bundler** (maximum portability
-  and easy handoff to another developer or agent).
-- **Repository:** [`github.com/kotkoa/piscinas-yuriy`](https://github.com/kotkoa/piscinas-yuriy)
-  (public — required for free GitHub Pages). Source of truth for the project.
-- **Hosting:** **GitHub Pages** serving this repo directly (branch `main`, root). Custom domain via
-  `CNAME` once purchased. Domain DNS on **Cloudflare** (DNS/proxy only, not Cloudflare Pages).
-- **Access:** the client must have collaborator access to the repo in addition to the developer —
-  pending their GitHub username/email to invite them.
-- **Contact:** **WhatsApp** button (`wa.me/34678948509`) + **contact form** via a service
-  (Web3Forms). The client's email is **never** published as plain text (anti-spam).
-- **Analytics:** **Google Analytics 4** (`gtag.js`) with **Consent Mode v2** + a Spanish **cookie
-  banner**, mandatory in ES/EU (GDPR/ePrivacy): analytics `denied` by default until consent.
-  Conversion events: WhatsApp click, "Call" (tel:) click, form submit. Link GA4 with Google Ads and
-  Search Console. IP anonymized. Optional extra: Cloudflare Web Analytics (cookieless). Requires a
-  **Privacy/Cookies** page under `/legal`.
-- **Google Maps:** create a Google Business Profile listing for the company (Pego, Alicante) and
-  link it from the site (embedded map + reviews).
-- **Domain:** `piscina*.es` — must start with "piscina" (explicit client decision), `.es` TLD as
-  primary (Cloudflare Registrar, at-cost pricing). `.com` optional/redirect, not a priority. See
-  shortlist in `PLAN.md`.
-- **Primary goal / SEO:** rank the site among the top Google results for pool
-  construction/installation searches in the Comunidad Valenciana (Valencia/Alicante).
+- **Primary goal / SEO:** rank among the top Google results for pool construction/installation
+  searches in the Comunidad Valenciana.
+- **Stack:** HTML5 + CSS + vanilla JS. No framework, no bundler, no build step. (ADR-001)
+- **Hosting:** GitHub Pages, branch `main`, root; Cloudflare for DNS only. (ADR-002)
+- **Repository:** [`github.com/Kotkoa/piscinas-yuriy`](https://github.com/Kotkoa/piscinas-yuriy),
+  public. Nothing sensitive may ever be committed. (ADR-003)
+- **Indexing:** `noindex` everywhere until the real domain is live. (ADR-004)
+- **Positioning:** construction is the core, filtration is a named service. (ADR-005)
+- **Contact:** WhatsApp (`wa.me/34678948509`) is primary; the client's email never appears as
+  plain text. (ADR-006)
+- **Form:** Web3Forms; its key is public by design. Must not ship before the privacy page.
+  (ADR-007)
+- **Analytics:** GA4 + Consent Mode v2, `denied` by default, Spanish cookie banner; events
+  `click_whatsapp`, `click_call`, `submit_form`. (ADR-008)
+- **Domain:** must start with "piscina", `.es` primary (ADR-009). Not purchasable at Cloudflare —
+  register at **DonDominio**: €6.95/year flat, registration and renewal identical, transfer free
+  (verified 2026-08-26, ex-IVA → ~€8.41 with 21% IVA). Dinahosting is the fallback but lists €14/year
+  after a €9.75 first-year promo. Buy in the client's name, 5 years up front, auto-renew on; record
+  the expiry date here at purchase. (ADR-014)
+- **Site architecture:** one page for v1; expansion gated on keyword data. (ADR-010)
+- **Access:** the client gets repo collaborator access — pending their GitHub username/email.
+- **Google Maps:** create a Google Business Profile (Pego, Alicante) and link it from the site.
 
 ## Services
 - Pool construction (construcción de piscinas)
@@ -83,8 +87,11 @@ index.html          # main landing page (Spanish copy)
 robots.txt
 sitemap.xml
 llms.txt            # GEO: context for AI search engines
+404.html            # GitHub Pages custom 404
 CNAME               # custom domain (added after purchase)
 README.md
+ADR.md              # decision log (why)
+PLAN.md             # checklist (what next)
 ```
 
 ## Conventions
@@ -108,9 +115,10 @@ to this working folder only:
 - `Website services and costs.md` (transcript of the call with the client)
 
 ## Current state
-Repo created on GitHub (`kotkoa/piscinas-yuriy`), base structure scaffolded, GitHub Pages enabled
-without a custom domain yet. Pending: photos, purchased domain + `CNAME`, final content, full
-design. Step-by-step plan and planned sessions in `PLAN.md` (this repo).
+Repo `Kotkoa/piscinas-yuriy` on GitHub Pages, no custom domain yet. Scaffold audited 2026-08-26:
+known defects and their fixes are listed in `PLAN.md` Track 0 — read it before touching the code,
+so the same bugs are not re-diagnosed. Pending: domain purchase (blocks all SEO), client photos and
+copy, design, analytics/form/legal chain.
 
 ## Pending from the client
 - Contact email

@@ -25,7 +25,7 @@ confirmed:
 1. Find/replace `piscinasyuriy.es` with the real domain in `index.html`, `robots.txt`,
    `sitemap.xml`.
 2. Add a `CNAME` file at the repo root with the domain.
-3. Configure DNS in Cloudflare pointing to GitHub Pages.
+3. Configure DNS pointing to GitHub Pages.
 
 ## Secrets
 - Web3Forms key (contact form): not yet generated, do not hardcode — set it in the form itself per
