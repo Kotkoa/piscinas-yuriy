@@ -1,0 +1,114 @@
+:root {
+  --color-primary: #37c1d4;
+  --color-accent: #ff914d;
+  --color-text: #1a2b2e;
+  --color-bg: #ffffff;
+  --color-bg-alt: #f2fbfc;
+  --font-base: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --max-width: 72rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+.container {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+header.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--color-bg-alt);
+}
+
+.logo {
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.btn.btn-whatsapp {
+  background: #25d366;
+}
+
+.btn.btn-accent {
+  background: var(--color-accent);
+}
+
+section {
+  padding-block: 3rem;
+}
+
+section:nth-of-type(even) {
+  background: var(--color-bg-alt);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.5rem;
+}
+
+.service-card {
+  border: 1px solid var(--color-bg-alt);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+}
+
+.service-card img {
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--color-bg-alt);
+}
+
+details.faq-item {
+  border-bottom: 1px solid var(--color-bg-alt);
+  padding-block: 0.75rem;
+}
+
+details.faq-item summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+footer.site-footer {
+  padding-block: 2rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #4b5c5f;
+}
