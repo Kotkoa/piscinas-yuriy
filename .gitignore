@@ -2,3 +2,5 @@
 # See "Local files not in git" in CLAUDE.md.
 *.pdf
 Website services and costs.md
+
+/docs

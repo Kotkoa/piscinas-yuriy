@@ -17,6 +17,85 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const form = document.querySelector("#contact-form");
   if (form) {
-    form.addEventListener("submit", () => trackEvent("submit_form"));
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      trackEvent("submit_form");
+
+      const data = new FormData(form);
+      const nombre = (data.get("nombre") || "").toString().trim();
+      const telefono = (data.get("telefono") || "").toString().trim();
+      const ciudad = (data.get("ciudad") || "").toString().trim();
+      const servicio = (data.get("servicio") || "").toString().trim();
+      const comentario = (data.get("comentario") || "").toString().trim();
+
+      const lines = [
+        `Hola, soy ${nombre}.`,
+        `Teléfono: ${telefono}`,
+        ciudad && `Ciudad: ${ciudad}`,
+        servicio && `Necesito: ${servicio}`,
+        comentario && `Comentario: ${comentario}`,
+      ].filter(Boolean);
+
+      const message = encodeURIComponent(lines.join("\n"));
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank", "noopener");
+      form.reset();
+    });
+  }
+
+  const header = document.querySelector("#site-header");
+  if (header) {
+    const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 48);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
+  const heroCta = document.querySelector(".hero-cta");
+  const navCta = document.querySelector(".nav-cta");
+  if (heroCta && navCta && "IntersectionObserver" in window) {
+    const ctaObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          navCta.classList.toggle("is-hidden", entry.isIntersecting);
+        });
+      },
+      { threshold: 0 }
+    );
+    ctaObserver.observe(heroCta);
+  }
+
+  const revealTargets = document.querySelectorAll(".reveal");
+  if (revealTargets.length && "IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    revealTargets.forEach((el) => revealObserver.observe(el));
+  } else {
+    revealTargets.forEach((el) => el.classList.add("is-visible"));
+  }
+
+  const processSteps = document.querySelectorAll(".process-step");
+  if (processSteps.length && "IntersectionObserver" in window) {
+    const processObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            processObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    processSteps.forEach((el) => processObserver.observe(el));
+  } else {
+    processSteps.forEach((el) => el.classList.add("is-visible"));
   }
 });

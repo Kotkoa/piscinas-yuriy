@@ -121,14 +121,41 @@ Recommendation: #1 or #2 as primary; #4 as a redirect if budget allows.
 
 ## Track 4 — Design and content layout
 
-- [ ] **[A]** Approve a design direction. Agents may produce options; the choice is manual.
-- [ ] **[A]** Session: define the design system — type scale, spacing, components — consistent with
-  turquoise `#37C1D4` / orange `#FF914D` and the logo.
-- [ ] **[AG]** Session: competitor structure analysis (`rppool.es`, `tecnigunita2.com`, other
-  Valencia/Alicante firms). *Deliverable: the section skeleton typical for the industry, plus what
-  each competitor ranks for. Read-only research, no code.*
-- [ ] **[AG]** Implement the approved layout: mobile-first, one real photo per service, collapsible
-  SEO text blocks, testimonials section.
+- [x] **[A]** Approve a design direction: minimalist synthesis of Tecnigunita2 + CuesaSport — large
+  real photos, clear short copy, generous whitespace, 6–8 strong sections. Rejected: US-style dense
+  multi-CTA layouts (Anthony&Sylvan, PresidentialPools) and RPPool's e-commerce look.
+- [x] **[A]** Session: define the design system — type scale, spacing, components — consistent with
+  turquoise `#37C1D4` / orange `#FF914D` and the logo. *Delivered: `docs/design-system.md` (tonal
+  scale adapted from `tonal-style.md`, chromatic section map, typography, buttons, photography
+  blocks, process/reviews/footer components). Implemented as CSS tokens/components in
+  `css/styles.css` and wired into `index.html`'s 12-block skeleton (nav, hero, 3 services, trust,
+  gallery, FAQ, process, reviews, area+map, contact, footer) with scroll-reveal/nav-glass JS in
+  `js/main.js`.*
+- [x] **[AG]** Session: competitor structure analysis (`rppool.es`, `tecnigunita2.com`, other
+  Valencia/Alicante firms). *Delivered: `docs/competitor-analysis.md` (10-site comparison table) and
+  `docs/design-system-analysis.md` (visual design-system synthesis from screenshots).*
+- [ ] **[A]** Approve final homepage section spec (below) before implementation starts.
+- [ ] **[AG]** Implement the approved layout, mobile-first, in this exact section order:
+  1. Header: logo, phone, WhatsApp, nav.
+  2. Hero: one strong real pool photo, H1 `Construcción, reforma y mantenimiento de piscinas en
+     Alicante, Valencia y Costa Blanca`, single CTA `Solicitar presupuesto`, phone + WhatsApp always
+     visible.
+  3. Three core services only — Construcción de piscinas / Instalación de sistemas de filtración y
+     climatización / Reforma y reparación. Do not dilute with the full 7-item service list here.
+  4. Pool types/variants (if content exists; otherwise skip, do not pad with stock content).
+  5. Why trust us: verifiable facts only (years, in-house team, transparent quote, warranty) +
+     photo of the actual team/foreman, not abstract icons.
+  6. Gallery: 6–12 real projects, each with location, work type, before/after photo pair where
+     available. Prioritize this over long copy blocks.
+  7. Process: Consulta → Visita y medición → Presupuesto → Ejecución/Entrega, 4 steps.
+  8. Reviews: real named Google reviews with rating, if the client can supply them.
+  9. Local coverage block: "Trabajamos en Valencia, Alicante, Costa Blanca, Dénia, Jávea, Calpe,
+     Moraira, Benidorm, Altea, Gandía, Oliva, Pego" + map/address if there's an office.
+  10. Contact: quick form (nombre, teléfono, ciudad, qué necesita, comentario) + WhatsApp button,
+      repeated at page end.
+  11. Footer: contacts, legal, social.
+  *Blocked on real client photos (hero, services, gallery, team) — none exist in `assets/` yet
+  (Track 1). Do not launch with stock/placeholder imagery in gallery/before-after sections.*
 - [ ] **[AG]** Convert client photos to webp with `srcset` and lazy loading, explicit
   `width`/`height` to prevent CLS. Depends on Track 1.
 
