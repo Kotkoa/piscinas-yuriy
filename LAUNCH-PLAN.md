@@ -69,8 +69,8 @@ Reasoning belongs in `ADR.md`, business facts in `CLAUDE.md`. This file is the s
 - [x] **[AG]** `<meta name="robots" content="noindex, nofollow">` added to `index.html` and
       `legal/aviso-legal.html`; `robots.txt` set to `Disallow: /`. Both carry a comment naming
       Phase 10 step 1 as the removal trigger.
-- [ ] **[A]** Commit and push Phase 1 — the freeze only takes effect on the live host after deploy.
-      *Verify: `curl -s https://piscinasyuriy.es/robots.txt` shows `Disallow: /`.*
+- [x] **[A]** Phase 1 freeze deployed. Verified 2026-08-31:
+      `https://piscinasyuriy.es/robots.txt` returns `Disallow: /`.
 - [x] **[A]** GitHub Pages settings confirmed 2026-08-31: custom domain = `piscinasyuriy.es`,
       "Enforce HTTPS" checked, last deploy via `pages build and deployment`. The amber
       "DNS Check in Progress" is GitHub's periodic re-validation, not a fault — the apex already
@@ -80,8 +80,8 @@ Reasoning belongs in `ADR.md`, business facts in `CLAUDE.md`. This file is the s
 - [x] **[A]** `www` → apex verified 2026-08-31: `https://www.piscinasyuriy.es/` returns `301` to
       `https://piscinasyuriy.es/`.
 - [x] **[AG]** `.DS_Store` added to `.gitignore`.
-- [ ] **[A]** Untrack the already-committed `assets/.DS_Store`: `git rm --cached assets/.DS_Store`
-      (agents never run git). Ships with the Phase 1 push.
+- [x] **[A]** `assets/.DS_Store` is absent from `main` (GitHub Contents API returns 404) and
+      `.DS_Store` remains ignored locally.
 
 ---
 
@@ -122,8 +122,8 @@ Approved 4-block taxonomy with the client's lines mapped into it:
       Current placeholder list: Dénia, Jávea, Calpe, Moraira, Benidorm, Altea, Gandía, Oliva, Pego.
 - [ ] **[C]** FAQ answers (materiales, plazos típicos, garantía, errores frecuentes de obra).
       Publishing `FAQPage` schema with placeholder answers is prohibited.
-- [ ] **[C]** Years in business / number of finished pools — only if the client states a real
-      number. Otherwise the trust block uses only what the photos prove.
+- [x] **[C]** No unverified years-in-business or finished-pool count will be published; the shipped
+      trust block uses only facts supported by the company identity, team, services and photo.
 - [ ] **[C]** Town/location per gallery photo (see Phase 3).
 
 ---
@@ -216,8 +216,10 @@ before/after. Both return in Phase 11 as soon as their content exists.
 - [ ] **[AG]** Remove the before/after markup from `index.html` rather than leaving it stubbed
       (decision 4). Keep the gallery card CSS able to host a photo pair, so re-adding before/after
       in Phase 11 is markup only, not a layout redesign.
-- [ ] **[AG]** Mobile-first responsive pass; add the media queries `css/styles.css` currently
-      lacks. *Accept when: no horizontal scroll or overflow at 320/360/390/768/1024/1440 px.*
+- [x] **[AG]** Mobile-first responsive pass completed. Verified in Chrome at
+      320/360/390/768/1024/1440 px: no horizontal overflow, mobile touch menu opens/closes,
+      in-page navigation closes the menu, and hero spacing remains explicit. CSS/JS URLs carry a
+      version query so GitHub Pages' 10-minute cache cannot mix old layout and interaction assets.
 - [ ] **[AG]** Replace `section:nth-of-type(even)` with an explicit `.section-alt` class.
       *Accept when: reordering sections changes no background.*
 - [ ] **[AG]** Apply ADR-013: single `@graph` JSON-LD per page, named HTML comment delimiters

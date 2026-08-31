@@ -168,6 +168,7 @@ header.site-header .container {
   backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid rgba(33, 60, 64, 0.12);
   box-shadow: 0 16px 32px rgba(3, 4, 94, 0.14);
+  pointer-events: none;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-0.5rem);
@@ -175,6 +176,7 @@ header.site-header .container {
 }
 
 .site-nav.is-open {
+  pointer-events: auto;
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -248,6 +250,7 @@ header.site-header .container {
   background: transparent;
   color: var(--text-on-dark);
   cursor: pointer;
+  touch-action: manipulation;
   flex-shrink: 0;
   transition: color 0.3s ease;
 }
@@ -512,6 +515,17 @@ section {
   max-width: 42rem;
   padding-left: clamp(1.25rem, 6vw, 4.5rem);
   padding-right: 1.25rem;
+}
+
+@media (max-width: 859px) {
+  #hero {
+    padding-bottom: clamp(4rem, 8vw, 5rem);
+  }
+
+  .hero-content {
+    width: 100%;
+    padding-inline: clamp(1.5rem, 6vw, 3rem);
+  }
 }
 
 .hero-content p {
