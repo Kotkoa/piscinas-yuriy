@@ -2,6 +2,9 @@
 
 Work checklist. Decisions and their reasoning live in `ADR.md`; business facts live in `CLAUDE.md`.
 Do not restate either here.
+**Active sequence is `LAUNCH-PLAN.md`** (phases, owners, acceptance criteria, launch order). This
+file is kept for the 2026-08-26 scaffold-audit findings in Track 0 and for the historical domain
+shortlist; every item here is also represented as a phase step in `LAUNCH-PLAN.md`.
 
 Every item is tagged with who unblocks it:
 
@@ -19,10 +22,9 @@ Findings from the 2026-08-26 audit of the initial commit. All are self-contained
 different files can be delegated in one parallel batch (one agent per file).
 
 **Blocking release:**
-- [ ] **[AG]** Add `<meta name="robots" content="noindex, nofollow">` to `index.html` and
-  `legal/aviso-legal.html`; set `robots.txt` to `User-agent: * / Disallow: /`. Leave a comment
-  naming ADR-004 as the removal trigger. *Accept when: both pages carry the tag and robots.txt
-  disallows everything.* (ADR-004)
+- [x] **[AG]** Add `<meta name="robots" content="noindex, nofollow">` to `index.html` and
+  `legal/aviso-legal.html`; set `robots.txt` to `User-agent: * / Disallow: /`. *Done 2026-08-31;
+  removal trigger is `LAUNCH-PLAN.md` Phase 10.* (ADR-004)
 - [ ] **[AG]** Fix the `LocalBusiness` JSON-LD in `index.html`: `vatID` must be `ESB56728777`, add
   `taxID: B56728777`, `@id`, `url`, `geo`, `openingHoursSpecification`; remove the `image`
   reference to `assets/logo.png` until that file exists. *Accept when: the block passes Google's
@@ -70,11 +72,12 @@ different files can be delegated in one parallel batch (one agent per file).
 
 Resolved: brand name, CIF `B56728777`, phone/WhatsApp, logo colors, registered address.
 
-- [ ] **[C]** Contact email — **blocks** the legal notice and the contact form (Track 5).
+- [x] **[C]** Contact email — `piscinasyuriy@gmail.com`, confirmed 2026-08-31.
 - [ ] **[C]** Exact service area: cities/comarcas beyond Pego — **blocks** local SEO copy and the
   hub & spoke town decision (ADR-010).
-- [ ] **[C]** Photos: ≥ 8 pools + the 41-outlet plumbing installation — **blocks** Track 4 and the
-  OG image.
+- [x] **[C]** Photos — 42 delivered, triaged and renamed in `assets/photos/` (`MAP.md`), including
+  the multi-outlet plumbing installation. The unfinished-pool shots are reserved as the "before"
+  half of future before/after pairs.
 - [ ] **[C]** Final FAQ answers: materials, partner companies, typical construction mistakes.
 - [ ] **[C]** Review of the drafted Spanish copy.
 - [ ] **[C]** GitHub username or email — **blocks** the collaborator invite.
@@ -98,16 +101,15 @@ Shortlist verified available on instantdomainsearch.com, 2026-08-26:
 
 Recommendation: #1 or #2 as primary; #4 as a redirect if budget allows.
 
-- [ ] **[C]** Client picks the domain.
-- [ ] **[A]** Purchase at **DonDominio** (€6.95/year flat, no renewal step-up) — **not** Cloudflare,
-  which does not sell `.es`. Register in the client's name for **5 years**, enable auto-renew,
-  request a Spanish IVA invoice, then write the expiry date into `CLAUDE.md`. (ADR-014)
-- [ ] **[A]** Delegate the nameservers to Cloudflare; configure DNS → GitHub Pages; add `CNAME` at
-  the repo root.
-- [ ] **[AG]** Replace the `piscinasyuriy.es` placeholder in `index.html`, `robots.txt`,
-  `sitemap.xml` with the real domain, and remove the ADR-004 `noindex` in the same change.
-  *Accept when: no occurrence of the placeholder remains and no `noindex` is left anywhere.*
-- [ ] **[A]** Verify the property in Search Console and request indexing.
+- [x] **[C]** Client picks the domain — `piscinasyuriy.es` (shortlist #2, exact legal-name match).
+- [x] **[A]** Domain purchased. Registrar and expiry date still to be recorded in `CLAUDE.md`.
+  (ADR-014)
+- [x] **[A]** DNS live: apex A records → GitHub Pages, `www` CNAME → `kotkoa.github.io`, `CNAME`
+  committed at the repo root, TLS valid (verified 2026-08-31).
+- [ ] **[AG]** Remove the ADR-004 `noindex` and reopen `robots.txt` once the page carries real
+  content — `LAUNCH-PLAN.md` Phase 10. The URLs already point at the real domain, so only the
+  `noindex`/`Disallow` pair remains.
+- [ ] **[A]** Verify the property in Search Console and request indexing (Phase 10).
 
 ---
 

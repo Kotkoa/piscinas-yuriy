@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- ADR-004: removal trigger is LAUNCH-PLAN.md Phase 10, step 1 (real content live) -->
+    <meta name="robots" content="noindex, nofollow" />
     <title>
       Piscinas Yuriy — Construcción, reforma y mantenimiento de piscinas
     </title>
@@ -74,17 +76,19 @@
     <main id="top">
       <section id="hero">
         <div class="hero-photo">
-          <!-- TODO(Track A): replace with real photo of a finished pool (golden hour), reserve aspect-ratio via width/height once supplied -->
-          <div class="photo-placeholder" data-photo="hero-pool-completed">
-            Foto real de piscina terminada
-          </div>
+          <img
+            src="assets/photos/02_hero-piscina-jardin-atardecer.jpeg"
+            alt="Piscina terminada en un jardín al atardecer"
+            width="1024"
+            height="768"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
         </div>
         <div class="container hero-content">
-          <h1>
-            Construcción, reforma y mantenimiento de piscinas en Alicante,
-            Valencia y Costa Blanca
-          </h1>
-          <p>Equipo propio, presupuesto sin compromiso y obra llave en mano.</p>
+          <h1>Construcción de piscinas en Alicante y Valencia</h1>
+          <p>Construcción, reparación y renovación de piscinas en la Costa Blanca.</p>
           <div class="hero-cta-row">
             <a class="btn btn-accent hero-cta" href="#contacto"
               >Solicitar presupuesto</a
@@ -376,9 +380,9 @@
               </ul>
             </div>
             <div class="map-card reveal">
-              <!-- TODO(Track A): embed real Google Maps iframe with office address once confirmed -->
+              <!-- TODO(Track A): embed the service-area map after the city list is confirmed -->
               <div class="photo-placeholder" data-photo="mapa-zona-trabajo">
-                Mapa: Calle San Joaquín, 11, Pego
+                Mapa de la zona de trabajo
               </div>
             </div>
           </div>
@@ -466,7 +470,7 @@
           <div>
             <h4>Zona de trabajo</h4>
             <ul>
-              <li><a href="#zona">Pego y Alicante</a></li>
+              <li><a href="#zona">Alicante</a></li>
               <li><a href="#zona">Valencia</a></li>
               <li><a href="#zona">Costa Blanca</a></li>
             </ul>
@@ -483,21 +487,13 @@
                   >WhatsApp</a
                 >
               </li>
-              <li>Calle San Joaquín, 11, 03780 Pego</li>
-            </ul>
-          </div>
-          <div>
-            <h4>Legal</h4>
-            <ul>
-              <li>
-                <a href="legal/aviso-legal.html">Aviso legal y privacidad</a>
-              </li>
             </ul>
           </div>
         </div>
+        <!-- Legal identity is defined in legal/aviso-legal.html (ADR-015). -->
         <p class="footer-colophon">
-          Piscinas Yuriy, S.L. · CIF B56728777 · Calle San Joaquín, 11, 03780
-          Pego (Alicante)
+          © 2026 Piscinas Yuriy, S.L. ·
+          <a href="legal/aviso-legal.html">Aviso legal y privacidad</a>
         </p>
       </div>
     </footer>

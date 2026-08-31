@@ -1,4 +1,6 @@
+# ADR-004: blanket disallow while the page still carries placeholder content.
+# Removal trigger: LAUNCH-PLAN.md Phase 10, step 1.
 User-agent: *
-Allow: /
+Disallow: /
 
 Sitemap: https://piscinasyuriy.es/sitemap.xml

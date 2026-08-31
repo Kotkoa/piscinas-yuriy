@@ -721,7 +721,7 @@ footer.site-footer {
 
 @media (min-width: 800px) {
   .footer-grid {
-    grid-template-columns: 15rem repeat(4, 1fr);
+    grid-template-columns: 15rem repeat(3, 1fr);
   }
 }
 

@@ -34,6 +34,8 @@ within it, not the headline. See ADR-005.
   the target market's language).
 - **Registered address:** Calle San Joaquín, Núm. 11, 03780 Pego (Alicante), Spain.
 - **Phone / WhatsApp:** `+34 678 948 509`.
+- **Email:** `piscinasyuriy@gmail.com` — confirmed working 2026-08-31. Used for the `aviso legal`
+  and as the Web3Forms target; never rendered as plain text in the page source (ADR-006).
 - **Brand colors (extracted from the logo):** turquoise `#37C1D4` (primary), orange `#FF914D`
   (accent). Source logo file: `шрифтовой_минималистичный_логотип_с_буквой_и_цветком.pdf` (not
   versioned, see "Local files not in git").
@@ -51,7 +53,8 @@ Reasoning and trade-offs for each of these are in `ADR.md`; only the outcome is 
 - **Hosting:** GitHub Pages, branch `main`, root; Cloudflare for DNS only. (ADR-002)
 - **Repository:** [`github.com/Kotkoa/piscinas-yuriy`](https://github.com/Kotkoa/piscinas-yuriy),
   public. Nothing sensitive may ever be committed. (ADR-003)
-- **Indexing:** `noindex` everywhere until the real domain is live. (ADR-004)
+- **Indexing:** `noindex` + `robots.txt Disallow: /` until the page carries real content, not just
+  until the domain is live. Removal trigger: `LAUNCH-PLAN.md` Phase 10. (ADR-004)
 - **Positioning:** construction is the core, filtration is a named service. (ADR-005)
 - **Contact:** WhatsApp (`wa.me/34678948509`) is primary; the client's email never appears as
   plain text. (ADR-006)
@@ -59,11 +62,10 @@ Reasoning and trade-offs for each of these are in `ADR.md`; only the outcome is 
   (ADR-007)
 - **Analytics:** GA4 + Consent Mode v2, `denied` by default, Spanish cookie banner; events
   `click_whatsapp`, `click_call`, `submit_form`. (ADR-008)
-- **Domain:** must start with "piscina", `.es` primary (ADR-009). Not purchasable at Cloudflare —
-  register at **DonDominio**: €6.95/year flat, registration and renewal identical, transfer free
-  (verified 2026-08-26, ex-IVA → ~€8.41 with 21% IVA). Dinahosting is the fallback but lists €14/year
-  after a €9.75 first-year promo. Buy in the client's name, 5 years up front, auto-renew on; record
-  the expiry date here at purchase. (ADR-014)
+- **Domain:** `piscinasyuriy.es` — **registered and live** since 2026-08-31, served by GitHub Pages
+  over the apex, `www` redirects to it. Registrar and expiry date: _to record_. Auto-renew must be
+  on. (ADR-009, ADR-014)
+- **Project name:** `piscinas-yuriy` everywhere — repo, folder, document titles. (ADR-012)
 - **Site architecture:** one page for v1; expansion gated on keyword data. (ADR-010)
 - **Access:** the client gets repo collaborator access — pending their GitHub username/email.
 - **Google Maps:** create a Google Business Profile (Pego, Alicante) and link it from the site.
@@ -115,19 +117,21 @@ to this working folder only:
 - `Website services and costs.md` (transcript of the call with the client)
 
 ## Current state
-Repo `Kotkoa/piscinas-yuriy` on GitHub Pages, no custom domain yet. Scaffold audited 2026-08-26:
-known defects and their fixes are listed in `PLAN.md` Track 0 — read it before touching the code,
-so the same bugs are not re-diagnosed. Pending: domain purchase (blocks all SEO), client photos and
-copy, design, analytics/form/legal chain.
+Repo `Kotkoa/piscinas-yuriy` on GitHub Pages, live on the custom domain `piscinasyuriy.es`
+(A records → GitHub Pages, `www` CNAME → `kotkoa.github.io`, TLS valid, verified 2026-08-31).
+The page itself is still the placeholder skeleton, so `noindex` + `robots.txt Disallow: /` are back
+in place until it carries real content (ADR-004; removal trigger = `LAUNCH-PLAN.md` Phase 10).
+Client photos (42) are delivered, triaged and renamed in `assets/photos/` — see
+`assets/photos/MAP.md`. Client Hero copy is delivered. `LAUNCH-PLAN.md` is the launch sequence;
+`PLAN.md` Track 0 still lists the scaffold defects — read it before touching the code.
 
 ## Pending from the client
-- Contact email
 - Exact service area (list of cities/comarcas beyond Pego)
-- Text review (content drafted from the call, see `PLAN.md`)
-- Domain decision (pick from the shortlist in `PLAN.md`)
+- Town + work type for each gallery photo
+- Final FAQ answers (materials, timelines, warranty, common construction mistakes)
+- Years in business / number of finished pools — only if a real number exists
+- Text review of the final Spanish copy
 - Client's GitHub username or email (to grant repo collaborator access)
-- **Photos:** of real client projects — at least 8 pools + a photo of the installation with 41 pipe
-  outlets (a standout example).
 - **Competitor references:** `rppool.es` (Spain) and `tecnigunita2.com` — use as a style/structure
   reference, do not copy content.
 

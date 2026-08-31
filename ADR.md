@@ -249,17 +249,23 @@ client photos, neither of which the client can necessarily re-supply.
 
 ---
 
-## ADR-012 — Repository, folder and document naming are inconsistent
+## ADR-012 — One project name: `piscinas-yuriy`
 
-**Status:** Proposed · 2026-08-26 · **Owner: Andriy**
+**Status:** Accepted · 2026-08-31 (resolved from Proposed · 2026-08-26) · **Owner: Andriy**
 
-**Context.** Three different names for one project: the local folder is `piscina-services`, the
-GitHub repo is `piscinas-yuriy`, and `CLAUDE.md`/`PLAN.md` are titled `piscina-services`. Agents
-searching by project name find inconsistent results.
+**Context.** Three different names for one project: the local folder was `piscina-services`, the
+GitHub repo is `piscinas-yuriy`, and `CLAUDE.md`/`PLAN.md` were titled `piscina-services`. Agents
+searching by project name found inconsistent results. Renaming was cheap only while ADR-004 keeps
+the site unindexed.
 
-**Decision (pending).** Standardise on one name. Renaming the GitHub repo changes the Pages URL,
-which is harmless only while ADR-004 keeps the site unindexed — so this is cheap **now** and
-expensive later.
+**Decision.** The single name is **`piscinas-yuriy`**, chosen to match both the existing GitHub
+repo and the live domain `piscinasyuriy.es`. The GitHub repo is therefore not renamed; the local
+folder and every document title follow it.
+
+**Consequences.**
+- No Pages URL change, no redirect problem, no new work in Search Console.
+- The project name, the repo name and the domain now differ only by the hyphen, which is the
+  smallest inconsistency available given `.es` domains read better unhyphenated.
 
 ---
 
@@ -350,6 +356,37 @@ Selection criteria, in priority order:
   with the developer as technical contact.
 
 ---
+
+## ADR-015 — The legal identity block is rendered once, on the legal page
+
+**Status:** Accepted · 2026-08-31 · refines ADR-013
+
+**Context.** `Piscinas Yuriy, S.L. · CIF B56728777 · Calle San Joaquín, 11, 03780 Pego (Alicante)`
+was printed three times: in the footer colophon, again as an address line in the footer contact
+column, and a third time in `legal/aviso-legal.html`. ADR-013 keeps repeated values greppable but
+does not say how many times a value should be *visible*. Three copies is three places to drift, and
+the visual noise sits in the highest-density part of the page.
+
+LSSI-CE art. 10 requires the company's name, CIF, registered address and a contact channel to be
+available "de forma permanente, fácil, directa y gratuita". It does not require them on every page:
+a permanently linked `aviso legal` satisfies it. Nothing in GDPR adds a second requirement.
+
+**Decision.** The full legal identity block is rendered exactly once, in
+`legal/aviso-legal.html`. The footer carries only `© <year> Piscinas Yuriy, S.L.` plus a permanent
+link to that page. The machine-readable copies stay: the `LocalBusiness` JSON-LD (`address`,
+`vatID`, `taxID`) and `llms.txt`, both of which exist to be parsed, not read.
+
+**Consequences.**
+- One visible source. Changing the registered address is a legal-page edit plus the JSON-LD block,
+  and `grep B56728777` returns a countable, verifiable set.
+- Local-SEO exposure of the address is unchanged: it is carried by the JSON-LD and the Google
+  Business Profile, which is what Google actually consumes for NAP consistency.
+- The town name may still appear in body copy and in the coverage block — that is content about the
+  service area, not a restatement of the fiscal identity. Only the identity block is deduplicated.
+- Cost: a user who wants the CIF needs one click. Accepted.
+
+---
+
 
 ## Working model: who decides what
 
