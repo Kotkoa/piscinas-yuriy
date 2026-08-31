@@ -75,8 +75,8 @@ Reasoning belongs in `ADR.md`, business facts in `CLAUDE.md`. This file is the s
       "Enforce HTTPS" checked, last deploy via `pages build and deployment`. The amber
       "DNS Check in Progress" is GitHub's periodic re-validation, not a fault — the apex already
       serves `200` over valid TLS.
-- [ ] **[A]** Record the domain expiry date and registrar in `CLAUDE.md`; verify auto-renew is on
-      (an expired domain destroys every ranking this plan buys — ADR-014).
+- [x] **[A]** Domain renewal checked by the owner 2026-08-31: registered for 5 years (expires
+      2031-08-31) with auto-renew on. Recorded in `CLAUDE.md` (ADR-014).
 - [x] **[A]** `www` → apex verified 2026-08-31: `https://www.piscinasyuriy.es/` returns `301` to
       `https://piscinasyuriy.es/`.
 - [x] **[AG]** `.DS_Store` added to `.gitignore`.
@@ -116,15 +116,29 @@ Approved 4-block taxonomy with the client's lines mapped into it:
       present, one occurrence each; 4 cards, real photos, `<picture>` + webp `srcset`; services
       grid is 1 column on mobile and 2×2 from `40rem` (4 cards in an `auto-fit` grid left an
       orphan third column).
-- [ ] **[AG]** Strip the multi-region stacking from `<title>`, `meta description`, `og:*` and the
-      footer; keep at most one "Costa Blanca" mention per block.
-- [ ] **[C]** Confirm the exact service area (city list beyond Pego) for the coverage block.
-      Current placeholder list: Dénia, Jávea, Calpe, Moraira, Benidorm, Altea, Gandía, Oliva, Pego.
-- [ ] **[C]** FAQ answers (materiales, plazos típicos, garantía, errores frecuentes de obra).
-      Publishing `FAQPage` schema with placeholder answers is prohibited.
+- [x] **[AG]** Multi-region stacking removed 2026-08-31. `<title>` is `Construcción de piscinas en
+      Alicante y Valencia` (47 chars), `meta description` 147 chars, `og:*`/`twitter:*` name each
+      region once, footer blurb reads `Alicante y Valencia` and the footer zone column lists
+      `Alicante · Valencia · Marina Alta`. Verified in the browser: exactly one "Costa Blanca"
+      occurrence remains on the whole page (the hero subtitle, which is client copy).
+- [x] **[C]** Service area confirmed by the owner 2026-08-31: the whole Comunitat Valenciana, the
+      corridor from the Valencia area to Alicante. Shipped copy: `Trabajamos de Valencia a
+      Alicante`; reference towns Valencia, Gandia, Oliva, Pego, Dénia, Xàbia, Calp, Moraira,
+      Benissa, Altea, Benidorm, Alicante.
+- [x] **[AG]** FAQ answers shipped 2026-08-31 as an owner-approved **template**, researched from
+      8–10 real Spanish pool-builder sites, each ≤ 2 sentences and ≤ 15 words: precio (depende de
+      tamaño/terreno/materiales), materiales (gunitado, gresite o porcelánico, cloración salina,
+      bombas de calor), plazo (8–12 semanas, sector range, explicitly project-dependent), errores
+      típicos (terreno, materiales, permisos). `FAQPage` schema now matches the visible answers
+      one-for-one. The guarantee question was deliberately NOT published: the LOE tiers (1/3/10
+      years) and any company-offered extension must come from the client first.
 - [x] **[C]** No unverified years-in-business or finished-pool count will be published; the shipped
       trust block uses only facts supported by the company identity, team, services and photo.
-- [ ] **[C]** Town/location per gallery photo (see Phase 3).
+- [x] **[AG]** Town per gallery photo shipped 2026-08-31 as a template on the owner's instruction.
+      The 42 client photos carry **no EXIF at all** (verified with `magick identify` on the
+      originals recovered from commit `1910c9d` — WhatsApp strips metadata), so no GPS was
+      available; the 12 towns were assigned from the approved corridor and are marked in
+      `index.html` with an English comment as pending per-project confirmation.
 
 ---
 
@@ -170,13 +184,11 @@ Section assignment for v1:
 
 Remaining work:
 
-- [ ] **[C]** Town per gallery card. The 12 cards ship with the work type only; the town is a
-      one-line addition per card once confirmed.
-- [ ] **[A]** ADR-011 backup decision is now urgent: `assets/photos/` disappeared from the working
-      tree on 2026-08-31 (43 files, including `MAP.md`) and only survives in the last commit. The
-      published derivatives in `assets/img/` were unaffected, and the van photo needed for the
-      trust block was recovered read-only with `git show`. Decide where the originals live before
-      the next cleanup removes the only copy.
+- [x] **[C]** Town per gallery card shipped 2026-08-31 as a template (see Phase 2).
+- [x] **[A]** ADR-011 backup decision taken by the owner 2026-08-31: the originals live in git
+      history only, and that is accepted. They are recoverable with
+      `git show 1910c9d:assets/photos/<file>`; the working tree does not need them because every
+      published derivative already sits in `assets/img/`.
 - [x] **[AG]** Derivative pipeline built for every photo now on the page: hero (`480/768/1024`
       webp + jpg), 4 service cards, 12 gallery cards and the trust photo (`480/800` webp + jpg,
       4:3 for cards, 4:5 for the trust portrait). Never upscaled — two gallery sources cap at 681
@@ -184,15 +196,18 @@ Remaining work:
       reports zero GPS tags). Verified in Chrome: 18 images, none broken, no horizontal overflow,
       **1255 KB transferred over 22 requests** with every image forced to load at once, so the
       real first-view cost is lower.
-- [ ] **[AG]** Same pipeline for the coverage/map block once the city list is confirmed.
-- [ ] **[AG]** Mechanical retouch only: straighten horizons, crop to layout ratios (16:9 hero,
-      4:3 cards, 1:1 details). No filters, no AI fills.
-- [ ] **[AG]** Produce `assets/og-image.jpg` (1200×630) from `02` + logo lockup — WhatsApp link
-      previews are the primary conversion surface (ADR-006).
-- [ ] **[AG]** Export the logo from the source PDF: `assets/logo.svg`, `assets/logo.png`,
-      `favicon.ico`, `apple-touch-icon.png` (180×180), `icon-192.png`, `icon-512.png`.
-      *Accept when: `LocalBusiness.image` in the JSON-LD points at a file that exists (today it
-      points at a missing `assets/logo.png`).*
+- [x] **[AG]** Coverage/map block shipped: a Google Maps embed centred on Pego, injected by
+      `js/main.js` only after an explicit click (no third-party request, no cookie, before that).
+- [x] **[AG]** Mechanical retouch (horizons, crop ratios) deferred by the owner to a later pass by
+      a dedicated agent. Not a launch blocker: the shipped derivatives are already cropped to the
+      layout ratios.
+- [x] **[AG]** `assets/og-image.jpg` produced 2026-08-31 from the hero photo plus the brand
+      wordmark, verified `1200×630`, 147 KB, wired into `og:image`/`twitter:image` with dimensions
+      and alt text.
+- [ ] **[A]** Logo/icon export (`assets/logo.svg`, `favicon.ico`, `apple-touch-icon.png`,
+      `icon-192.png`, `icon-512.png`) deferred by the owner to a later pass. `LocalBusiness.image`
+      now points at `assets/og-image.jpg`, which exists, so nothing on the page references a
+      missing file; `assets/favicon.svg` already ships.
 
 ---
 
@@ -205,58 +220,77 @@ before/after. Both return in Phase 11 as soon as their content exists.
 - [x] **[AG]** Services: the 4 approved blocks, real photos, verbatim bullets, 2×2 from `40rem`.
 - [x] **[AG]** Trust block: `41` (van), four verifiable facts, no icon clichés. "Garantía por
       escrito" was dropped — the client has not confirmed any warranty terms.
-- [x] **[AG]** Gallery: 12 real projects, work type per card, no lightbox (would add JS for no
-      conversion gain). Town per card pending the client.
-- [ ] **[AG]** Process: 4 steps (Consulta → Visita y medición → Presupuesto → Ejecución/Entrega).
-- [ ] **[AG]** Coverage block: approved city list + Google Maps embed as a click-to-load
-      placeholder (it sets cookies; must sit behind consent).
-- [ ] **[AG]** Contact block + footer: contacts, legal links, CIF.
+- [x] **[AG]** Gallery: 12 real projects, work type plus town per card, no lightbox (would add JS
+      for no conversion gain).
+- [x] **[AG]** Process: 4 steps (Consulta → Visita y medición → Presupuesto → Ejecución/Entrega).
+- [x] **[AG]** Coverage block: approved corridor copy + 12 reference towns + Google Maps embed as a
+      click-to-load placeholder behind consent.
+- [x] **[AG]** Contact block + footer: WhatsApp first, phone second, privacy link, copyright and
+      the legal-page links. CIF stays on `legal/aviso-legal.html` only (ADR-015).
 - [x] **[AG]** Reviews section removed from `index.html`, mobile/desktop navigation, and unused CSS;
       it returns in Phase 11 once real reviews exist.
-- [ ] **[AG]** Remove the before/after markup from `index.html` rather than leaving it stubbed
-      (decision 4). Keep the gallery card CSS able to host a photo pair, so re-adding before/after
-      in Phase 11 is markup only, not a layout redesign.
+- [x] **[AG]** Before/after markup: the owner decided to keep the gallery-pair CSS in place rather
+      than remove it, so re-adding before/after in Phase 11 stays markup-only. `index.html` carries
+      no stubbed before/after section.
 - [x] **[AG]** Mobile-first responsive pass completed. Verified in Chrome at
       320/360/390/768/1024/1440 px: no horizontal overflow, mobile touch menu opens/closes,
       in-page navigation closes the menu, and hero spacing remains explicit. CSS/JS URLs carry a
       version query so GitHub Pages' 10-minute cache cannot mix old layout and interaction assets.
-- [ ] **[AG]** Replace `section:nth-of-type(even)` with an explicit `.section-alt` class.
-      *Accept when: reordering sections changes no background.*
-- [ ] **[AG]** Apply ADR-013: single `@graph` JSON-LD per page, named HTML comment delimiters
-      around header/footer/CTA/head-meta, stable class on every `tel:` and `wa.me` link, no phone
-      or CIF inlined in prose.
-- [ ] **[AG]** `404.html` in the site's own design.
-- [ ] **[AG]** Remove every `photo-placeholder` div and every superseded `TODO(Track …)` comment.
-      *Accept when: `grep -c "photo-placeholder\|TODO" index.html` = 0.*
+- [x] **[AG]** No positional section selector exists: every section already carries an explicit
+      `section-light` / `section-white` / `section-process` / `section-area` / `section-contact`
+      class, so reordering sections cannot change a background.
+- [x] **[AG]** ADR-013 applied: one JSON-LD `@graph` (LocalBusiness, 4 × Service, WebSite,
+      BreadcrumbList, FAQPage), named comment delimiters `head-meta`, `site-header`, `site-footer`,
+      `cookie-banner`, class `js-call-link` on all 3 `tel:` links and `js-whatsapp-link` on both
+      `wa.me` links, no CIF in page prose.
+- [x] **[AG]** `404.html` shipped in the site's design, mobile-first, root-absolute asset paths so
+      it renders at any URL depth.
+- [x] **[AG]** Every `photo-placeholder` div and every `TODO(Track …)` comment removed from
+      `index.html`, and the now-dead placeholder CSS deleted. Verified in the browser: 0 elements
+      with class `photo-placeholder`.
 
 ---
 
 ## Phase 5 — Legal (hard prerequisite for the form and analytics)
 
-- [ ] **[AG]** `legal/aviso-legal.html`: complete with legal name, CIF `B56728777`, registered
-      address, `piscinasyuriy@gmail.com`, and hosting/registrar identification (LSSI-CE art. 10).
-- [ ] **[AG]** `legal/privacidad.html`: privacy + cookies policy in Spanish, GDPR/LOPDGDD —
-      controller identity, purpose, legal basis, retention, rights, AEPD complaint route, third
-      parties (Web3Forms, Google Analytics, Google Maps, GitHub Pages).
-- [ ] **[AG]** Form consent checkbox linking to `legal/privacidad.html`, unchecked by default,
-      required for submit.
+- [x] **[AG]** `legal/aviso-legal.html` rewritten (186 lines, 8 sections): titular, CIF, domicilio
+      social, teléfono, `piscinasyuriy@gmail.com`, actividad, hosting (GitHub, Inc.) and DNS
+      (Cloudflare, Inc.) identification, condiciones de uso, propiedad intelectual with an explicit
+      all-rights-reserved statement, enlaces, legislación aplicable y jurisdicción.
+- [x] **[AG]** `legal/privacidad.html` created (310 lines, 15 sections): responsable, finalidades,
+      base jurídica (art. 6.1.a RGPD), datos recogidos, plazo de conservación, encargados
+      (Web3Forms, GA4, Google Maps, GitHub Pages, Cloudflare) with the international-transfer note,
+      derechos and the AEPD complaint route, plus a cookies table separating técnicas from
+      analíticas, the `pyConsent` `localStorage` key, how to withdraw consent and the click-to-load
+      Google Maps behaviour. `tidy -q -e`: 0 errors, 0 warnings on both files.
+- [x] **[AG]** Form consent checkbox shipped: unchecked by default, `required`, links to
+      `legal/privacidad.html`, blocks submit with an inline Spanish error. Verified in Chrome.
 - [ ] **[A]** Read both legal pages end to end before publication — this is the client's legal
       exposure, not boilerplate.
-- [ ] **[AG]** Add both legal pages to `sitemap.xml` with `lastmod`.
-- [ ] **[A]** Add a copyright / all-rights-reserved notice (the repo is public — ADR-003).
+- [x] **[AG]** Both legal pages added to `sitemap.xml` with `lastmod` `2026-08-31`.
+- [x] **[AG]** `© 2026 Piscinas Yuriy, S.L. · Todos los derechos reservados` in the footer, with
+      the reuse prohibition stated in full on the legal notice (ADR-003).
 
 ---
 
 ## Phase 6 — Contact form
 
-- [ ] **[A]** Create the Web3Forms access key against `piscinasyuriy@gmail.com`.
-- [ ] **[AG]** Implement the form: `nombre`, `teléfono`, `ciudad`, `qué necesita`, `comentario`,
-      consent checkbox; honeypot + captcha enabled; subject/reply-to configured; success and error
-      states rendered inline (no page navigation).
-      *Accept when: a real test submission arrives in the inbox and the client's email appears
-      nowhere in the page source.*
-- [ ] **[AG]** Keep the WhatsApp deep link as the primary CTA; the form is secondary (ADR-006).
-- [ ] **[AG]** Accessible validation (`aria-describedby`, `aria-invalid`), no `alert()`.
+- [ ] **[A]** Create the Web3Forms access key against `piscinasyuriy@gmail.com` and paste it into
+      `WEB3FORMS_ACCESS_KEY` in `js/main.js`. Runbook: `docs/forms-setup.md`.
+- [x] **[AG]** Form implemented: `nombre`, `teléfono`, `ciudad`, `qué necesitas`, `comentario`,
+      consent checkbox, hidden `subject`/`from_name`, `botcheck` honeypot, JSON `fetch` to
+      `https://api.web3forms.com/submit`, inline success/error states, no page navigation, submit
+      button disabled while sending. While the access key is empty the same validated form delivers
+      through the WhatsApp deep link instead of silently failing. hCaptcha is documented as the
+      free zero-config upgrade in `docs/forms-setup.md`, to be enabled with the privacy-page update
+      if spam appears.
+      *Still to accept on the client's side: a real test submission arriving in the inbox. Verified
+      now: `grep -c "piscinasyuriy@gmail.com" index.html` = 0.*
+- [x] **[AG]** WhatsApp stays the primary CTA (first button in the contact block, `btn-whatsapp`);
+      the form is secondary (ADR-006).
+- [x] **[AG]** Accessible validation: `aria-describedby` on every validated field, `aria-invalid`
+      toggled per field, inline `field-error` messages, `role="status"` + `aria-live="polite"` on
+      the submit status, focus moved to the first invalid field, no `alert()`.
 - [ ] **[A]** Test the chain from a phone on mobile data: WhatsApp button, `tel:` link, form
       submit, inbox arrival.
 
@@ -266,37 +300,53 @@ before/after. Both return in Phase 11 as soon as their content exists.
 
 Order is mandatory: privacy page → banner → GA4 → events (ADR-007, ADR-008).
 
-- [ ] **[A]** Create the GA4 property; note the measurement ID.
-- [ ] **[AG]** Cookie banner: dependency-free, Spanish, accept / reject, choice persisted in
-      `localStorage`, zero layout shift, keyboard accessible.
-      *Accept when: rejecting keeps `analytics_storage=denied` across a reload and no `_ga` cookie
-      is set.*
-- [ ] **[AG]** `gtag.js` with Consent Mode v2, `analytics_storage`/`ad_storage` denied by default,
-      IP anonymised, script loaded only after acceptance.
-- [ ] **[AG]** Wire `click_whatsapp`, `click_call`, `submit_form` to the ADR-013 stable classes.
-      *Accept when: all three appear in GA4 Realtime during a manual test.*
-- [ ] **[AG]** Gate the Google Maps embed behind the same consent.
+- [ ] **[A]** Create the GA4 property; note the measurement ID and paste it into
+      `GA_MEASUREMENT_ID` in `js/main.js`. Runbook: `docs/analytics-setup.md`.
+- [x] **[AG]** Cookie banner shipped: dependency-free, Spanish, accept / reject, choice persisted
+      in `localStorage` under `pyConsent`, keyboard accessible, and zero layout shift — while the
+      banner is on screen `js/main.js` publishes its measured height as `--cookie-banner-h`, which
+      the hero and `body` padding consume, so the hero CTA is never covered (verified: CTA bottom
+      561 px vs banner top 625 px at 500×780).
+      *Verified: rejecting stores `denied`, hides the banner, injects no analytics script, and the
+      choice survives a reload.*
+- [x] **[AG]** Consent Mode v2 implemented: `ad_storage`, `ad_user_data`, `ad_personalization` and
+      `analytics_storage` all default `denied` with `wait_for_update: 500`; `gtag.js` is injected
+      only after acceptance, with `anonymize_ip` and `allow_google_signals: false`. No script is
+      requested at all while `GA_MEASUREMENT_ID` is empty.
+- [x] **[AG]** `click_whatsapp`, `click_call` and `submit_form` wired to the ADR-013 stable classes
+      (`js-whatsapp-link`, `js-call-link`) and to the form submit handler.
+      *Still to accept: all three appearing in GA4 Realtime once the property exists.*
+- [x] **[AG]** Google Maps embed gated behind an explicit click; verified that no `iframe` exists
+      before the click and that the injected frame points at the Pego embed URL.
 - [ ] **[A]** Link GA4 ↔ Search Console ↔ Google Ads.
 
 ---
 
 ## Phase 8 — SEO / GEO
 
-- [ ] **[A]** Keyword session: volume/difficulty for `construcción de piscinas alicante`,
-      `piscinas valencia`, `reforma de piscinas`, `bomba de calor piscina`, `cloración salina`,
-      `cuadro eléctrico piscina`, + town modifiers. Output = the target keyword set and the
-      ADR-010 expansion decision.
-- [ ] **[AG]** Work the approved keywords into the copy: `<title>` ≤ 60 chars,
-      `meta description` ≤ 155, unique H1, H2 per service block, `alt` text that describes the
-      real work (never keyword-stuffed).
-- [ ] **[AG]** Complete the head meta set: `og:url`, `og:image` + dimensions, `og:site_name`,
-      `twitter:card=summary_large_image`, `theme-color`.
-- [ ] **[AG]** JSON-LD `@graph`: `LocalBusiness` (fix `vatID` → `ESB56728777`, add
-      `taxID: B56728777`, `@id`, `url`, `image`, `geo`, `openingHoursSpecification`, `sameAs` →
-      Google Business Profile), one `Service` per approved block, `BreadcrumbList`, `FAQPage` only
-      with final answers. *Accept when: Google Rich Results Test reports zero errors.*
-- [ ] **[AG]** `sitemap.xml` with `lastmod`.
-- [ ] **[AG]** Update `llms.txt` to the final 4-block taxonomy and positioning (GEO for AI search).
+- [ ] **[A]** Approve the keyword set. Research delivered 2026-08-31 from real SERP observation (no
+      paid tool, so no measured volumes — difficulty is grounded in the domains actually ranking):
+      recommended primary `construcción de piscinas Dénia`; secondaries `constructor de piscinas
+      Dénia`, `reforma de piscinas Alicante`, `reparación de piscinas Dénia / Marina Alta`,
+      `fontanería de piscinas Alicante`, `bomba de calor piscina Alicante`, `cloración salina
+      piscina Alicante`, `cuadro eléctrico piscina Alicante`, `iluminación led piscina Alicante`,
+      `construcción de piscinas Gandía / Oliva`; do-not-chase `construcción de piscinas Valencia`
+      (city), `Altea`/`Benidorm`, and every geo-less informational term (Leroy Merlin / ManoMano /
+      habitissimo own those SERPs). ADR-010 candidate pages, in order: Dénia >
+      Teulada-Moraira/Benissa > Calp ≈ Oliva/Gandía > Xàbia.
+- [ ] **[AG]** Work the approved keywords into the copy once the set above is signed off. Current
+      state already satisfies the mechanical limits: `<title>` 47 chars, `meta description` 147,
+      unique H1, H2 per block, `alt` text describing the real work.
+- [x] **[AG]** Head meta set completed: `og:url`, `og:site_name`, `og:image` + type/width/height/alt,
+      `twitter:card=summary_large_image` with title/description/image, `theme-color`, canonical.
+- [x] **[AG]** JSON-LD is now a single `@graph`: `LocalBusiness` (`vatID` `ESB56728777`, `taxID`
+      `B56728777`, `@id`, `url`, `image`, `geo`, `areaServed`), 4 × `Service`, `WebSite`,
+      `BreadcrumbList`, and `FAQPage` matching the published answers. `openingHoursSpecification`
+      and `sameAs` are deliberately absent until the client confirms hours and the Google Business
+      Profile exists — publishing invented hours would be a factual claim.
+      *Still to accept: Google Rich Results Test reporting zero errors (needs a public URL).*
+- [x] **[AG]** `sitemap.xml` carries `lastmod` on all three URLs.
+- [x] **[AG]** `llms.txt` rewritten to the final 4-block taxonomy, positioning and service corridor.
 - [ ] **[A]** Create the Google Business Profile (Pego, Alicante): category "Constructor de
       piscinas", service area, hours, ≥ 10 photos, site link; then add `sameAs` to the JSON-LD.
 - [ ] **[A]** Local citations with NAP consistent with `CLAUDE.md`: Páginas Amarillas, Habitissimo,
@@ -375,9 +425,16 @@ Phase 8 keyword session    → Phase 8 copy → Phase 9 quality gate
 Phase 9 all green + client sign-off → Phase 10 go live → Phase 11
 ```
 
-Runnable in parallel right now, nothing blocking: Phase 2 copy rewrite, Phase 3 image pipeline
-(hero + all 4 service blocks are decided), Phase 4 CSS/media-query and `.section-alt` work,
-Phase 5 legal pages (email is confirmed), Phase 8 head-meta and JSON-LD fixes.
+Runnable in parallel right now, nothing blocking: Phase 9 quality gate (Lighthouse, axe, W3C,
+link check) and the owner's account work — Web3Forms key, GA4 property, Google Business Profile,
+Search Console verification.
 
-Still waiting on the client, and only these: city list for the coverage block, FAQ answers,
-locations for the gallery cards, any real "years in business" number.
+Blocked only on the owner's accounts: Web3Forms access key (`WEB3FORMS_ACCESS_KEY`), GA4
+measurement ID (`GA_MEASUREMENT_ID`), Google Business Profile, GSC/Bing verification, keyword
+set sign-off, and reading the two legal pages end to end.
+
+Blocked only on the client's own facts: the guarantee terms (LOE minimum vs any company
+extension), confirmation of the per-project towns now shipped as a template, confirmation that
+the materials list is complete, and any real "years in business" number. Everything else that
+used to sit on this list — city list, FAQ answers, gallery locations — has been shipped as
+owner-approved copy or a reviewable template.

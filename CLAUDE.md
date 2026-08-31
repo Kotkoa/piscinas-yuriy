@@ -64,7 +64,8 @@ Reasoning and trade-offs for each of these are in `ADR.md`; only the outcome is 
   `click_whatsapp`, `click_call`, `submit_form`. (ADR-008)
 - **Domain:** `piscinasyuriy.es` — **registered and live** since 2026-08-31, served by GitHub Pages
   over the apex, `www` redirects to it. Registered for **5 years: expires 2031-08-31**; auto-renew
-  must stay on. Registrar: _to record_. (ADR-009, ADR-014)
+  verified on by the owner 2026-08-31. Registrar credentials and account live outside this repo,
+  with the owner. (ADR-009, ADR-014)
 - **Project name:** `piscinas-yuriy` everywhere — repo, folder, document titles. (ADR-012)
 - **Site architecture:** one page for v1; expansion gated on keyword data. (ADR-010)
 - **Access:** the client gets repo collaborator access — pending their GitHub username/email.
@@ -119,19 +120,36 @@ to this working folder only:
 ## Current state
 Repo `Kotkoa/piscinas-yuriy` on GitHub Pages, live on the custom domain `piscinasyuriy.es`
 (A records → GitHub Pages, `www` CNAME → `kotkoa.github.io`, TLS valid, verified 2026-08-31).
-The page itself is still the placeholder skeleton, so `noindex` + `robots.txt Disallow: /` are back
-in place until it carries real content (ADR-004; removal trigger = `LAUNCH-PLAN.md` Phase 10).
-Client photos (42) are delivered, triaged and renamed in `assets/photos/` — see
-`assets/photos/MAP.md`. Client Hero copy is delivered. `LAUNCH-PLAN.md` is the launch sequence;
-`PLAN.md` Track 0 still lists the scaffold defects — read it before touching the code.
+`noindex` + `robots.txt Disallow: /` remain in place until launch (ADR-004; removal trigger =
+`LAUNCH-PLAN.md` Phase 10).
+
+The page is no longer a skeleton. Shipped 2026-08-31: hero, 4 service blocks, trust block, 12-card
+gallery with towns, 4 FAQ answers, 4-step process, coverage block with a click-to-load Google Maps
+embed, contact block with a validated Web3Forms-ready form, cookie consent banner with Consent
+Mode v2, `404.html`, `legal/aviso-legal.html`, `legal/privacidad.html`, `assets/og-image.jpg`, one
+JSON-LD `@graph`, `sitemap.xml` and `llms.txt`.
+
+Two constants in `js/main.js` are the only things standing between this and a working production
+funnel: `WEB3FORMS_ACCESS_KEY` (empty → the form delivers through the WhatsApp deep link;
+`docs/forms-setup.md`) and `GA_MEASUREMENT_ID` (empty → no analytics script is ever requested;
+`docs/analytics-setup.md`).
+
+Client photos: the 42 originals live in git history only (commit `1910c9d`), recoverable with
+`git show 1910c9d:assets/photos/<file>`; the published derivatives are in `assets/img/`. The
+originals carry no EXIF at all — WhatsApp stripped it — so no photo has GPS data.
 
 ## Pending from the client
-- Exact service area (list of cities/comarcas beyond Pego)
-- Town + work type for each gallery photo
-- Final FAQ answers (materials, timelines, warranty, common construction mistakes)
-- Years in business / number of finished pools — only if a real number exists
-- Text review of the final Spanish copy
-- Client's GitHub username or email (to grant repo collaborator access)
+- Guarantee terms: the LOE statutory tiers are 1 / 3 / 10 years; confirm whether the company
+  offers anything beyond that before any guarantee claim is published.
+- Confirmation of the per-project towns currently shipped as a template on the gallery cards.
+- Confirmation that the materials list is complete (gunitado, gresite/porcelánico, cloración
+  salina, bombas de calor — no liner, poliéster or prefabricated shells?).
+- Confirmation that 8–12 weeks matches the real average build time, and whether licence
+  processing is inside that figure.
+- Business hours (needed before `openingHoursSpecification` may enter the JSON-LD).
+- Years in business / number of finished pools — only if a real number exists.
+- Text review of the final Spanish copy, including the two legal pages.
+- Client's GitHub username or email (to grant repo collaborator access).
 - **Competitor references:** `rppool.es` (Spain) and `tecnigunita2.com` — use as a style/structure
   reference, do not copy content.
 

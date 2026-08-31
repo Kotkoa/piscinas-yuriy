@@ -387,6 +387,91 @@ link to that page. The machine-readable copies stay: the `LocalBusiness` JSON-LD
 
 ---
 
+## ADR-016 — Template content is allowed pre-launch, but only where it cannot become a false claim
+
+**Status:** Accepted · 2026-08-31 · owner decision, extends ADR-004
+
+**Context.** Three content slots were blocked on the client: the coverage city list, the FAQ answers
+and the town per gallery photo. The plan forbade shipping placeholders. The owner instructed that
+realistic template content be generated now, so that the page can be reviewed and worked on as a
+whole, with the client correcting it later.
+
+The three slots do not carry the same risk. The coverage area was answered directly by the owner
+(Comunitat Valenciana, Valencia→Alicante corridor), so it is a fact, not a template. FAQ answers
+describe how the trade works and can be written from sector research without asserting anything
+specific about this company. Per-photo towns are the risky one: they assert where a particular job
+was done. The photos carry no EXIF at all — WhatsApp strips it, verified with `magick identify` on
+the originals in commit `1910c9d` — so there was no data to derive them from.
+
+**Decision.**
+1. Coverage area: shipped as confirmed fact.
+2. FAQ: shipped, researched from 8–10 real Spanish pool-builder sites, each answer ≤ 2 sentences and
+   ≤ 15 words, worded so that nothing is a company-specific promise — build time is stated as a
+   sector range with an explicit project-dependent caveat.
+3. Guarantee: **not** published. The LOE tiers (1 / 3 / 10 years) and any company extension are a
+   legal commitment; only the client can make it.
+4. Per-photo towns: shipped as a template drawn from the approved corridor, marked in `index.html`
+   with an English comment naming it as pending per-project confirmation.
+
+**Consequences.**
+- The site is reviewable end to end now, which is what the owner asked for.
+- The gallery towns are the one place where the page states something not yet verified. They are
+  confined to a single greppable class (`gallery-location`) and one comment, so replacing all 12
+  is a mechanical pass, and `robots.txt Disallow: /` means no search engine has indexed them.
+- `FAQPage` schema and the visible answers are generated from the same four answers, so they cannot
+  drift apart — publishing schema with placeholder answers stays prohibited.
+
+---
+
+## ADR-017 — The contact form degrades to WhatsApp instead of shipping broken
+
+**Status:** Accepted · 2026-08-31 · refines ADR-006, ADR-007
+
+**Context.** The form is implemented, but Web3Forms delivery needs an access key that only the owner
+can create. The options were: ship nothing until the key exists, ship a form that posts to an empty
+key and fails, or ship a form that works today and switches to email when the key arrives.
+
+**Decision.** `js/main.js` holds `WEB3FORMS_ACCESS_KEY`. While it is empty, the fully validated form
+delivers through the existing WhatsApp deep link and says so in its success message. With a key, the
+same submission goes to `https://api.web3forms.com/submit` as JSON with inline success/error states.
+No other file changes when the key is pasted. The same pattern governs `GA_MEASUREMENT_ID`: empty
+means no analytics script is ever requested, even after the visitor accepts cookies.
+
+**Consequences.**
+- No dead form, no fake success, no half-built feature waiting on an account.
+- WhatsApp remains the primary channel by construction (ADR-006), since it is also the fallback.
+- Spam protection ships as the `botcheck` honeypot. Web3Forms deprecates it in favour of a captcha,
+  so `docs/forms-setup.md` documents enabling hCaptcha — free, zero-config, no site key — with the
+  hard precondition that `legal/privacidad.html` must list hCaptcha as a processor first.
+- Anyone can read the key from the public repo. That is by design: it can only send mail to the
+  client's own inbox (ADR-003).
+
+---
+
+## ADR-018 — Consent state lives in `localStorage`, and the banner reserves its own space
+
+**Status:** Accepted · 2026-08-31 · implements ADR-008
+
+**Context.** The cookie banner has to be dependency-free, must not set a cookie before consent, and
+must not cause layout shift. The first mobile build covered the hero CTA with the banner — the
+single most important conversion element on the page.
+
+**Decision.** The accept/reject choice is stored in `localStorage` under `pyConsent` (`granted` /
+`denied`), never in a cookie, so no storage is written for tracking purposes before consent. Consent
+Mode v2 defaults are pushed before `DOMContentLoaded` with all four signals `denied` and
+`wait_for_update: 500`; `gtag.js` is injected only on `granted`. While the banner is visible,
+`js/main.js` measures its height and publishes it as the CSS variable `--cookie-banner-h`, consumed
+by `#hero`'s and `body`'s bottom padding; on settle it is reset to `0px`. The Google Maps embed is
+behind a separate explicit click, not the banner.
+
+**Consequences.**
+- Rejecting leaves no `_ga` cookie and survives a reload — verified in Chrome.
+- The hero CTA is never covered at any viewport, because the reservation is measured rather than
+  guessed; a longer banner text cannot silently re-break it.
+- `localStorage` is not a cookie, so the cookies policy must explain it explicitly. It does.
+- Private-mode failures are swallowed: the banner then reappears on the next visit, which is the
+  conservative outcome.
+
 
 ## Working model: who decides what
 

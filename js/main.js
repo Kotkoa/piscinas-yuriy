@@ -1,50 +1,142 @@
 const WHATSAPP_NUMBER = "34678948509";
 
+// Paste the Web3Forms access key here (public by design, safe in a public repo).
+// While it stays empty the form keeps working through the WhatsApp deep link.
+const WEB3FORMS_ACCESS_KEY = "";
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+
+// Paste the GA4 measurement ID here (public by design). Empty = analytics disabled.
+const GA_MEASUREMENT_ID = "";
+
+const CONSENT_STORAGE_KEY = "pyConsent";
+const MAP_EMBED_URL =
+  "https://www.google.com/maps?q=Pego,%20Alicante,%20Espa%C3%B1a&z=10&output=embed";
+
+function readStoredConsent() {
+  try {
+    const value = window.localStorage.getItem(CONSENT_STORAGE_KEY);
+    return value === "granted" || value === "denied" ? value : null;
+  } catch {
+    return null;
+  }
+}
+
+function storeConsent(value) {
+  try {
+    window.localStorage.setItem(CONSENT_STORAGE_KEY, value);
+  } catch {
+    // Private mode or storage disabled: the choice simply is not persisted.
+  }
+}
+
+function pushToDataLayer() {
+  window.dataLayer = window.dataLayer || [];
+  // eslint-disable-next-line prefer-rest-params
+  window.dataLayer.push(arguments);
+}
+
+function initConsentDefaults() {
+  if (typeof window.gtag !== "function") {
+    window.gtag = pushToDataLayer;
+  }
+  window.gtag("consent", "default", {
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+    analytics_storage: "denied",
+    wait_for_update: 500,
+  });
+}
+
+let analyticsLoaded = false;
+
+function loadAnalytics() {
+  if (analyticsLoaded || !GA_MEASUREMENT_ID) return;
+  analyticsLoaded = true;
+
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+  document.head.appendChild(script);
+
+  window.gtag("js", new Date());
+  window.gtag("config", GA_MEASUREMENT_ID, {
+    anonymize_ip: true,
+    allow_google_signals: false,
+  });
+}
+
+function grantConsent() {
+  window.gtag("consent", "update", {
+    analytics_storage: "granted",
+  });
+  loadAnalytics();
+}
+
 function trackEvent(name, params = {}) {
   if (typeof window.gtag === "function") {
     window.gtag("event", name, params);
   }
 }
 
+initConsentDefaults();
+
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll('a[href^="https://wa.me/"]').forEach((link) => {
+  const storedConsent = readStoredConsent();
+  if (storedConsent === "granted") grantConsent();
+
+  const banner = document.querySelector("#cookie-banner");
+  if (banner && !storedConsent) {
+    banner.hidden = false;
+    const setBannerOffset = (px) =>
+      document.documentElement.style.setProperty("--cookie-banner-h", px);
+    const measureBanner = () => setBannerOffset(`${banner.offsetHeight}px`);
+    measureBanner();
+    window.addEventListener("resize", measureBanner);
+    const settle = (choice) => {
+      storeConsent(choice);
+      if (choice === "granted") grantConsent();
+      banner.hidden = true;
+      window.removeEventListener("resize", measureBanner);
+      setBannerOffset("0px");
+    };
+    banner
+      .querySelector("#cookie-accept")
+      ?.addEventListener("click", () => settle("granted"));
+    banner
+      .querySelector("#cookie-reject")
+      ?.addEventListener("click", () => settle("denied"));
+  }
+
+  document.querySelectorAll(".js-whatsapp-link").forEach((link) => {
     link.addEventListener("click", () => trackEvent("click_whatsapp"));
   });
 
-  document.querySelectorAll('a[href^="tel:"]').forEach((link) => {
+  document.querySelectorAll(".js-call-link").forEach((link) => {
     link.addEventListener("click", () => trackEvent("click_call"));
   });
 
-  const form = document.querySelector("#contact-form");
-  if (form) {
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      trackEvent("submit_form");
-
-      const data = new FormData(form);
-      const nombre = (data.get("nombre") || "").toString().trim();
-      const telefono = (data.get("telefono") || "").toString().trim();
-      const ciudad = (data.get("ciudad") || "").toString().trim();
-      const servicio = (data.get("servicio") || "").toString().trim();
-      const comentario = (data.get("comentario") || "").toString().trim();
-
-      const lines = [
-        `Hola, soy ${nombre}.`,
-        `Teléfono: ${telefono}`,
-        ciudad && `Ciudad: ${ciudad}`,
-        servicio && `Necesito: ${servicio}`,
-        comentario && `Comentario: ${comentario}`,
-      ].filter(Boolean);
-
-      const message = encodeURIComponent(lines.join("\n"));
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank", "noopener");
-      form.reset();
+  const mapConsent = document.querySelector("#map-consent");
+  const mapConsentBtn = document.querySelector("#map-consent-btn");
+  if (mapConsent && mapConsentBtn) {
+    mapConsentBtn.addEventListener("click", () => {
+      const frame = document.createElement("iframe");
+      frame.src = MAP_EMBED_URL;
+      frame.title = "Mapa de la zona de trabajo de Piscinas Yuriy";
+      frame.loading = "lazy";
+      frame.referrerPolicy = "no-referrer-when-downgrade";
+      frame.setAttribute("allowfullscreen", "");
+      mapConsent.replaceWith(frame);
     });
   }
 
+  const form = document.querySelector("#contact-form");
+  if (form) initContactForm(form);
+
   const header = document.querySelector("#site-header");
   if (header) {
-    const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 48);
+    const onScroll = () =>
+      header.classList.toggle("is-scrolled", window.scrollY > 48);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
   }
@@ -121,10 +213,161 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
       },
-      { threshold: 0.4 }
+      { threshold: 0.35 }
     );
     processSteps.forEach((el) => processObserver.observe(el));
   } else {
     processSteps.forEach((el) => el.classList.add("is-visible"));
   }
 });
+
+function initContactForm(form) {
+  const status = form.querySelector("#form-status");
+  const submitButton = form.querySelector('button[type="submit"]');
+
+  const rules = [
+    {
+      name: "nombre",
+      errorId: "error-nombre",
+      validate: (value) => value.trim().length >= 2,
+      message: "Indica tu nombre.",
+    },
+    {
+      name: "telefono",
+      errorId: "error-telefono",
+      validate: (value) => value.replace(/[^\d+]/g, "").length >= 9,
+      message: "Indica un teléfono válido.",
+    },
+    {
+      name: "consentimiento",
+      errorId: "error-consentimiento",
+      validate: (_value, field) => field.checked,
+      message: "Debes aceptar la política de privacidad.",
+    },
+  ];
+
+  const setStatus = (message, state) => {
+    if (!status) return;
+    status.textContent = message;
+    if (state) {
+      status.dataset.state = state;
+    } else {
+      delete status.dataset.state;
+    }
+  };
+
+  const showFieldError = (rule, field, message) => {
+    const target = form.querySelector(`#${rule.errorId}`);
+    if (target) target.textContent = message;
+    if (message) {
+      field.setAttribute("aria-invalid", "true");
+    } else {
+      field.removeAttribute("aria-invalid");
+    }
+  };
+
+  const validateField = (rule) => {
+    const field = form.elements[rule.name];
+    if (!field) return true;
+    const ok = rule.validate(field.value || "", field);
+    showFieldError(rule, field, ok ? "" : rule.message);
+    return ok;
+  };
+
+  rules.forEach((rule) => {
+    const field = form.elements[rule.name];
+    if (!field) return;
+    field.addEventListener("blur", () => validateField(rule));
+    field.addEventListener("input", () => {
+      if (field.getAttribute("aria-invalid") === "true") validateField(rule);
+    });
+  });
+
+  const sendViaWhatsApp = (data) => {
+    const lines = [
+      `Hola, soy ${data.nombre}.`,
+      `Teléfono: ${data.telefono}`,
+      data.ciudad && `Ciudad: ${data.ciudad}`,
+      data.servicio && `Necesito: ${data.servicio}`,
+      data.comentario && `Comentario: ${data.comentario}`,
+    ].filter(Boolean);
+
+    const message = encodeURIComponent(lines.join("\n"));
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`,
+      "_blank",
+      "noopener"
+    );
+    form.reset();
+    setStatus(
+      "Abrimos WhatsApp con tu solicitud. Envía el mensaje para completarla.",
+      "success"
+    );
+  };
+
+  const sendViaWeb3Forms = async (payload) => {
+    const response = await fetch(WEB3FORMS_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    const result = await response.json().catch(() => null);
+    return Boolean(response.ok && result && result.success);
+  };
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const invalidRules = rules.filter((rule) => !validateField(rule));
+    if (invalidRules.length) {
+      setStatus("Revisa los campos marcados.", "error");
+      const firstField = form.elements[invalidRules[0].name];
+      firstField?.focus();
+      return;
+    }
+
+    const data = Object.fromEntries(new FormData(form).entries());
+    trackEvent("submit_form");
+
+    if (!WEB3FORMS_ACCESS_KEY) {
+      sendViaWhatsApp(data);
+      return;
+    }
+
+    submitButton?.setAttribute("disabled", "disabled");
+    setStatus("Enviando…", null);
+
+    try {
+      const sent = await sendViaWeb3Forms({
+        ...data,
+        access_key: WEB3FORMS_ACCESS_KEY,
+      });
+      if (sent) {
+        form.reset();
+        rules.forEach((rule) => {
+          const field = form.elements[rule.name];
+          if (field) showFieldError(rule, field, "");
+        });
+        setStatus(
+          "Solicitud enviada. Te contestamos lo antes posible.",
+          "success"
+        );
+      } else {
+        setStatus(
+          "No hemos podido enviar la solicitud. Escríbenos por WhatsApp.",
+          "error"
+        );
+      }
+    } catch {
+      setStatus(
+        "Error de conexión. Inténtalo de nuevo o escríbenos por WhatsApp.",
+        "error"
+      );
+    } finally {
+      submitButton?.removeAttribute("disabled");
+    }
+  });
+}

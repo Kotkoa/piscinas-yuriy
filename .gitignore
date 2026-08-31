@@ -3,7 +3,11 @@
 *.pdf
 Website services and costs.md
 
-/docs
+# Internal design/competitor notes stay local; the operator runbooks ship with the repo
+# because LAUNCH-PLAN.md and CLAUDE.md point the owner and future agents at them.
+/docs/*
+!/docs/analytics-setup.md
+!/docs/forms-setup.md
 
 .DS_Store
 Pego y Alicante
