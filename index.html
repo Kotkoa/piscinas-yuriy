@@ -56,19 +56,31 @@
     <header class="site-header" id="site-header">
       <div class="container">
         <a class="logo" href="#top">Piscinas <span>Yuriy</span></a>
-        <ul class="site-nav">
+        <ul class="site-nav" id="site-nav">
           <li><a href="#servicios">Servicios</a></li>
           <li><a href="#galeria">Galería</a></li>
           <li><a href="#proceso">Cómo trabajamos</a></li>
-          <li><a href="#opiniones">Opiniones</a></li>
           <li><a href="#zona">Zona</a></li>
           <li><a href="#contacto">Contacto</a></li>
+          <li class="site-nav-cta">
+            <a class="btn btn-accent" href="#contacto">Solicitar presupuesto</a>
+          </li>
         </ul>
         <div class="header-actions">
           <a class="header-phone" href="tel:+34678948509">+34 678 948 509</a>
           <a class="btn btn-accent nav-cta" href="#contacto"
             >Solicitar presupuesto</a
           >
+          <button
+            class="nav-toggle"
+            id="nav-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="site-nav"
+            aria-label="Abrir menú"
+          >
+            <span></span><span></span><span></span>
+          </button>
         </div>
       </div>
     </header>
@@ -76,17 +88,28 @@
     <main id="top">
       <section id="hero">
         <div class="hero-photo">
-          <img
-            src="assets/photos/02_hero-piscina-jardin-atardecer.jpeg"
-            alt="Piscina terminada en un jardín al atardecer"
-            width="1024"
-            height="768"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-          />
+          <picture>
+            <source
+              type="image/webp"
+              sizes="100vw"
+              srcset="
+                assets/img/hero-piscina-jardin-atardecer-480.webp   480w,
+                assets/img/hero-piscina-jardin-atardecer-768.webp   768w,
+                assets/img/hero-piscina-jardin-atardecer-1024.webp 1024w
+              "
+            />
+            <img
+              src="assets/img/hero-piscina-jardin-atardecer-1024.jpg"
+              alt="Piscina de obra con terraza, tumbonas y zona de sombra en un jardín"
+              width="1024"
+              height="768"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
         </div>
-        <div class="container hero-content">
+        <div class="hero-content">
           <h1>Construcción de piscinas en Alicante y Valencia</h1>
           <p>Construcción, reparación y renovación de piscinas en la Costa Blanca.</p>
           <div class="hero-cta-row">
@@ -101,46 +124,132 @@
         <div class="container">
           <div class="section-header reveal">
             <span class="eyebrow">Qué hacemos</span>
-            <h2>Tres servicios principales</h2>
+            <h2>Nuestros servicios</h2>
           </div>
           <div class="services-grid">
             <article class="service-card reveal">
-              <!-- TODO(Track A): real photo of a built pool -->
-              <div class="photo-placeholder" data-photo="servicio-construccion">
-                Foto: construcción de piscinas
-              </div>
+              <picture>
+                <source
+                  type="image/webp"
+                  sizes="(min-width: 40rem) 45vw, 100vw"
+                  srcset="
+                    assets/img/servicio-construccion-gunitado-480.webp 480w,
+                    assets/img/servicio-construccion-gunitado-800.webp 800w
+                  "
+                />
+                <img
+                  src="assets/img/servicio-construccion-gunitado-800.jpg"
+                  alt="Operario gunitando el vaso de una piscina en obra"
+                  width="800"
+                  height="600"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
               <div class="service-card-body">
                 <h3>Construcción de piscinas</h3>
                 <p>
-                  Piscinas a medida, desde el proyecto hasta la puesta en
-                  marcha.
+                  Obra completa a medida: excavación, ferralla, gunitado,
+                  impermeabilización y revestimiento.
                 </p>
+                <ul class="service-list">
+                  <li>Construcción piscinas</li>
+                </ul>
               </div>
             </article>
             <article class="service-card reveal">
-              <!-- TODO(Track A): real photo of filtration/climate equipment -->
-              <div class="photo-placeholder" data-photo="servicio-filtracion">
-                Foto: filtración y climatización
-              </div>
+              <picture>
+                <source
+                  type="image/webp"
+                  sizes="(min-width: 40rem) 45vw, 100vw"
+                  srcset="
+                    assets/img/servicio-reforma-revestimiento-480.webp 480w,
+                    assets/img/servicio-reforma-revestimiento-800.webp 800w
+                  "
+                />
+                <img
+                  src="assets/img/servicio-reforma-revestimiento-800.jpg"
+                  alt="Vaso de piscina con revestimiento porcelánico nuevo tras una renovación"
+                  width="800"
+                  height="600"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
               <div class="service-card-body">
-                <h3>Instalación de sistemas de filtración y climatización</h3>
+                <h3>Reparación y renovación</h3>
                 <p>
-                  Filtración, cloración salina y climatización para disfrutar la
-                  piscina todo el año.
+                  Piscinas antiguas puestas a nuevo: fugas, impermeabilización y
+                  cambio de revestimiento.
                 </p>
+                <ul class="service-list">
+                  <li>Reparación y renovación de piscinas</li>
+                </ul>
               </div>
             </article>
             <article class="service-card reveal">
-              <!-- TODO(Track A): real photo of a renovation in progress -->
-              <div class="photo-placeholder" data-photo="servicio-reforma">
-                Foto: reforma y reparación
-              </div>
+              <picture>
+                <source
+                  type="image/webp"
+                  sizes="(min-width: 40rem) 45vw, 100vw"
+                  srcset="
+                    assets/img/servicio-fontaneria-tomas-480.webp 480w,
+                    assets/img/servicio-fontaneria-tomas-800.webp 800w
+                  "
+                />
+                <img
+                  src="assets/img/servicio-fontaneria-tomas-800.jpg"
+                  alt="Fontanería de piscina con múltiples tomas antes del hormigonado"
+                  width="800"
+                  height="600"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
               <div class="service-card-body">
-                <h3>Reforma y reparación</h3>
+                <h3>Fontanería, filtración y tratamiento del agua</h3>
                 <p>
-                  Rehabilitación integral, reparación de fugas y actualización
-                  de piscinas existentes.
+                  Circuito hidráulico, sala de bombas y agua equilibrada durante
+                  toda la temporada.
                 </p>
+                <ul class="service-list">
+                  <li>Instalación fontanería de piscinas</li>
+                  <li>Instalación filtros y bombas</li>
+                  <li>Equipos de Cloradores salinos y control de PH</li>
+                </ul>
+              </div>
+            </article>
+            <article class="service-card reveal">
+              <picture>
+                <source
+                  type="image/webp"
+                  sizes="(min-width: 40rem) 45vw, 100vw"
+                  srcset="
+                    assets/img/servicio-clima-cuadro-electrico-480.webp 480w,
+                    assets/img/servicio-clima-cuadro-electrico-800.webp 800w
+                  "
+                />
+                <img
+                  src="assets/img/servicio-clima-cuadro-electrico-800.jpg"
+                  alt="Filtro, bomba y cuadro eléctrico instalados en la sala técnica de una piscina"
+                  width="800"
+                  height="600"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
+              <div class="service-card-body">
+                <h3>Climatización, electricidad e iluminación</h3>
+                <p>
+                  Temporada de baño más larga, instalación eléctrica segura y
+                  luz bien colocada.
+                </p>
+                <ul class="service-list">
+                  <li>Bombas de calor</li>
+                  <li>Instalación electricidad de piscinas</li>
+                  <li>Cuadros eléctricos</li>
+                  <li>Iluminación de piscinas</li>
+                </ul>
               </div>
             </article>
           </div>
@@ -151,27 +260,42 @@
         <div class="container">
           <div class="trust-layout">
             <div class="trust-photo reveal">
-              <!-- TODO(Track A): real photo of the foreman/team on site -->
-              <div class="photo-placeholder" data-photo="equipo-piscinas-yuriy">
-                Foto: nuestro equipo en obra
-              </div>
+              <picture>
+                <source
+                  type="image/webp"
+                  sizes="(min-width: 50rem) 45vw, 100vw"
+                  srcset="
+                    assets/img/equipo-furgoneta-rotulada-480.webp 480w,
+                    assets/img/equipo-furgoneta-rotulada-800.webp 800w
+                  "
+                />
+                <img
+                  src="assets/img/equipo-furgoneta-rotulada-800.jpg"
+                  alt="Furgoneta rotulada de Piscinas Yuriy S.L. con los servicios de construcción, reparación, climatización e instalación de piscinas"
+                  width="800"
+                  height="1000"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
             </div>
             <div class="reveal">
               <span class="eyebrow">Por qué confiar en nosotros</span>
-              <h2>Un equipo propio, sin subcontratas</h2>
+              <h2>Obra completa con equipo propio</h2>
               <ul class="trust-facts">
                 <li>
-                  Equipo propio: la misma cuadrilla del presupuesto hasta la
-                  entrega.
+                  Empresa registrada: Piscinas Yuriy, S.L., con vehículo y
+                  equipo propios.
                 </li>
                 <li>
-                  Presupuesto detallado y sin compromiso, sin sorpresas en la
-                  factura final.
+                  Todas las fases con la misma cuadrilla: excavación, gunitado,
+                  revestimiento, fontanería y sala de bombas.
                 </li>
-                <li>Garantía por escrito en obra y en instalaciones.</li>
                 <li>
-                  Servicio en Pego, Alicante, Valencia y toda la Costa Blanca.
+                  Instalaciones técnicas completas: filtración, cloración
+                  salina, control de pH, bombas de calor y cuadros eléctricos.
                 </li>
+                <li>Visita, medición y presupuesto sin compromiso.</li>
               </ul>
             </div>
           </div>
@@ -184,73 +308,283 @@
             <span class="eyebrow">Trabajos realizados</span>
             <h2>Galería de proyectos</h2>
           </div>
-          <!-- TODO(Track A): replace each card with a real project photo (or before/after pair) once the client supplies images. Target 6-12 projects. -->
+          <!-- TODO(Track A): add the town to each caption once the client confirms it per project -->
           <div class="gallery-grid">
             <article class="gallery-card reveal">
-              <div class="gallery-pair">
-                <div class="photo-placeholder" data-photo="proyecto-1-antes">
-                  Antes
-                </div>
-                <div class="photo-placeholder" data-photo="proyecto-1-despues">
-                  Después
-                </div>
+              <div class="gallery-single">
+                <picture>
+                  <source
+                    type="image/webp"
+                    sizes="(min-width: 60rem) 30vw, (min-width: 40rem) 45vw, 100vw"
+                    srcset="
+                      assets/img/galeria-01-piscina-agua-turquesa-480.webp 480w,
+                      assets/img/galeria-01-piscina-agua-turquesa-681.webp 681w
+                    "
+                  />
+                  <img
+                    src="assets/img/galeria-01-piscina-agua-turquesa-681.jpg"
+                    alt="Piscina terminada con agua turquesa y playa de piedra clara"
+                    width="681"
+                    height="511"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
               </div>
-              <p class="gallery-caption">
-                <span class="location">Pego</span> · Reforma de piscina
-              </p>
+              <p class="gallery-caption">Construcción de piscina</p>
             </article>
             <article class="gallery-card reveal">
               <div class="gallery-single">
-                <div class="photo-placeholder" data-photo="proyecto-2">
-                  Foto del proyecto
-                </div>
+                <picture>
+                  <source
+                    type="image/webp"
+                    sizes="(min-width: 60rem) 30vw, (min-width: 40rem) 45vw, 100vw"
+                    srcset="
+                      assets/img/galeria-02-piscina-gresite-azul-palmeras-480.webp 480w,
+                      assets/img/galeria-02-piscina-gresite-azul-palmeras-800.webp 800w
+                    "
+                  />
+                  <img
+                    src="assets/img/galeria-02-piscina-gresite-azul-palmeras-800.jpg"
+                    alt="Piscina con gresite azul junto a palmeras"
+                    width="800"
+                    height="600"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
               </div>
-              <p class="gallery-caption">
-                <span class="location">Dénia</span> · Construcción de piscina
-              </p>
+              <p class="gallery-caption">Construcción de piscina</p>
             </article>
             <article class="gallery-card reveal">
               <div class="gallery-single">
-                <div class="photo-placeholder" data-photo="proyecto-3">
-                  Foto del proyecto
-                </div>
+                <picture>
+                  <source
+                    type="image/webp"
+                    sizes="(min-width: 60rem) 30vw, (min-width: 40rem) 45vw, 100vw"
+                    srcset="
+                      assets/img/galeria-03-cascada-lamina-agua-480.webp 480w,
+                      assets/img/galeria-03-cascada-lamina-agua-800.webp 800w
+                    "
+                  />
+                  <img
+                    src="assets/img/galeria-03-cascada-lamina-agua-800.jpg"
+                    alt="Cascada de acero inoxidable vertiendo agua en la piscina"
+                    width="800"
+                    height="600"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
               </div>
-              <p class="gallery-caption">
-                <span class="location">Jávea</span> · Climatización
-              </p>
-            </article>
-            <article class="gallery-card reveal">
-              <div class="gallery-pair">
-                <div class="photo-placeholder" data-photo="proyecto-4-antes">
-                  Antes
-                </div>
-                <div class="photo-placeholder" data-photo="proyecto-4-despues">
-                  Después
-                </div>
-              </div>
-              <p class="gallery-caption">
-                <span class="location">Oliva</span> · Reforma y reparación
-              </p>
-            </article>
-            <article class="gallery-card reveal">
-              <div class="gallery-single">
-                <div class="photo-placeholder" data-photo="proyecto-5">
-                  Foto del proyecto
-                </div>
-              </div>
-              <p class="gallery-caption">
-                <span class="location">Gandía</span> · Construcción de piscina
-              </p>
+              <p class="gallery-caption">Cascada y lámina de agua</p>
             </article>
             <article class="gallery-card reveal">
               <div class="gallery-single">
-                <div class="photo-placeholder" data-photo="proyecto-6">
-                  Foto del proyecto
-                </div>
+                <picture>
+                  <source
+                    type="image/webp"
+                    sizes="(min-width: 60rem) 30vw, (min-width: 40rem) 45vw, 100vw"
+                    srcset="
+                      assets/img/galeria-04-escalera-curva-iluminada-480.webp 480w,
+                      assets/img/galeria-04-escalera-curva-iluminada-645.webp 645w
+                    "
+                  />
+                  <img
+                    src="assets/img/galeria-04-escalera-curva-iluminada-645.jpg"
+                    alt="Escalera curva de piscina con gresite oscuro e iluminación LED"
+                    width="645"
+                    height="484"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
               </div>
-              <p class="gallery-caption">
-                <span class="location">Calpe</span> · Instalación de filtración
-              </p>
+              <p class="gallery-caption">Escalera curva e iluminación</p>
+            </article>
+            <article class="gallery-card reveal">
+              <div class="gallery-single">
+                <picture>
+                  <source
+                    type="image/webp"
+                    sizes="(min-width: 60rem) 30vw, (min-width: 40rem) 45vw, 100vw"
+                    srcset="
+                      assets/img/galeria-05-piscina-escalera-lateral-480.webp 480w,
+                      assets/img/galeria-05-piscina-escalera-lateral-800.webp 800w
+                    "
+                  />
+                  <img
+                    src="assets/img/galeria-05-piscina-escalera-lateral-800.jpg"
+                    alt="Piscina rectangular con escalera lateral de obra"
+                    width="800"
+                    height="600"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <p class="gallery-caption">Construcción de piscina</p>
+            </article>
+            <article class="gallery-card reveal">
+              <div class="gallery-single">
+                <picture>
+                  <source
+                    type="image/webp"
+                    sizes="(min-width: 60rem) 30vw, (min-width: 40rem) 45vw, 100vw"
+                    srcset="
+                      assets/img/galeria-06-escalera-obra-gresite-480.webp 480w,
+                      assets/img/galeria-06-escalera-obra-gresite-800.webp 800w
+                    "
+                  />
+                  <img
+                    src="assets/img/galeria-06-escalera-obra-gresite-800.jpg"
+                    alt="Escalera de obra revestida con gresite azul oscuro"
+                    width="800"
+                    height="600"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <p class="gallery-caption">Escalera de obra revestida</p>
+            </article>
+            <article class="gallery-card reveal">
+              <div class="gallery-single">
+                <picture>
+                  <source
+                    type="image/webp"
+                    sizes="(min-width: 60rem) 30vw, (min-width: 40rem) 45vw, 100vw"
+                    srcset="
+                      assets/img/galeria-07-escalones-gresite-azul-480.webp 480w,
+                      assets/img/galeria-07-escalones-gresite-azul-800.webp 800w
+                    "
+                  />
+                  <img
+                    src="assets/img/galeria-07-escalones-gresite-azul-800.jpg"
+                    alt="Escalones de acceso revestidos con gresite azul"
+                    width="800"
+                    height="600"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <p class="gallery-caption">Escalones de acceso</p>
+            </article>
+            <article class="gallery-card reveal">
+              <div class="gallery-single">
+                <picture>
+                  <source
+                    type="image/webp"
+                    sizes="(min-width: 60rem) 30vw, (min-width: 40rem) 45vw, 100vw"
+                    srcset="
+                      assets/img/galeria-08-piscina-gresite-gris-480.webp 480w,
+                      assets/img/galeria-08-piscina-gresite-gris-800.webp 800w
+                    "
+                  />
+                  <img
+                    src="assets/img/galeria-08-piscina-gresite-gris-800.jpg"
+                    alt="Piscina revestida con gresite gris y borde de piedra"
+                    width="800"
+                    height="600"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <p class="gallery-caption">Revestimiento de piscina</p>
+            </article>
+            <article class="gallery-card reveal">
+              <div class="gallery-single">
+                <picture>
+                  <source
+                    type="image/webp"
+                    sizes="(min-width: 60rem) 30vw, (min-width: 40rem) 45vw, 100vw"
+                    srcset="
+                      assets/img/galeria-09-gresite-gris-escalera-480.webp 480w,
+                      assets/img/galeria-09-gresite-gris-escalera-800.webp 800w
+                    "
+                  />
+                  <img
+                    src="assets/img/galeria-09-gresite-gris-escalera-800.jpg"
+                    alt="Piscina en gresite gris con escalera y zona de playa"
+                    width="800"
+                    height="600"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <p class="gallery-caption">Revestimiento y escalera</p>
+            </article>
+            <article class="gallery-card reveal">
+              <div class="gallery-single">
+                <picture>
+                  <source
+                    type="image/webp"
+                    sizes="(min-width: 60rem) 30vw, (min-width: 40rem) 45vw, 100vw"
+                    srcset="
+                      assets/img/galeria-10-piscina-interior-cubierta-480.webp 480w,
+                      assets/img/galeria-10-piscina-interior-cubierta-800.webp 800w
+                    "
+                  />
+                  <img
+                    src="assets/img/galeria-10-piscina-interior-cubierta-800.jpg"
+                    alt="Piscina interior cubierta con revestimiento gris"
+                    width="800"
+                    height="600"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <p class="gallery-caption">Piscina interior cubierta</p>
+            </article>
+            <article class="gallery-card reveal">
+              <div class="gallery-single">
+                <picture>
+                  <source
+                    type="image/webp"
+                    sizes="(min-width: 60rem) 30vw, (min-width: 40rem) 45vw, 100vw"
+                    srcset="
+                      assets/img/galeria-11-gresite-claro-vaso-480.webp 480w,
+                      assets/img/galeria-11-gresite-claro-vaso-800.webp 800w
+                    "
+                  />
+                  <img
+                    src="assets/img/galeria-11-gresite-claro-vaso-800.jpg"
+                    alt="Vaso de piscina revestido con gresite claro"
+                    width="800"
+                    height="600"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <p class="gallery-caption">Revestimiento en gresite claro</p>
+            </article>
+            <article class="gallery-card reveal">
+              <div class="gallery-single">
+                <picture>
+                  <source
+                    type="image/webp"
+                    sizes="(min-width: 60rem) 30vw, (min-width: 40rem) 45vw, 100vw"
+                    srcset="
+                      assets/img/galeria-12-mosaico-plata-480.webp 480w,
+                      assets/img/galeria-12-mosaico-plata-800.webp 800w
+                    "
+                  />
+                  <img
+                    src="assets/img/galeria-12-mosaico-plata-800.jpg"
+                    alt="Detalle de mosaico plateado en la pared de una piscina"
+                    width="800"
+                    height="600"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <p class="gallery-caption">Mosaico decorativo</p>
             </article>
           </div>
         </div>
@@ -334,23 +668,6 @@
                 <div class="process-progress"></div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="opiniones" class="section-reviews">
-        <div class="container">
-          <div class="section-header reveal">
-            <span class="eyebrow">Opiniones</span>
-            <h2>Lo que dicen nuestros clientes</h2>
-          </div>
-          <!-- TODO(Track F): replace with real named Google reviews (name, rating, quote) once available -->
-          <div class="reviews-grid">
-            <article class="review-card reveal">
-              <p class="review-stars">★★★★★</p>
-              <p>Pendiente de reseñas reales de Google.</p>
-              <p class="review-author">— Pendiente</p>
-            </article>
           </div>
         </div>
       </section>

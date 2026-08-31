@@ -63,8 +63,8 @@ Reasoning and trade-offs for each of these are in `ADR.md`; only the outcome is 
 - **Analytics:** GA4 + Consent Mode v2, `denied` by default, Spanish cookie banner; events
   `click_whatsapp`, `click_call`, `submit_form`. (ADR-008)
 - **Domain:** `piscinasyuriy.es` — **registered and live** since 2026-08-31, served by GitHub Pages
-  over the apex, `www` redirects to it. Registrar and expiry date: _to record_. Auto-renew must be
-  on. (ADR-009, ADR-014)
+  over the apex, `www` redirects to it. Registered for **5 years: expires 2031-08-31**; auto-renew
+  must stay on. Registrar: _to record_. (ADR-009, ADR-014)
 - **Project name:** `piscinas-yuriy` everywhere — repo, folder, document titles. (ADR-012)
 - **Site architecture:** one page for v1; expansion gated on keyword data. (ADR-010)
 - **Access:** the client gets repo collaborator access — pending their GitHub username/email.
