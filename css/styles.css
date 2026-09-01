@@ -28,7 +28,8 @@
   --text-on-dark: #eafbff;
   --text-muted-on-dark: var(--tone-300);
 
-  --font-base: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-base:
+    'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --max-width: 1140px;
   --nav-height: 68px;
   --radius-pill: 999px;
@@ -132,7 +133,10 @@ header.site-header {
   justify-content: space-between;
   background: transparent;
   border-bottom: 1px solid transparent;
-  transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    backdrop-filter 0.3s ease;
 }
 
 header.site-header.is-scrolled,
@@ -189,7 +193,10 @@ header.site-header .container {
   opacity: 0;
   visibility: hidden;
   transform: translateY(-0.5rem);
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s ease;
 }
 
 .site-nav.is-open {
@@ -209,7 +216,9 @@ header.site-header .container {
   font-weight: 600;
   padding: 0.375rem 0.25rem;
   border-radius: 0.5rem;
-  transition: color 0.2s ease, background 0.2s ease;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
 }
 
 .site-nav a:hover,
@@ -293,18 +302,20 @@ header.site-header .container {
   height: 2px;
   border-radius: 2px;
   background: currentColor;
-  transition: transform 0.25s ease, opacity 0.2s ease;
+  transition:
+    transform 0.25s ease,
+    opacity 0.2s ease;
 }
 
-.nav-toggle[aria-expanded="true"] span:nth-child(1) {
+.nav-toggle[aria-expanded='true'] span:nth-child(1) {
   transform: translateY(7px) rotate(45deg);
 }
 
-.nav-toggle[aria-expanded="true"] span:nth-child(2) {
+.nav-toggle[aria-expanded='true'] span:nth-child(2) {
   opacity: 0;
 }
 
-.nav-toggle[aria-expanded="true"] span:nth-child(3) {
+.nav-toggle[aria-expanded='true'] span:nth-child(3) {
   transform: translateY(-7px) rotate(-45deg);
 }
 
@@ -375,7 +386,11 @@ header.site-header .container {
   font-size: 0.9375rem;
   white-space: nowrap;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .header-actions .btn {
@@ -393,8 +408,6 @@ header.site-header .container {
 .nav-cta.is-hidden {
   display: none;
 }
-
-
 
 .btn:hover {
   transform: translateY(-1px);
@@ -456,7 +469,6 @@ section {
   color: var(--text-on-dark);
 }
 
-
 .section-area {
   background: var(--tone-900);
   color: var(--text-on-dark);
@@ -511,27 +523,14 @@ section {
 }
 
 .hero-photo::after {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
-  /* Two scrims sized for legibility, measured against the photo's own luminance:
-     bottom-heavy for the hero copy, a thin top band for the transparent header.
-     Text over a photograph is invisible to automated contrast audits, so these
-     values are verified by sampling rendered pixels (LAUNCH-PLAN Phase 9). */
-  background:
-    linear-gradient(
-      to top,
-      rgba(3, 4, 94, 0.9) 0%,
-      rgba(3, 4, 94, 0.82) 34%,
-      rgba(3, 4, 94, 0.62) 62%,
-      rgba(3, 4, 94, 0.2) 100%
-    ),
-    linear-gradient(
-      to bottom,
-      rgba(3, 4, 94, 0.8) 0%,
-      rgba(3, 4, 94, 0.35) 12%,
-      rgba(3, 4, 94, 0) 24%
-    );
+  background: linear-gradient(
+    120deg,
+    rgba(0, 119, 182, 0.72),
+    rgba(0, 119, 182, 0.2)
+  );
 }
 
 .hero-content {
@@ -596,7 +595,9 @@ section {
   border: 1px solid var(--tone-200);
   border-radius: var(--radius-card);
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .service-card:hover {
@@ -627,7 +628,7 @@ section {
 }
 
 .service-list li::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   top: 0.55em;
@@ -682,7 +683,7 @@ section {
 }
 
 .trust-facts li::before {
-  content: "✓";
+  content: '✓';
   position: absolute;
   left: 0;
   color: var(--tone-500);
@@ -701,7 +702,9 @@ section {
   border-radius: var(--radius-card);
   overflow: hidden;
   background: var(--tone-50);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .gallery-card:hover {
@@ -719,7 +722,6 @@ section {
   width: 100%;
   height: 100%;
 }
-
 
 .gallery-single picture {
   display: block;
@@ -747,7 +749,7 @@ section {
 }
 
 .gallery-location::before {
-  content: "📍 ";
+  content: '📍 ';
 }
 
 /* ---------- FAQ ---------- */
@@ -1081,8 +1083,8 @@ footer.site-footer {
 
 .contact-form input:user-invalid,
 .contact-form textarea:user-invalid,
-.contact-form input[aria-invalid="true"],
-.contact-form textarea[aria-invalid="true"] {
+.contact-form input[aria-invalid='true'],
+.contact-form textarea[aria-invalid='true'] {
   border-color: #c0392b;
 }
 
@@ -1125,11 +1127,11 @@ footer.site-footer {
   min-height: 1.25rem;
 }
 
-.form-status[data-state="success"] {
+.form-status[data-state='success'] {
   color: #1e7d5a;
 }
 
-.form-status[data-state="error"] {
+.form-status[data-state='error'] {
   color: #c0392b;
 }
 
