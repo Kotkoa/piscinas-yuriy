@@ -56,6 +56,9 @@ html.has-cookie-banner {
 html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--nav-height) + 0.5rem);
+  /* Stop Safari from inflating text in landscape, which reflows the layout */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -884,9 +887,22 @@ details.faq-item summary {
 .contact-form select,
 .contact-form textarea {
   font: inherit;
+  /* iOS Safari zooms the whole page when a focused control is under 16px,
+     which then pushes the layout off-screen. 1rem is the floor here. */
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.4;
+  width: 100%;
+  max-width: 100%;
   padding: 0.625rem 0.875rem;
   border: 1px solid var(--tone-300);
   border-radius: 0.625rem;
+  background: #fff;
+  color: var(--color-text);
+}
+
+.contact-form textarea {
+  resize: vertical;
 }
 
 .contact-direct {
@@ -1071,7 +1087,7 @@ footer.site-footer {
 }
 
 .field-error {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: #c0392b;
   min-height: 1em;
@@ -1082,14 +1098,16 @@ footer.site-footer {
   grid-template-columns: auto 1fr;
   gap: 0.625rem;
   align-items: start;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.45;
   font-weight: 500;
 }
 
 .consent-field input {
-  margin-top: 0.2rem;
-  width: 1.125rem;
-  height: 1.125rem;
+  margin-top: 0.15rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  min-width: 1.25rem;
 }
 
 .form-honeypot {

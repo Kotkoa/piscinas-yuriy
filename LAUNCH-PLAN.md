@@ -406,6 +406,14 @@ Order is mandatory: privacy page → banner → GA4 → events (ADR-007, ADR-008
       subresources, no references to missing files. The only non-200 responses are the two
       `rel="preconnect"` origins (`fonts.googleapis.com`, `fonts.gstatic.com`), which are
       connection hints and are not fetched as resources.
+- [x] **[AG]** iOS Safari form defect found on a real iPhone 2026-09-01 and fixed: the contact
+      inputs inherited `0.875rem` (14px), and Safari force-zooms the page whenever a focused control
+      is under 16px — after tapping a field the layout was magnified and ran off-screen. Form
+      controls now carry an explicit `font-size: 1rem` floor plus `width: 100%`, `html` gets
+      `text-size-adjust: 100%` so landscape cannot inflate text either, the consent text went from
+      12px to 13px, field errors from 11px to 12px, and the consent checkbox from 18px to 20px.
+      *Verified at 320/360/390 px: every control reports 16px, zero page overflow, no element in
+      `#contacto` extends past the viewport.*
 - [ ] **[A]** Real-device check: iPhone Safari + Android Chrome — hero legibility, tap targets,
       WhatsApp handoff, form keyboard behaviour.
 - [ ] **[A]** Spanish native proofread of every visible string.
