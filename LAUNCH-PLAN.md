@@ -275,15 +275,17 @@ before/after. Both return in Phase 11 as soon as their content exists.
 
 ## Phase 6 — Contact form
 
-- [ ] **[A]** Create the Web3Forms access key against `piscinasyuriy@gmail.com` and paste it into
-      `WEB3FORMS_ACCESS_KEY` in `js/main.js`. Runbook: `docs/forms-setup.md`.
+- [x] **[A]** Web3Forms access key created and pasted into `WEB3FORMS_ACCESS_KEY` in `js/main.js`
+      (2026-08-31). Runbook: `docs/forms-setup.md`.
 - [x] **[AG]** Form implemented: `nombre`, `teléfono`, `ciudad`, `qué necesitas`, `comentario`,
       consent checkbox, hidden `subject`/`from_name`, `botcheck` honeypot, JSON `fetch` to
       `https://api.web3forms.com/submit`, inline success/error states, no page navigation, submit
-      button disabled while sending. While the access key is empty the same validated form delivers
-      through the WhatsApp deep link instead of silently failing. hCaptcha is documented as the
-      free zero-config upgrade in `docs/forms-setup.md`, to be enabled with the privacy-page update
-      if spam appears.
+      button disabled while sending. Real end-to-end submission verified 2026-08-31 through the
+      rendered form: `HTTP 200`, `{"success": true, "message": "Form submitted successfully!"}`,
+      inline success shown, form reset. Network-failure path verified with Chrome offline emulation:
+      inline `Error de conexión…`, typed values kept, button re-enabled. hCaptcha is documented as
+      the free zero-config upgrade in `docs/forms-setup.md`, to be enabled together with the
+      privacy-page update if spam appears.
       *Still to accept on the client's side: a real test submission arriving in the inbox. Verified
       now: `grep -c "piscinasyuriy@gmail.com" index.html` = 0.*
 - [x] **[AG]** WhatsApp stays the primary CTA (first button in the contact block, `btn-whatsapp`);

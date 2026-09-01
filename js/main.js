@@ -1,8 +1,9 @@
 const WHATSAPP_NUMBER = "34678948509";
 
-// Paste the Web3Forms access key here (public by design, safe in a public repo).
-// While it stays empty the form keeps working through the WhatsApp deep link.
-const WEB3FORMS_ACCESS_KEY = "";
+// Web3Forms access key. Public by design: it can only cause mail to be sent to the
+// account's own inbox, so it is safe in this public repo (ADR-003, ADR-007).
+// Empty string = the form falls back to the WhatsApp deep link (ADR-017).
+const WEB3FORMS_ACCESS_KEY = "c4a80025-1df4-4581-a7e4-434b84543608";
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 
 // Paste the GA4 measurement ID here (public by design). Empty = analytics disabled.

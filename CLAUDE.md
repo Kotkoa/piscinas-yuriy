@@ -129,10 +129,13 @@ embed, contact block with a validated Web3Forms-ready form, cookie consent banne
 Mode v2, `404.html`, `legal/aviso-legal.html`, `legal/privacidad.html`, `assets/og-image.jpg`, one
 JSON-LD `@graph`, `sitemap.xml` and `llms.txt`.
 
-Two constants in `js/main.js` are the only things standing between this and a working production
-funnel: `WEB3FORMS_ACCESS_KEY` (empty → the form delivers through the WhatsApp deep link;
-`docs/forms-setup.md`) and `GA_MEASUREMENT_ID` (empty → no analytics script is ever requested;
-`docs/analytics-setup.md`).
+The contact form is **live**: `WEB3FORMS_ACCESS_KEY` in `js/main.js` holds the real Web3Forms key
+and a real submission was verified end to end on 2026-08-31 (`HTTP 200`, `success: true`).
+Delivery target is currently `piscinasyuriy@gmail.com`; see `docs/forms-setup.md`.
+
+Analytics is still dark by choice: `GA_MEASUREMENT_ID` is empty, so no `gtag.js` is ever requested
+even after a visitor accepts the cookie banner. Paste the GA4 ID to activate it —
+`docs/analytics-setup.md`.
 
 Client photos: the 42 originals live in git history only (commit `1910c9d`), recoverable with
 `git show 1910c9d:assets/photos/<file>`; the published derivatives are in `assets/img/`. The

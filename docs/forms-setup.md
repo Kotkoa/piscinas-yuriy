@@ -6,39 +6,39 @@ Verified against the official Web3Forms documentation on 2026-08-31.
 Decision context: `ADR-006` (WhatsApp is the primary channel, the client's email never appears in
 `index.html`) and `ADR-007` (Web3Forms, no backend, key is public by design).
 
-## 1. Current behaviour without a key
+## 1. Current state — active
 
-`js/main.js` holds one constant:
-
-```js
-const WEB3FORMS_ACCESS_KEY = "";
-```
-
-While it is empty the form is fully functional but delivers through the WhatsApp deep link: it
-validates the fields, requires the privacy consent checkbox, then opens WhatsApp pre-filled with the
-enquiry. Nothing is silently dropped and no fake success message is shown.
-
-Pasting a real key switches the same form to email delivery via `fetch`, with inline success and
-error states. No other file changes are needed.
-
-## 2. Create the access key
-
-1. Open <https://web3forms.com/> and enter `piscinasyuriy@gmail.com`.
-2. Confirm the verification email that arrives at that address.
-3. Copy the access key (a UUID) from <https://app.web3forms.com/>.
-4. Paste it into `js/main.js`:
+The access key is set and email delivery is **live**:
 
 ```js
-const WEB3FORMS_ACCESS_KEY = "00000000-0000-0000-0000-000000000000";
+const WEB3FORMS_ACCESS_KEY = "c4a80025-1df4-4581-a7e4-434b84543608";
 ```
 
-5. Bump the `?v=` query on the `js/main.js` tag in `index.html` so the GitHub Pages cache cannot
+Verified 2026-08-31 with a real submission through the rendered form: `HTTP 200`,
+`{"success": true, "message": "Form submitted successfully!"}`, inline Spanish success message
+shown, form reset, submit button disabled during the request and re-enabled afterwards. Only the
+arrival of that test mail in the inbox is left for the owner to confirm.
+
+The key is public by design — it can only cause email to be sent *to* the account's own inbox, it
+grants no account access and no read access to past submissions. Committing it to this public repo
+is expected (`ADR-003`, `ADR-007`); it is not a secret and does not belong in a `.env` file, which
+a static site served by GitHub Pages could not read anyway.
+
+### If the key is ever emptied or rotated
+
+With `WEB3FORMS_ACCESS_KEY = ""` the same validated form falls back to the WhatsApp deep link: it
+still validates, still requires the consent checkbox, and opens WhatsApp pre-filled instead of
+silently failing (`ADR-017`). To rotate:
+
+1. Create the new key at <https://app.web3forms.com/> against the destination mailbox.
+2. Replace the constant in `js/main.js` — it appears exactly once.
+3. Bump the `?v=` query on the `js/main.js` tag in `index.html` so the GitHub Pages cache cannot
    serve the previous file, then commit and push.
 
-The key is public by design — it can only cause email to be sent *to* that inbox, it grants no
-account access. Committing it to this public repo is expected (`ADR-003`).
+If the destination address changes to a domain mailbox (for example
+`presupuestos@piscinasyuriy.es`), a **new** key is required: one key maps to exactly one recipient.
 
-## 3. What the form sends
+## 2. What the form sends
 
 `POST https://api.web3forms.com/submit` with `Content-Type: application/json`.
 
@@ -55,7 +55,7 @@ Success is `HTTP 200` with `{"success": true, ...}`; the handler shows an inline
 message and resets the form. Any other outcome (`400`, `429`, network failure) shows an inline error
 that points the visitor to WhatsApp. The page never navigates away.
 
-## 4. Spam protection
+## 3. Spam protection
 
 The honeypot (`botcheck`) is active and needs no configuration. Web3Forms marks the honeypot as
 deprecated in favour of a captcha, so if spam appears:
@@ -71,7 +71,7 @@ deprecated in favour of a captcha, so if spam appears:
 hCaptcha is preferred over Google reCAPTCHA here because it is free on this tier and does not
 profile users across sites. Cloudflare Turnstile and reCAPTCHA v3 are paid Web3Forms features.
 
-## 5. Verification after activation
+## 4. Verification
 
 1. Submit a real enquiry from a phone on mobile data.
 2. Confirm the email arrives at `piscinasyuriy@gmail.com` and that replying to it reaches the
@@ -81,7 +81,7 @@ profile users across sites. Cloudflare Turnstile and reCAPTCHA v3 are paid Web3F
 4. Confirm the client's email address still appears nowhere in `index.html`
    (`grep -c "piscinasyuriy@gmail.com" index.html` must return `0`).
 
-## 6. Limits
+## 5. Limits
 
 Web3Forms does not publish a free-tier submission quota; it returns `HTTP 429`
 (`"Too many requests. Please try later!"`) when rate-limited. File attachments, `ccemail`, webhooks,
