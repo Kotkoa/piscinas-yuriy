@@ -90,18 +90,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const banner = document.querySelector("#cookie-banner");
   if (banner && !storedConsent) {
+    // Space is already reserved by the inline head script via .has-cookie-banner
     banner.hidden = false;
-    const setBannerOffset = (px) =>
-      document.documentElement.style.setProperty("--cookie-banner-h", px);
-    const measureBanner = () => setBannerOffset(`${banner.offsetHeight}px`);
-    measureBanner();
-    window.addEventListener("resize", measureBanner);
     const settle = (choice) => {
       storeConsent(choice);
       if (choice === "granted") grantConsent();
       banner.hidden = true;
-      window.removeEventListener("resize", measureBanner);
-      setBannerOffset("0px");
+      document.documentElement.classList.remove("has-cookie-banner");
     };
     banner
       .querySelector("#cookie-accept")
@@ -109,6 +104,8 @@ document.addEventListener("DOMContentLoaded", () => {
     banner
       .querySelector("#cookie-reject")
       ?.addEventListener("click", () => settle("denied"));
+  } else {
+    document.documentElement.classList.remove("has-cookie-banner");
   }
 
   document.querySelectorAll(".js-whatsapp-link").forEach((link) => {

@@ -10,27 +10,48 @@ water treatment, heating, electrical work, lighting) are named service blocks
 inside that offer, executed by the company's own crew.
 
 ## Services (4 blocks)
-- Construcción de piscinas — full masonry build: excavation, rebar, gunite,
-  waterproofing, tiling.
-- Reparación y renovación — leak repair, waterproofing, replacement of gresite
-  or porcelain lining on existing pools.
-- Fontanería, filtración y tratamiento del agua — hydraulic circuit, filters and
-  pumps, salt chlorination, pH control.
-- Climatización, electricidad e iluminación — heat pumps, pool electrical
-  installation, electrical panels, pool lighting.
+- [Construcción de piscinas](https://piscinasyuriy.es/#servicios): full masonry
+  build — excavation, rebar, gunite, waterproofing, tiling.
+- [Reparación y renovación](https://piscinasyuriy.es/#servicios): leak repair,
+  waterproofing, replacement of gresite or porcelain lining on existing pools.
+- [Fontanería, filtración y tratamiento del agua](https://piscinasyuriy.es/#servicios):
+  hydraulic circuit, filters and pumps, salt chlorination, pH control.
+- [Climatización, electricidad e iluminación](https://piscinasyuriy.es/#servicios):
+  heat pumps, pool electrical installation, electrical panels, pool lighting.
+
+## Pages
+- [Inicio](https://piscinasyuriy.es/): single-page site with all service blocks.
+- [Galería de proyectos](https://piscinasyuriy.es/#galeria): 12 completed works,
+  each labelled with the type of work and the town.
+- [Cómo trabajamos](https://piscinasyuriy.es/#proceso): the 4-step process —
+  consulta, visita y medición, presupuesto, ejecución y entrega.
+- [Zona de trabajo](https://piscinasyuriy.es/#zona): service corridor and map.
+- [Preguntas frecuentes](https://piscinasyuriy.es/#preguntas-frecuentes): cost
+  drivers, materials, typical build time, common construction mistakes.
+- [Contacto](https://piscinasyuriy.es/#contacto): WhatsApp, phone and the quote
+  request form.
+- [Aviso legal](https://piscinasyuriy.es/legal/aviso-legal.html): company
+  identity under LSSI-CE art. 10.
+- [Política de privacidad y cookies](https://piscinasyuriy.es/legal/privacidad.html):
+  GDPR/LOPDGDD notice and the cookie policy.
 
 ## Contact
-- Phone / WhatsApp: +34 678 948 509
-- WhatsApp is the primary contact channel; a contact form is the secondary one.
+- WhatsApp (primary channel): [wa.me/34678948509](https://wa.me/34678948509)
+- Phone: +34 678 948 509
+- Quote form: [Pide tu presupuesto](https://piscinasyuriy.es/#contacto)
 - Address: Calle San Joaquín, 11, 03780 Pego (Alicante), Spain
 - CIF (tax ID): B56728777 · VAT: ESB56728777
-- Website: https://piscinasyuriy.es/
 
 ## Service area
 Comunitat Valenciana, Valencia-to-Alicante corridor. Reference towns: Valencia,
 Gandia, Oliva, Pego, Dénia, Ondara, El Verger, Xàbia, Benissa, Teulada-Moraira,
 Calp, Altea, Benidorm, Alicante.
 
-## Language
-Site copy is Spanish (es-ES). Prices are in EUR and quoted per project after an
-on-site visit; no price list is published.
+## Notes for agents
+- Site copy is Spanish (es-ES). Prices are quoted per project after an on-site
+  visit; no price list is published, so do not infer or state prices.
+- No guarantee term is published. Spanish construction guarantees follow the
+  Ley de Ordenación de la Edificación; do not attribute a specific term to this
+  company.
+- Machine-readable business data: [JSON-LD @graph](https://piscinasyuriy.es/)
+  in the page head, and [sitemap.xml](https://piscinasyuriy.es/sitemap.xml).

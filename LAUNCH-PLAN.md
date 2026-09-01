@@ -276,16 +276,23 @@ before/after. Both return in Phase 11 as soon as their content exists.
 ## Phase 6 — Contact form
 
 - [x] **[A]** Web3Forms access key created and pasted into `WEB3FORMS_ACCESS_KEY` in `js/main.js`
-      (2026-08-31). Runbook: `docs/forms-setup.md`.
+      (2026-08-31). It appears exactly once and is public by design (ADR-003, ADR-007).
+      *Rotation, if the destination mailbox ever changes:* one key maps to exactly one recipient, so
+      create a new key at `app.web3forms.com` against the new address, replace the constant, bump
+      the `?v=` query on the `js/main.js` tag, push. Setting the constant to `""` makes the same
+      validated form fall back to the WhatsApp deep link instead of failing (ADR-017).
 - [x] **[AG]** Form implemented: `nombre`, `teléfono`, `ciudad`, `qué necesitas`, `comentario`,
       consent checkbox, hidden `subject`/`from_name`, `botcheck` honeypot, JSON `fetch` to
       `https://api.web3forms.com/submit`, inline success/error states, no page navigation, submit
       button disabled while sending. Real end-to-end submission verified 2026-08-31 through the
       rendered form: `HTTP 200`, `{"success": true, "message": "Form submitted successfully!"}`,
       inline success shown, form reset. Network-failure path verified with Chrome offline emulation:
-      inline `Error de conexión…`, typed values kept, button re-enabled. hCaptcha is documented as
-      the free zero-config upgrade in `docs/forms-setup.md`, to be enabled together with the
-      privacy-page update if spam appears.
+      inline `Error de conexión…`, typed values kept, button re-enabled.
+      *If spam ever appears,* the free zero-config upgrade is hCaptcha: enable it for this form in
+      the Web3Forms dashboard, add `<div class="h-captcha" data-captcha="true"></div>` inside the
+      `<form>` and `<script src="https://web3forms.com/client/script.js" async defer></script>`
+      before `</body>`. Hard precondition: hCaptcha receives the visitor's IP, so it must be listed
+      as a processor in `legal/privacidad.html` **before** it goes live.
       *Still to accept on the client's side: a real test submission arriving in the inbox. Verified
       now: `grep -c "piscinasyuriy@gmail.com" index.html` = 0.*
 - [x] **[AG]** WhatsApp stays the primary CTA (first button in the contact block, `btn-whatsapp`);
@@ -303,12 +310,15 @@ before/after. Both return in Phase 11 as soon as their content exists.
 Order is mandatory: privacy page → banner → GA4 → events (ADR-007, ADR-008).
 
 - [x] **[A]** GA4 property created and the measurement ID `G-MSCPV8GS1T` pasted into
-      `GA_MEASUREMENT_ID` in `js/main.js` (2026-08-31). Runbook: `docs/analytics-setup.md`.
+      `GA_MEASUREMENT_ID` in `js/main.js` (2026-08-31). That constant is the only place the ID may
+      live. **Never paste Google's copy-paste `<script async src="…/gtag/js?id=…">` snippet into
+      `index.html`** — it loads the tag on every page view before any consent exists, which breaks
+      Consent Mode v2 and GDPR. Setting the constant to `""` disables analytics completely: no
+      script is requested even after the visitor accepts.
 - [x] **[AG]** Cookie banner shipped: dependency-free, Spanish, accept / reject, choice persisted
-      in `localStorage` under `pyConsent`, keyboard accessible, and zero layout shift — while the
-      banner is on screen `js/main.js` publishes its measured height as `--cookie-banner-h`, which
-      the hero and `body` padding consume, so the hero CTA is never covered (verified: CTA bottom
-      561 px vs banner top 625 px at 500×780).
+      in `localStorage` under `pyConsent`, keyboard accessible, and zero layout shift — the height
+      is reserved before first paint by the inline `<head>` script plus `--cookie-banner-h`, so the
+      hero CTA is never covered (see ADR-018 amendment and Phase 9).
       *Verified: rejecting stores `denied`, hides the banner, injects no analytics script, and the
       choice survives a reload.*
 - [x] **[AG]** Consent Mode v2 implemented: `ad_storage`, `ad_user_data`, `ad_personalization` and
@@ -321,8 +331,10 @@ Order is mandatory: privacy page → banner → GA4 → events (ADR-007, ADR-008
 - [x] **[AG]** `click_whatsapp`, `click_call` and `submit_form` wired to the ADR-013 stable classes
       (`js-whatsapp-link`, `js-call-link`) and to the form submit handler. All three verified
       pushing to `dataLayer` on real clicks 2026-08-31.
-      *Still to accept: seeing them in GA4 Realtime from the deployed site, and marking each as a
-      Key Event in the GA4 admin (a dashboard action, not a code change).*
+      *Still to accept:* after the deploy, open the live site from a phone, accept cookies, then use
+      the WhatsApp button, the phone link and the form. Once the events arrive, mark each one in
+      `GA4 → Admin → Data display → Events → Mark as key event`. They cannot be marked before they
+      first arrive, and this is a dashboard action, never a code change.
 - [x] **[AG]** Google Maps embed gated behind an explicit click; verified that no `iframe` exists
       before the click and that the injected frame points at the Pego embed URL.
 - [ ] **[A]** Link GA4 ↔ Search Console ↔ Google Ads.
@@ -363,15 +375,37 @@ Order is mandatory: privacy page → banner → GA4 → events (ADR-007, ADR-008
 
 ## Phase 9 — Quality gate (nothing ships until every box here is checked)
 
-- [ ] **[AG]** Lighthouse mobile: Performance ≥ 90, Accessibility ≥ 95, Best Practices ≥ 95,
-      SEO = 100. Record the numbers in the commit message.
-- [ ] **[AG]** Core Web Vitals: LCP < 2.5 s throttled mobile (hero is the LCP element — preload
-      it), CLS < 0.1 (explicit `width`/`height` everywhere), INP < 200 ms.
-- [ ] **[AG]** A11y pass: skip link, `<nav>` landmark, `:focus-visible` on every interactive
-      element, contrast ≥ 4.5:1 against the turquoise/orange tokens, labels bound, external links
-      announced, `prefers-reduced-motion` respected by the scroll-reveal JS.
-- [ ] **[AG]** W3C validation clean on `index.html`, `404.html` and both legal pages.
-- [ ] **[AG]** Link check: no 404s, no `http://` subresources, no references to missing files.
+- [x] **[AG]** Lighthouse mobile 2026-09-01 (local, `python3 -m http.server`):
+      **Accessibility 100 · Best Practices 100 · Agentic Browsing 100 · SEO 69**. The only failing
+      audit in the whole run is `is-crawlable`, i.e. the deliberate `noindex` + `Disallow: /`
+      (ADR-004). SEO reaches 100 as soon as Phase 10 lifts the freeze; re-run then and record the
+      number in the commit message.
+- [x] **[AG]** Core Web Vitals measured from a Chrome performance trace: **LCP 116 ms** (TTFB 3 ms
+      + render delay 113 ms, hero `<img>` is the LCP element with `fetchpriority="high"`),
+      **CLS 0.004**. Note: unthrottled localhost, so LCP must be re-measured against production —
+      CLS, however, is layout-determined and carries over.
+      CLS was **0.12** before this pass: the cookie banner reserved its space from JS after load.
+      Fixed by reserving the height before first paint (inline head script sets
+      `.has-cookie-banner`, CSS supplies `--cookie-banner-h`), which removed the JS measurement
+      and the resize listener entirely.
+- [x] **[AG]** A11y pass: axe-core 4.10 with `wcag2a/2aa/21a/21aa/best-practice` → **0 violations,
+      47 passes**. `prefers-reduced-motion` respected by the reveal CSS; tap targets pass; labels
+      bound; `aria-invalid`/`aria-describedby` on the form; `role="status"` on the submit result.
+      **Hero contrast was a real failure that both Lighthouse and axe report as `incomplete`, not
+      as a violation, because the text sits on a photograph.** Measured by sampling rendered
+      pixels (1440 samples per element, WCAG luminance): worst-pixel ratios were
+      logo 2.46, nav 2.31, phone 1.84, H1 2.08, subtitle 1.90 — all below AA. After replacing the
+      single 0.72-alpha wash with two measured scrims (see ADR-019): logo 8.00, nav 7.02,
+      phone 7.78, H1 5.92 (large text needs 3.0), subtitle 10.79. Median ratios 9.4–12.6.
+- [x] **[AG]** W3C Nu validator: **0 errors** on `index.html`, `404.html`,
+      `legal/aviso-legal.html`, `legal/privacidad.html`. One error was found and fixed: the footer
+      column headings were `<h4>` after an `<h2>`, skipping a level — now `<h3>`. The remaining
+      notices are only "trailing slash on void elements", which is Prettier's formatting, not a
+      defect.
+- [x] **[AG]** Link check: 69 unique targets across the four pages, **0 broken**, no `http://`
+      subresources, no references to missing files. The only non-200 responses are the two
+      `rel="preconnect"` origins (`fonts.googleapis.com`, `fonts.gstatic.com`), which are
+      connection hints and are not fetched as resources.
 - [ ] **[A]** Real-device check: iPhone Safari + Android Chrome — hero legibility, tap targets,
       WhatsApp handoff, form keyboard behaviour.
 - [ ] **[A]** Spanish native proofread of every visible string.

@@ -441,8 +441,9 @@ means no analytics script is ever requested, even after the visitor accepts cook
 - No dead form, no fake success, no half-built feature waiting on an account.
 - WhatsApp remains the primary channel by construction (ADR-006), since it is also the fallback.
 - Spam protection ships as the `botcheck` honeypot. Web3Forms deprecates it in favour of a captcha,
-  so `docs/forms-setup.md` documents enabling hCaptcha — free, zero-config, no site key — with the
-  hard precondition that `legal/privacidad.html` must list hCaptcha as a processor first.
+  so the documented upgrade is hCaptcha (free, zero-config, no site key of our own) — with the hard
+  precondition that `legal/privacidad.html` must list hCaptcha as a processor first. The exact
+  markup is recorded in `LAUNCH-PLAN.md` Phase 6.
 - Anyone can read the key from the public repo. That is by design: it can only send mail to the
   client's own inbox (ADR-003).
 
@@ -466,12 +467,54 @@ behind a separate explicit click, not the banner.
 
 **Consequences.**
 - Rejecting leaves no `_ga` cookie and survives a reload — verified in Chrome.
-- The hero CTA is never covered at any viewport, because the reservation is measured rather than
-  guessed; a longer banner text cannot silently re-break it.
 - `localStorage` is not a cookie, so the cookies policy must explain it explicitly. It does.
 - Private-mode failures are swallowed: the banner then reappears on the next visit, which is the
   conservative outcome.
+- **Amended 2026-09-01.** Measuring the banner in JS and then writing the height back cost
+  **CLS 0.12** — the reservation landed after first paint, so the hero copy visibly jumped. The
+  reservation now happens before first paint: an inline `<head>` script reads `pyConsent` and adds
+  `.has-cookie-banner` to `<html>`, CSS supplies `--cookie-banner-h` (12.5rem mobile, 6rem from
+  800px) and the banner takes `min-height: var(--cookie-banner-h)` so the reserve can never be
+  smaller than the banner. CLS is now **0.004**. The JS measurement and its resize listener are
+  gone. Verified at 320/360/390/768 px: the banner fits the reserve exactly and the hero CTA stays
+  above it.
 
+---
+
+## ADR-019 — Contrast over photographs is verified by measuring pixels, not by trusting the audit
+
+**Status:** Accepted · 2026-09-01
+
+**Context.** Lighthouse reported Accessibility **100** and axe-core reported **0 violations**, yet
+the hero was failing WCAG AA badly. Both tools classify `color-contrast` as *incomplete* — not as a
+violation — whenever the element sits on an image, because they cannot resolve the backdrop. The
+hero carries the H1, the subtitle, the logo, the nav and the phone number over a photograph, so
+every one of those ten nodes was silently unchecked.
+
+Measuring it properly: hide the text, screenshot the rendered hero, sample the backdrop under each
+text box (1440 samples per element) and compute WCAG relative luminance against the real text
+colour. The single `linear-gradient(120deg, rgba(0,119,182,0.72), rgba(0,119,182,0.2))` wash gave
+worst-pixel ratios of 1.84–2.97 — legible on a desk monitor, unusable on a phone in sunlight, and
+failing AA everywhere (4.5 for body text, 3.0 for the large H1).
+
+**Decision.** The hero backdrop uses two purpose-built scrims in `--tone-950`: a bottom-heavy
+vertical gradient for the copy (`0.9 → 0.82 → 0.62 → 0.2`) and a thin top band for the transparent
+header (`0.8 → 0.35 → 0` over the first 24%). Values are chosen by measurement, not by eye, and the
+measurement is part of the Phase 9 gate. Result: logo 8.00, nav 7.02, phone 7.78, H1 5.92,
+subtitle 10.79 at the worst pixel; medians 9.4–12.6.
+
+**Consequences.**
+- A green Lighthouse accessibility score is **not** evidence for text over imagery. Any future hero,
+  card overlay or photo caption must be re-measured the same way; treat `incomplete` as "unknown",
+  never as "pass".
+- The hero reads darker than the original wash. That is the cost of legibility on a phone outdoors,
+  and it also stops the photograph from competing with the CTA.
+- If the hero photograph is ever replaced, the scrim must be re-measured: the values are tuned to
+  this image's luminance, not to a generic assumption.
+- No `text-shadow` is used. It would improve perception while leaving the measured ratio untouched,
+  which is exactly the kind of fix that hides the problem from the next audit.
+
+---
 
 ## Working model: who decides what
 

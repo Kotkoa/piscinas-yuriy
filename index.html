@@ -56,8 +56,20 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=20260831-6" />
+    <link rel="stylesheet" href="css/styles.css?v=20260901-4" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <script>
+      // Runs before first paint: if no cookie choice is stored yet, reserve the
+      // banner's height through CSS so showing it later shifts no layout (CLS).
+      try {
+        var pyConsent = window.localStorage.getItem("pyConsent");
+        if (pyConsent !== "granted" && pyConsent !== "denied") {
+          document.documentElement.classList.add("has-cookie-banner");
+        }
+      } catch (e) {
+        document.documentElement.classList.add("has-cookie-banner");
+      }
+    </script>
     <!-- ADR-013: one JSON-LD @graph per page; opening hours and sameAs stay out
          until the client confirms hours and the Google Business Profile exists -->
     <script type="application/ld+json">
@@ -1031,7 +1043,7 @@
             </p>
           </div>
           <div>
-            <h4>Servicios</h4>
+            <h3>Servicios</h3>
             <ul>
               <li><a href="#servicios">Construcción de piscinas</a></li>
               <li><a href="#servicios">Filtración y climatización</a></li>
@@ -1039,7 +1051,7 @@
             </ul>
           </div>
           <div>
-            <h4>Zona de trabajo</h4>
+            <h3>Zona de trabajo</h3>
             <ul>
               <li><a href="#zona">Alicante</a></li>
               <li><a href="#zona">Valencia</a></li>
@@ -1047,7 +1059,7 @@
             </ul>
           </div>
           <div>
-            <h4>Contacto</h4>
+            <h3>Contacto</h3>
             <ul>
               <li>
                 <a class="js-call-link" href="tel:+34678948509"
@@ -1105,6 +1117,6 @@
     </div>
     <!-- cookie-banner:end -->
 
-    <script src="js/main.js?v=20260831-6"></script>
+    <script src="js/main.js?v=20260901-4"></script>
   </body>
 </html>

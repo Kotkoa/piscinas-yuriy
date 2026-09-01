@@ -131,12 +131,16 @@ JSON-LD `@graph`, `sitemap.xml` and `llms.txt`.
 
 The contact form is **live**: `WEB3FORMS_ACCESS_KEY` in `js/main.js` holds the real Web3Forms key
 and a real submission was verified end to end on 2026-08-31 (`HTTP 200`, `success: true`).
-Delivery target is currently `piscinasyuriy@gmail.com`; see `docs/forms-setup.md`.
+Delivery target is `piscinasyuriy@gmail.com`. One key maps to one recipient, so changing the
+destination address requires a new key. Emptying the constant makes the form fall back to the
+WhatsApp deep link rather than fail (ADR-017).
 
-Analytics is **live but consent-gated**: `GA_MEASUREMENT_ID = "G-MSCPV8GS1T"` in `js/main.js`.
-Nothing is requested from Google until the visitor accepts the cookie banner; rejecting leaves no
-`_ga*` cookie. Verified end to end 2026-08-31. Remaining GA4 work is dashboard-only: mark
-`click_whatsapp`, `click_call` and `submit_form` as Key Events — `docs/analytics-setup.md`.
+Analytics is **live but consent-gated**: `GA_MEASUREMENT_ID = "G-MSCPV8GS1T"` in `js/main.js` is
+the only place that ID may appear — never add Google's `gtag.js` snippet to `index.html`, it would
+load before consent. Nothing is requested from Google until the visitor accepts the banner;
+rejecting leaves no `_ga*` cookie. Verified end to end 2026-08-31. The remaining GA4 work is
+dashboard-only: once `click_whatsapp`, `click_call` and `submit_form` arrive from the deployed
+site, mark each as a Key Event in `Admin → Data display → Events`.
 
 Client photos: the 42 originals live in git history only (commit `1910c9d`), recoverable with
 `git show 1910c9d:assets/photos/<file>`; the published derivatives are in `assets/img/`. The
