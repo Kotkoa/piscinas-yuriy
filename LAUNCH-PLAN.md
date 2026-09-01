@@ -302,8 +302,8 @@ before/after. Both return in Phase 11 as soon as their content exists.
 
 Order is mandatory: privacy page → banner → GA4 → events (ADR-007, ADR-008).
 
-- [ ] **[A]** Create the GA4 property; note the measurement ID and paste it into
-      `GA_MEASUREMENT_ID` in `js/main.js`. Runbook: `docs/analytics-setup.md`.
+- [x] **[A]** GA4 property created and the measurement ID `G-MSCPV8GS1T` pasted into
+      `GA_MEASUREMENT_ID` in `js/main.js` (2026-08-31). Runbook: `docs/analytics-setup.md`.
 - [x] **[AG]** Cookie banner shipped: dependency-free, Spanish, accept / reject, choice persisted
       in `localStorage` under `pyConsent`, keyboard accessible, and zero layout shift — while the
       banner is on screen `js/main.js` publishes its measured height as `--cookie-banner-h`, which
@@ -313,11 +313,16 @@ Order is mandatory: privacy page → banner → GA4 → events (ADR-007, ADR-008
       choice survives a reload.*
 - [x] **[AG]** Consent Mode v2 implemented: `ad_storage`, `ad_user_data`, `ad_personalization` and
       `analytics_storage` all default `denied` with `wait_for_update: 500`; `gtag.js` is injected
-      only after acceptance, with `anonymize_ip` and `allow_google_signals: false`. No script is
-      requested at all while `GA_MEASUREMENT_ID` is empty.
+      only after acceptance, with `anonymize_ip` and `allow_google_signals: false`.
+      *Verified 2026-08-31 in Chrome. Reject: zero `googletagmanager` scripts, no `_ga*` cookie.
+      Accept: `gtag/js?id=G-MSCPV8GS1T` loaded, `_ga` and `_ga_MSCPV8GS1T` set, and two `204`
+      hits to `region1.google-analytics.com/g/collect` with `tid=G-MSCPV8GS1T`, `en=page_view`,
+      `gcs=G101` (analytics granted, ads denied), `npa=1`, `ep.anonymize_ip=true`.*
 - [x] **[AG]** `click_whatsapp`, `click_call` and `submit_form` wired to the ADR-013 stable classes
-      (`js-whatsapp-link`, `js-call-link`) and to the form submit handler.
-      *Still to accept: all three appearing in GA4 Realtime once the property exists.*
+      (`js-whatsapp-link`, `js-call-link`) and to the form submit handler. All three verified
+      pushing to `dataLayer` on real clicks 2026-08-31.
+      *Still to accept: seeing them in GA4 Realtime from the deployed site, and marking each as a
+      Key Event in the GA4 admin (a dashboard action, not a code change).*
 - [x] **[AG]** Google Maps embed gated behind an explicit click; verified that no `iframe` exists
       before the click and that the injected frame points at the Pego embed URL.
 - [ ] **[A]** Link GA4 ↔ Search Console ↔ Google Ads.
@@ -428,12 +433,12 @@ Phase 9 all green + client sign-off → Phase 10 go live → Phase 11
 ```
 
 Runnable in parallel right now, nothing blocking: Phase 9 quality gate (Lighthouse, axe, W3C,
-link check) and the owner's account work — Web3Forms key, GA4 property, Google Business Profile,
-Search Console verification.
+link check).
 
-Blocked only on the owner's accounts: Web3Forms access key (`WEB3FORMS_ACCESS_KEY`), GA4
-measurement ID (`GA_MEASUREMENT_ID`), Google Business Profile, GSC/Bing verification, keyword
-set sign-off, and reading the two legal pages end to end.
+Blocked only on the owner's accounts, and none of it is a code change: marking the three events as
+Key Events in the GA4 admin, Google Business Profile, GSC/Bing verification, keyword set sign-off,
+linking GA4 ↔ Search Console ↔ Ads, and reading the two legal pages end to end. The Web3Forms key
+and the GA4 measurement ID are both set and verified working.
 
 Blocked only on the client's own facts: the guarantee terms (LOE minimum vs any company
 extension), confirmation of the per-project towns now shipped as a template, confirmation that

@@ -133,9 +133,10 @@ The contact form is **live**: `WEB3FORMS_ACCESS_KEY` in `js/main.js` holds the r
 and a real submission was verified end to end on 2026-08-31 (`HTTP 200`, `success: true`).
 Delivery target is currently `piscinasyuriy@gmail.com`; see `docs/forms-setup.md`.
 
-Analytics is still dark by choice: `GA_MEASUREMENT_ID` is empty, so no `gtag.js` is ever requested
-even after a visitor accepts the cookie banner. Paste the GA4 ID to activate it —
-`docs/analytics-setup.md`.
+Analytics is **live but consent-gated**: `GA_MEASUREMENT_ID = "G-MSCPV8GS1T"` in `js/main.js`.
+Nothing is requested from Google until the visitor accepts the cookie banner; rejecting leaves no
+`_ga*` cookie. Verified end to end 2026-08-31. Remaining GA4 work is dashboard-only: mark
+`click_whatsapp`, `click_call` and `submit_form` as Key Events — `docs/analytics-setup.md`.
 
 Client photos: the 42 originals live in git history only (commit `1910c9d`), recoverable with
 `git show 1910c9d:assets/photos/<file>`; the published derivatives are in `assets/img/`. The

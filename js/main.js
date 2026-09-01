@@ -6,8 +6,10 @@ const WHATSAPP_NUMBER = "34678948509";
 const WEB3FORMS_ACCESS_KEY = "c4a80025-1df4-4581-a7e4-434b84543608";
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 
-// Paste the GA4 measurement ID here (public by design). Empty = analytics disabled.
-const GA_MEASUREMENT_ID = "";
+// GA4 measurement ID. Public by design (it only lets a script send events into this one
+// property). Empty string = no analytics script is ever requested. The tag is injected by
+// loadAnalytics() only after the visitor accepts the cookie banner (ADR-008).
+const GA_MEASUREMENT_ID = "G-MSCPV8GS1T";
 
 const CONSENT_STORAGE_KEY = "pyConsent";
 const MAP_EMBED_URL =

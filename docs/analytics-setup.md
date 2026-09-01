@@ -103,25 +103,36 @@ Measurement ID is shown top-right of the panel.**
 
 ---
 
-## 3. Where the ID goes in this repo
+## 3. Where the ID goes in this repo — done
 
-`js/main.js` already implements the whole consent-gated analytics path: a `trackEvent()` helper that
-calls `window.gtag("event", name, params)` for `click_whatsapp`, `click_call` and `submit_form`, the
-Consent Mode v2 defaults, and the loader that injects `gtag.js` only after the visitor accepts the
-cookie banner. The single missing input is the Measurement ID.
-
-**The contract: the Measurement ID goes into exactly one place — a constant named
-`GA_MEASUREMENT_ID` in `js/main.js` — and nowhere else.** Not in `index.html` meta tags, not in a
-`.env` file, not in a GitHub secret, not duplicated in the legal pages. Replace the empty string:
+Already configured, 2026-08-31:
 
 ```js
-const GA_MEASUREMENT_ID = "G-XXXXXXXXXX"; // paste the real ID from Section 2 here
+const GA_MEASUREMENT_ID = "G-MSCPV8GS1T";
 ```
 
-While the constant stays empty, no analytics script is ever requested, even if the visitor accepts
-the banner — accepting only flips the stored consent state. Pasting the ID activates collection on
-the next deploy; remember to bump the `?v=` query on the `js/main.js` tag in `index.html` so the
-GitHub Pages cache cannot serve the previous file.
+`js/main.js` implements the whole consent-gated path: the Consent Mode v2 defaults, the loader that
+injects `gtag.js` only after the visitor accepts the cookie banner, and a `trackEvent()` helper that
+calls `window.gtag("event", name, params)` for `click_whatsapp`, `click_call` and `submit_form`.
+
+**The contract: the Measurement ID lives in exactly one place — the constant
+`GA_MEASUREMENT_ID` in `js/main.js` — and nowhere else.** Not in `index.html` meta tags, not in a
+`.env` file, not in a GitHub secret, not duplicated in the legal pages. Do **not** paste Google's
+copy-paste `<script async src="…/gtag/js?id=…">` snippet into `index.html`: it loads the tag on
+every page view before any consent exists, which breaks Consent Mode v2 and GDPR.
+
+Setting the constant to `""` disables analytics completely — no script is requested even after the
+visitor accepts. After any change to this file, bump the `?v=` query on the `js/main.js` tag in
+`index.html` so the GitHub Pages cache cannot serve the previous file.
+
+### Verified behaviour (Chrome, 2026-08-31)
+
+| Action | Observed |
+|---|---|
+| Reject | 0 `googletagmanager` scripts, no `_ga*` cookie, `pyConsent = denied` |
+| Accept | `gtag/js?id=G-MSCPV8GS1T` loaded, `_ga` + `_ga_MSCPV8GS1T` set, `pyConsent = granted` |
+| Accept | two `204` hits to `region1.google-analytics.com/g/collect`, `tid=G-MSCPV8GS1T`, `en=page_view`, `gcs=G101`, `npa=1`, `ep.anonymize_ip=true` |
+| Clicks | `click_call`, `click_whatsapp`, `submit_form` all pushed to `dataLayer` |
 
 **Why a public constant is fine here.** A GA4 Measurement ID is a public identifier by design — it
 only lets a script *send* events into that one property, the same way anyone can `curl` a public
