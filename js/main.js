@@ -12,8 +12,6 @@ const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 const GA_MEASUREMENT_ID = "G-MSCPV8GS1T";
 
 const CONSENT_STORAGE_KEY = "pyConsent";
-const MAP_EMBED_URL =
-  "https://www.google.com/maps?q=Pego,%20Alicante,%20Espa%C3%B1a&z=10&output=embed";
 
 function readStoredConsent() {
   try {
@@ -116,19 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
     link.addEventListener("click", () => trackEvent("click_call"));
   });
 
-  const mapConsent = document.querySelector("#map-consent");
-  const mapConsentBtn = document.querySelector("#map-consent-btn");
-  if (mapConsent && mapConsentBtn) {
-    mapConsentBtn.addEventListener("click", () => {
-      const frame = document.createElement("iframe");
-      frame.src = MAP_EMBED_URL;
-      frame.title = "Mapa de la zona de trabajo de Piscinas Yuriy";
-      frame.loading = "lazy";
-      frame.referrerPolicy = "no-referrer-when-downgrade";
-      frame.setAttribute("allowfullscreen", "");
-      mapConsent.replaceWith(frame);
-    });
-  }
 
   const form = document.querySelector("#contact-form");
   if (form) initContactForm(form);

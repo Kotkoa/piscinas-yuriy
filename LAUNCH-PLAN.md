@@ -487,28 +487,16 @@ extension), confirmation of the per-project towns now shipped as a template, con
 the materials list is complete, and any real "years in business" number. Everything else that
 used to sit on this list — city list, FAQ answers, gallery locations — has been shipped as
 owner-approved copy or a reviewable template.
-
-
-Основной                                                          
- - construcción de piscinas Dénia — local/транзакционный, сложность средняя. В   
-   топе смесь агрегаторов (habitissimo.es, piscinas.com, houzz.com) и локальных  
-   строителей (jimenezpiscinas.com, pool-aesthetics.com, piscinasdevesa.es).     
- - construcción de piscinas Pego — сложность низкая, выдача тонкая, закрывается  
-   главной страницей плюс Google Business Profile.                               
-                                                                                 
- Вторичные                                                              
- - constructor de piscinas Dénia — средняя.                                      
- - reforma de piscinas Alicante — средне-низкая, топ забит лид-биржами           
-   cronoshare.com и habitissimo.es.                                              
- - reparación de piscinas Dénia / reparación de piscinas Marina Alta —           
-   низко-средняя, зрелого локального конкурента нет.                             
- - fontanería de piscinas Alicante — низко-средняя, в топе только универсальные  
-   сантехники, специалиста по бассейнам нет.                                     
- - bomba de calor piscina Alicante — средняя, нишевики alpinoclima.es,           
-   neofont.net, tecnopool.                                                       
- - cloración salina piscina Alicante — низкая, гео-версия свободна.              
- - cuadro eléctrico piscina Alicante — низкая.                                   
- - iluminación led piscina Alicante — низкая.                                    
- - piscinas de obra Alicante — высокая, держать синонимом в тексте, не целью.    
- - construcción de piscinas Gandía / construcción de piscinas Oliva — средняя,   
-   сильны hidraulicasminana.com и Aquasol.                                       
+   
+                              
+ - construccion de piscinas                                                         
+ - constructor de piscinas Denia                               
+ - reforma de piscinas Alicante                                      
+ - reparación de piscinas Marina Alta            
+ - fontanería de piscinas Alicante                                   
+ - bomba de calor piscina Alicante                                     
+ - cloración salina piscina Alicante          
+ - cuadro eléctrico piscina Alicante                               
+ - iluminación led piscina Alicante                                
+ - piscinas de obra Alicante
+ - construcción de piscinas Oliva
