@@ -492,11 +492,12 @@ section {
 
 #hero {
   position: relative;
-  min-height: 100vh;
-  min-height: 100svh;
+  /* starts below the opaque header instead of running under it */
+  margin-top: var(--nav-height);
+  min-height: calc(100vh - var(--nav-height));
+  min-height: calc(100svh - var(--nav-height));
   display: flex;
   align-items: flex-end;
-  padding-top: var(--nav-height);
   padding-bottom: calc(clamp(3rem, 8vw, 5.5rem) + var(--cookie-banner-h));
   color: var(--text-on-dark);
   background: var(--tone-700);
