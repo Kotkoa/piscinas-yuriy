@@ -120,13 +120,18 @@ to this working folder only:
 ## Current state
 Repo `Kotkoa/piscinas-yuriy` on GitHub Pages, live on the custom domain `piscinasyuriy.es`
 (A records → GitHub Pages, `www` CNAME → `kotkoa.github.io`, TLS valid, verified 2026-08-31).
-`noindex` + `robots.txt Disallow: /` remain in place until launch (ADR-004; removal trigger =
-`LAUNCH-PLAN.md` Phase 10).
+**Indexing is open, contrary to ADR-004:** commit `444783e` (2026-09-02) switched `robots.txt` to
+`Allow: /` and deleted the `noindex` meta from `index.html` and `legal/aviso-legal.html`, while
+`LAUNCH-PLAN.md` Phase 9 (real-device check, native proofread, client sign-off) is still open.
+Only `404.html` still carries `noindex`. Re-closing indexing or formally superseding ADR-004 is an
+owner decision.
 
-The page is no longer a skeleton. Shipped 2026-08-31: hero, 4 service blocks, trust block, 12-card
-gallery with towns, 4 FAQ answers, 4-step process, coverage block with a click-to-load Google Maps
-embed, contact block with a validated Web3Forms-ready form, cookie consent banner with Consent
-Mode v2, `404.html`, `legal/aviso-legal.html`, `legal/privacidad.html`, `assets/og-image.jpg`, one
+The page is no longer a skeleton. Shipped 2026-08-31: hero, 4 service blocks, trust block, 10-card
+gallery with towns (12 originally; two photos were dropped in `444783e`, so the 3-column desktop
+grid ends in an orphan row), 4 FAQ answers, 4-step process, coverage block with a click-to-load
+Google Maps embed, contact block with a validated Web3Forms-ready form, cookie consent banner with
+Consent Mode v2 and a footer "Preferencias de cookies" control that reopens it,
+`404.html`, `legal/aviso-legal.html`, `legal/privacidad.html`, `assets/og-image.jpg`, one
 JSON-LD `@graph`, `sitemap.xml` and `llms.txt`.
 
 The contact form is **live**: `WEB3FORMS_ACCESS_KEY` in `js/main.js` holds the real Web3Forms key
@@ -141,6 +146,9 @@ load before consent. Nothing is requested from Google until the visitor accepts 
 rejecting leaves no `_ga*` cookie. Verified end to end 2026-08-31. The remaining GA4 work is
 dashboard-only: once `click_whatsapp`, `click_call` and `submit_form` arrive from the deployed
 site, mark each as a Key Event in `Admin → Data display → Events`.
+`submit_form` fires only after Web3Forms confirms delivery, so a failed send is not a conversion.
+Withdrawing consent from the footer control sets `analytics_storage: denied` and deletes the
+`_ga*` cookies already written.
 
 Client photos: the 42 originals live in git history only (commit `1910c9d`), recoverable with
 `git show 1910c9d:assets/photos/<file>`; the published derivatives are in `assets/img/`. The

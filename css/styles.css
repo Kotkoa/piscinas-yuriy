@@ -88,7 +88,8 @@ img {
 }
 
 a {
-  color: var(--color-primary);
+  /* tone-500 only reaches 2.1:1 on white; tone-700 clears WCAG AA (4.8:1) */
+  color: var(--tone-700);
 }
 
 .container {
@@ -127,7 +128,7 @@ h2 {
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--tone-500);
+  color: var(--tone-700);
   margin-bottom: 0.5rem;
 }
 
@@ -183,6 +184,11 @@ header.site-header .container {
 
 .logo span {
   color: var(--tone-500);
+}
+
+.is-scrolled .logo span,
+.is-menu-open .logo span {
+  color: var(--tone-700);
 }
 
 .site-nav {
@@ -345,6 +351,7 @@ header.site-header .container {
     visibility: visible;
     transform: none;
     transition: none;
+    pointer-events: auto;
   }
 
   .site-nav a {
@@ -493,6 +500,16 @@ section {
 .section-process h2,
 .section-area h2,
 .section-contact h2 {
+  color: var(--text-on-dark);
+}
+
+.section-area .eyebrow,
+.section-contact .eyebrow {
+  color: var(--tone-300);
+}
+
+/* tone-300 falls under 4.5:1 on the mid-tone process band */
+.section-process .eyebrow {
   color: var(--text-on-dark);
 }
 
@@ -953,12 +970,32 @@ footer.site-footer {
   color: #fff;
 }
 
+.footer-link-button {
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 0.8125rem;
+  color: var(--tone-300);
+  cursor: pointer;
+  text-align: left;
+}
+
+.footer-link-button:hover,
+.footer-link-button:focus-visible {
+  color: #fff;
+}
+
 .footer-colophon {
   margin-top: 2.5rem;
   padding-top: 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   font-size: 0.6875rem;
-  color: var(--tone-500);
+  color: var(--tone-300);
+}
+
+.footer-colophon a {
+  color: var(--tone-300);
 }
 
 /* ---------- Scroll-reveal / entrance animation ---------- */

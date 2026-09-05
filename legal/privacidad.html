@@ -11,7 +11,7 @@
       type="font/woff2"
       crossorigin
     />
-    <link rel="stylesheet" href="../css/styles.css?v=20260902-1" />
+    <link rel="stylesheet" href="../css/styles.css?v=20260905-2" />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
     <link rel="icon" href="/assets/favicon.ico" sizes="any" />
@@ -285,21 +285,26 @@
 
         <h3>Cómo retirar el consentimiento</h3>
         <p>
-          El usuario puede modificar o retirar su consentimiento en cualquier momento borrando el
-          valor <code>pyConsent</code> almacenado por el sitio web —por ejemplo, desde la opción
-          «Borrar datos del sitio» o «Borrar almacenamiento local» de la configuración de
-          privacidad del navegador— y recargando la página; el banner de cookies volverá a
-          mostrarse. Además, el usuario puede en todo momento permitir, bloquear o eliminar las
-          cookies instaladas en su equipo mediante la configuración de su navegador. Tenga en
-          cuenta que bloquear todas las cookies puede afectar al correcto funcionamiento de este y
-          otros sitios web.
+          El usuario puede modificar o retirar su consentimiento en cualquier momento desde el
+          enlace <strong>«Preferencias de cookies»</strong> del pie de la página de inicio: el
+          banner vuelve a mostrarse y la nueva elección sustituye a la anterior. Al rechazar,
+          <code>analytics_storage</code> vuelve al estado <code>denied</code> y no se registra
+          ninguna medición posterior. Como alternativa, el usuario puede borrar el valor
+          <code>pyConsent</code> almacenado por el sitio web —por ejemplo, desde la opción «Borrar
+          datos del sitio» o «Borrar almacenamiento local» de la configuración de privacidad del
+          navegador— y recargar la página. Además, el usuario puede en todo momento permitir,
+          bloquear o eliminar las cookies instaladas en su equipo mediante la configuración de su
+          navegador. Tenga en cuenta que bloquear todas las cookies puede afectar al correcto
+          funcionamiento de este y otros sitios web.
         </p>
 
         <h3>Mapa de Google Maps</h3>
         <p>
-          El mapa interactivo de Google Maps se carga automáticamente al abrir la página. Google
-          puede recibir la dirección IP y aplicar las cookies y el tratamiento de datos asociados a
-          este servicio.
+          El mapa interactivo de Google Maps <strong>no se carga automáticamente</strong>: en su
+          lugar se muestra un aviso con un botón. Hasta que el usuario pulsa ese botón no se realiza
+          ninguna petición a Google ni se instala ninguna cookie de este servicio. Al cargar el
+          mapa, Google puede recibir la dirección IP y aplicar las cookies y el tratamiento de datos
+          asociados a este servicio.
         </p>
       </section>
     </main>

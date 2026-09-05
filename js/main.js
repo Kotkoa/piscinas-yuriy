@@ -74,6 +74,23 @@ function grantConsent() {
   loadAnalytics();
 }
 
+// Consent Mode stops new writes but leaves the cookies already set, so a
+// withdrawal has to drop them for the choice to be honoured in full.
+function revokeConsent() {
+  window.gtag("consent", "update", {
+    analytics_storage: "denied",
+  });
+  const host = window.location.hostname;
+  document.cookie.split(";").forEach((entry) => {
+    const name = entry.split("=")[0].trim();
+    if (!name.startsWith("_ga")) return;
+    const expired = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+    document.cookie = expired;
+    document.cookie = `${expired}; domain=${host}`;
+    document.cookie = `${expired}; domain=.${host}`;
+  });
+}
+
 function trackEvent(name, params = {}) {
   if (typeof window.gtag === "function") {
     window.gtag("event", name, params);
@@ -87,14 +104,26 @@ document.addEventListener("DOMContentLoaded", () => {
   if (storedConsent === "granted") grantConsent();
 
   const banner = document.querySelector("#cookie-banner");
-  if (banner && !storedConsent) {
-    // Space is already reserved by the inline head script via .has-cookie-banner
+  const showBanner = () => {
+    if (!banner) return;
     banner.hidden = false;
+    // Keeps the reserved height in sync with the visible banner
+    document.documentElement.classList.add("has-cookie-banner");
+  };
+  const hideBanner = () => {
+    if (banner) banner.hidden = true;
+    document.documentElement.classList.remove("has-cookie-banner");
+  };
+
+  if (banner) {
     const settle = (choice) => {
       storeConsent(choice);
-      if (choice === "granted") grantConsent();
-      banner.hidden = true;
-      document.documentElement.classList.remove("has-cookie-banner");
+      if (choice === "granted") {
+        grantConsent();
+      } else {
+        revokeConsent();
+      }
+      hideBanner();
     };
     banner
       .querySelector("#cookie-accept")
@@ -102,9 +131,17 @@ document.addEventListener("DOMContentLoaded", () => {
     banner
       .querySelector("#cookie-reject")
       ?.addEventListener("click", () => settle("denied"));
-  } else {
-    document.documentElement.classList.remove("has-cookie-banner");
   }
+
+  if (storedConsent) {
+    hideBanner();
+  } else {
+    showBanner();
+  }
+
+  document
+    .querySelector("#cookie-reopen")
+    ?.addEventListener("click", showBanner);
 
   document.querySelectorAll(".js-whatsapp-link").forEach((link) => {
     link.addEventListener("click", () => trackEvent("click_whatsapp"));
@@ -114,6 +151,19 @@ document.addEventListener("DOMContentLoaded", () => {
     link.addEventListener("click", () => trackEvent("click_call"));
   });
 
+  const mapPlaceholder = document.querySelector("#map-consent");
+  const mapButton = document.querySelector("#map-load");
+  if (mapPlaceholder && mapButton) {
+    mapButton.addEventListener("click", () => {
+      const iframe = document.createElement("iframe");
+      iframe.src = mapPlaceholder.dataset.mapSrc;
+      iframe.title = "Mapa de la zona de trabajo, con base en Pego";
+      iframe.loading = "lazy";
+      iframe.referrerPolicy = "no-referrer-when-downgrade";
+      iframe.allowFullscreen = true;
+      mapPlaceholder.replaceWith(iframe);
+    });
+  }
 
   const form = document.querySelector("#contact-form");
   if (form) initContactForm(form);
@@ -220,7 +270,7 @@ function initContactForm(form) {
     {
       name: "telefono",
       errorId: "error-telefono",
-      validate: (value) => value.replace(/[^\d+]/g, "").length >= 9,
+      validate: (value) => value.replace(/\D/g, "").length >= 9,
       message: "Indica un teléfono válido.",
     },
     {
@@ -315,10 +365,10 @@ function initContactForm(form) {
     }
 
     const data = Object.fromEntries(new FormData(form).entries());
-    trackEvent("submit_form");
 
     if (!WEB3FORMS_ACCESS_KEY) {
       sendViaWhatsApp(data);
+      trackEvent("submit_form");
       return;
     }
 
@@ -331,6 +381,7 @@ function initContactForm(form) {
         access_key: WEB3FORMS_ACCESS_KEY,
       });
       if (sent) {
+        trackEvent("submit_form");
         form.reset();
         rules.forEach((rule) => {
           const field = form.elements[rule.name];
