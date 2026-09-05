@@ -168,27 +168,30 @@ header.site-header .container {
 }
 
 .logo {
-  font-weight: 800;
-  color: var(--text-on-dark);
+  display: flex;
+  align-items: center;
   text-decoration: none;
-  font-size: clamp(1rem, 4vw, 1.25rem);
-  white-space: nowrap;
   flex-shrink: 0;
-  transition: color 0.3s ease;
 }
 
-.is-scrolled .logo,
-.is-menu-open .logo {
-  color: var(--color-text);
+.logo-img {
+  width: auto;
+  height: clamp(1.75rem, 6vw, 2.25rem);
+  /* Cyan wordmark disappears on the bright hero photo: render it white until
+     the header gets its own light background on scroll */
+  filter: brightness(0) invert(1) drop-shadow(0 1px 3px rgba(3, 4, 94, 0.45));
+  transition: filter 0.3s ease;
 }
 
-.logo span {
-  color: var(--tone-500);
+.is-scrolled .logo-img,
+.is-menu-open .logo-img {
+  filter: none;
 }
 
-.is-scrolled .logo span,
-.is-menu-open .logo span {
-  color: var(--tone-700);
+.logo-footer .logo-img {
+  height: 2.25rem;
+  margin-bottom: 0.75rem;
+  filter: brightness(0) invert(1);
 }
 
 .site-nav {
@@ -857,11 +860,11 @@ details.faq-item summary {
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
 }
 
-.map-card iframe,
-.map-card .map-consent {
+.map-card iframe {
   width: 100%;
   aspect-ratio: 4 / 3;
   border: 0;
+  display: block;
 }
 
 /* ---------- Contact ---------- */
@@ -1026,26 +1029,6 @@ footer.site-footer {
   .process-progress {
     transition: none;
   }
-}
-
-/* ---------- Consent-gated map ---------- */
-
-.map-consent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.875rem;
-  padding: 1.5rem;
-  text-align: center;
-  background: var(--tone-50);
-  color: var(--color-text);
-}
-
-.map-consent p {
-  margin: 0;
-  font-size: 0.8125rem;
-  max-width: 24rem;
 }
 
 /* ---------- Cookie consent banner ---------- */

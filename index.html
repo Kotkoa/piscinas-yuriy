@@ -68,12 +68,13 @@
       imagesizes="100vw"
       fetchpriority="high"
     />
-    <link rel="stylesheet" href="css/styles.css?v=20260905-2" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
-    <link rel="icon" href="/assets/favicon.ico" sizes="any" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
-    <link rel="manifest" href="/assets/site.webmanifest" />
+    <link rel="stylesheet" href="css/styles.css?v=20260905-3" />
+    <link rel="icon" href="/assets/favicon.svg?v=20260905-3" type="image/svg+xml" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=20260905-3" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png?v=20260905-3" />
+    <link rel="icon" href="/assets/favicon.ico?v=20260905-3" sizes="any" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png?v=20260905-3" />
+    <link rel="manifest" href="/assets/site.webmanifest?v=20260905-3" />
     <noscript>
       <!-- Without JS the IntersectionObserver never runs, so reveal targets
            would stay at opacity 0 and hide most of the page -->
@@ -100,8 +101,8 @@
         document.documentElement.classList.add("has-cookie-banner");
       }
     </script>
-    <!-- ADR-013: one JSON-LD @graph per page; opening hours and sameAs stay out
-         until the client confirms hours and the Google Business Profile exists -->
+    <!-- ADR-013: one JSON-LD @graph per page; sameAs stays out until the Google
+         Business Profile exists -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -115,6 +116,12 @@
             "description": "Construcción y reforma de piscinas de obra en la Comunidad Valenciana.",
             "telephone": "+34678948509",
             "currenciesAccepted": "EUR",
+            "openingHoursSpecification": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+              "opens": "09:00",
+              "closes": "18:00"
+            },
             "vatID": "ESB56728777",
             "taxID": "B56728777",
             "address": {
@@ -273,7 +280,7 @@
     <!-- site-header:start -->
     <header class="site-header" id="site-header">
       <div class="container">
-        <a class="logo" href="#top">Piscinas <span>Yuriy</span></a>
+        <a class="logo" href="#top" aria-label="Piscinas Yuriy, inicio"><img class="logo-img" src="assets/logo-piscinas-yuriy.svg?v=20260905-3" alt="Piscinas Yuriy" width="210" height="48" /></a>
         <ul class="site-nav" id="site-nav">
           <li><a href="#servicios">Servicios</a></li>
           <li><a href="#galeria">Galería</a></li>
@@ -523,6 +530,9 @@
                 <li>
                   Instalaciones técnicas completas: filtración, cloración
                   salina, control de pH, bombas de calor y cuadros eléctricos.
+                </li>
+                <li>
+                  20 años de experiencia y más de 5000 piscinas construidas.
                 </li>
                 <li>Visita, medición y presupuesto sin compromiso.</li>
               </ul>
@@ -887,21 +897,13 @@
               </p>
             </div>
             <div class="map-card reveal">
-              <!-- ADR-018: no Google request before an explicit click. js/main.js
-                   swaps this placeholder for the iframe named in data-map-src -->
-              <div
-                class="map-consent"
-                id="map-consent"
-                data-map-src="https://www.google.com/maps?ll=38.8433,-0.1156&q=Pego,%20Alicante,%20Espa%C3%B1a&z=9&output=embed"
-              >
-                <p>
-                  El mapa se carga desde Google Maps. Al abrirlo, Google puede
-                  recibir tu dirección IP y aplicar sus propias cookies.
-                </p>
-                <button class="btn btn-accent" type="button" id="map-load">
-                  Cargar el mapa
-                </button>
-              </div>
+              <iframe
+                src="https://www.google.com/maps?q=38.8433,-0.1156(Piscinas%20Yuriy%2C%20Pego)&z=9&output=embed"
+                title="Mapa de la zona de trabajo, con base en Pego"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen
+              ></iframe>
             </div>
           </div>
         </div>
@@ -1020,8 +1022,8 @@
       <div class="container">
         <div class="footer-grid">
           <div>
-            <a class="logo" href="#top" style="color: #fff"
-              >Piscinas <span>Yuriy</span></a
+            <a class="logo logo-footer" href="#top" aria-label="Piscinas Yuriy, inicio"
+              ><img class="logo-img" src="assets/logo-piscinas-yuriy.svg?v=20260905-3" alt="Piscinas Yuriy" width="210" height="48" /></a
             >
             <p>
               Construcción, reforma y mantenimiento de piscinas en Alicante y

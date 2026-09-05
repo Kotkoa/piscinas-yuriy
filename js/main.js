@@ -151,20 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
     link.addEventListener("click", () => trackEvent("click_call"));
   });
 
-  const mapPlaceholder = document.querySelector("#map-consent");
-  const mapButton = document.querySelector("#map-load");
-  if (mapPlaceholder && mapButton) {
-    mapButton.addEventListener("click", () => {
-      const iframe = document.createElement("iframe");
-      iframe.src = mapPlaceholder.dataset.mapSrc;
-      iframe.title = "Mapa de la zona de trabajo, con base en Pego";
-      iframe.loading = "lazy";
-      iframe.referrerPolicy = "no-referrer-when-downgrade";
-      iframe.allowFullscreen = true;
-      mapPlaceholder.replaceWith(iframe);
-    });
-  }
-
   const form = document.querySelector("#contact-form");
   if (form) initContactForm(form);
 
