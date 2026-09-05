@@ -154,25 +154,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("#contact-form");
   if (form) initContactForm(form);
 
-  const header = document.querySelector("#site-header");
-  if (header) {
-    const onScroll = () =>
-      header.classList.toggle("is-scrolled", window.scrollY > 48);
-    requestAnimationFrame(onScroll);
-    window.addEventListener("scroll", onScroll, { passive: true });
-  }
-
   const navToggle = document.querySelector("#nav-toggle");
   const siteNav = document.querySelector("#site-nav");
   if (navToggle && siteNav) {
     const closeNav = () => {
       siteNav.classList.remove("is-open");
-      header?.classList.remove("is-menu-open");
       navToggle.setAttribute("aria-expanded", "false");
     };
     navToggle.addEventListener("click", () => {
       const isOpen = siteNav.classList.toggle("is-open");
-      header?.classList.toggle("is-menu-open", isOpen);
       navToggle.setAttribute("aria-expanded", String(isOpen));
     });
     siteNav.querySelectorAll("a").forEach((link) => {
