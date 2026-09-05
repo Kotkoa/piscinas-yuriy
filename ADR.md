@@ -516,6 +516,48 @@ subtitle 10.79 at the worst pixel; medians 9.4–12.6.
 
 ---
 
+## ADR-020 — Inter is self-hosted; nothing render-blocking comes from a third party
+
+**Status:** Accepted · 2026-09-02
+
+**Context.** A DevTools trace of the live page (4x CPU, Slow 4G) put the LCP element at the hero
+`<h1>` — text, not the photo — with `TTFB 2 ms` and `render delay 553 ms`, i.e. 99.7% of LCP was
+the wait before the first frame could be painted at all. Two requests were marked
+`renderBlocking: t`: `css/styles.css` (same origin, connection already open) and
+`fonts.googleapis.com/css2` (`VeryHigh`). The Google request costs 237 bytes but a full
+cross-origin connection — measured `conn=34 ms, tls=67 ms, ttfb=105 ms` on fibre — and it then
+initiates a second connection to `fonts.gstatic.com` for a 48 KB woff2. On mobile networks that is
+two extra handshakes in front of the first paint. Separately, `js/main.js` had no `defer` and its
+startup `onScroll()` forced a synchronous layout of 557 nodes (115 ms of forced reflow, 83 ms in a
+single layout update) before the first paint.
+
+**Decision.**
+1. The Inter latin variable subset (`assets/fonts/inter-latin-var.woff2`, 48 432 B, `wght 400..800`)
+   is committed to the repo and declared with a local `@font-face` (`font-display: swap`) at the top
+   of `css/styles.css`. Every page preloads it. No page may reference `fonts.googleapis.com` or
+   `fonts.gstatic.com` again — that includes the `preconnect` hints, which are now removed.
+   Only the latin subset is shipped: Spanish diacritics and `€`/typographic dashes all fall inside
+   its `unicode-range`.
+2. `js/main.js` is loaded with `defer`, and the initial header-state read runs inside
+   `requestAnimationFrame`, so no forced layout precedes the first paint.
+3. The hero ships AVIF as the first `<source>` (90 426 B at 1024w vs 141 398 B webp, -36%) and is
+   preloaded with `imagesrcset`/`fetchpriority="high"`; `decoding="async"` is removed from the
+   above-fold image.
+
+**Consequences.** A binary asset now lives in git — accepted, because it removes two third-party
+connections from the critical path and, as a side effect, stops sending visitor IPs to Google on
+every page view, which is the safer reading of the GDPR position stated in
+`legal/privacidad.html`. Updating Inter is a manual re-download of the subset URL from the Google
+Fonts CSS; there is no build step to automate it, by ADR-001.
+
+**Not decided here.** The hero source photo is 1024x768 (WhatsApp-compressed, see
+`assets/photos/MAP.md`), so no 1440w/1920w variant can be produced honestly; on a wide desktop
+viewport the hero is upscaled. Fixing that needs a higher-resolution photo from the client.
+GitHub Pages serves static assets with `cache-control: max-age=600`, which cannot be changed
+without proxying the domain through Cloudflare (today Cloudflare is DNS-only, ADR-002/ADR-009).
+
+---
+
 ## Working model: who decides what
 
 The bottleneck in this project is decisions and client-supplied content, not typing. Implementation

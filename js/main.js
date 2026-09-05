@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (header) {
     const onScroll = () =>
       header.classList.toggle("is-scrolled", window.scrollY > 48);
-    onScroll();
+    requestAnimationFrame(onScroll);
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 

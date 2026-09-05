@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- head-meta:start -->
-    <title>Construccion de piscinas en Alicante y Valencia</title>
+    <title>Piscinas Yuriy | Construcción de piscinas en Alicante y Valencia</title>
     <meta
       name="description"
       content="Construccion de piscinas, reforma y mantenimiento en la Comunidad Valenciana. Gunitado, gresite y cloracion salina. Presupuesto sin compromiso."
@@ -16,7 +16,7 @@
     <meta property="og:url" content="https://piscinasyuriy.es/" />
     <meta
       property="og:title"
-      content="Construccion de piscinas en Alicante y Valencia"
+      content="Piscinas Yuriy | Construcción de piscinas en Alicante y Valencia"
     />
     <meta
       property="og:description"
@@ -37,7 +37,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Construccion de piscinas en Alicante y Valencia"
+      content="Piscinas Yuriy | Construcción de piscinas en Alicante y Valencia"
     />
     <meta
       name="twitter:description"
@@ -48,14 +48,32 @@
       content="https://piscinasyuriy.es/assets/og-image.jpg"
     />
     <!-- head-meta:end -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="assets/fonts/inter-latin-var.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
-    <link rel="stylesheet" href="css/styles.css?v=20260901-6" />
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      href="assets/img/hero-piscina-jardin-atardecer-1024.avif"
+      imagesrcset="
+        assets/img/hero-piscina-jardin-atardecer-480.avif   480w,
+        assets/img/hero-piscina-jardin-atardecer-768.avif   768w,
+        assets/img/hero-piscina-jardin-atardecer-1024.avif 1024w
+      "
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
+    <link rel="stylesheet" href="css/styles.css?v=20260905-1" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
+    <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+    <link rel="manifest" href="/assets/site.webmanifest" />
     <script>
       // Runs before first paint: if no cookie choice is stored yet, reserve the
       // banner's height through CSS so showing it later shifts no layout (CLS).
@@ -286,6 +304,15 @@
         <div class="hero-photo">
           <picture>
             <source
+              type="image/avif"
+              sizes="100vw"
+              srcset="
+                assets/img/hero-piscina-jardin-atardecer-480.avif   480w,
+                assets/img/hero-piscina-jardin-atardecer-768.avif   768w,
+                assets/img/hero-piscina-jardin-atardecer-1024.avif 1024w
+              "
+            />
+            <source
               type="image/webp"
               sizes="100vw"
               srcset="
@@ -301,7 +328,6 @@
               height="768"
               loading="eager"
               fetchpriority="high"
-              decoding="async"
             />
           </picture>
         </div>
@@ -1056,6 +1082,6 @@
     </div>
     <!-- cookie-banner:end -->
 
-    <script src="js/main.js?v=20260901-6"></script>
+    <script defer src="js/main.js?v=20260902-1"></script>
   </body>
 </html>
