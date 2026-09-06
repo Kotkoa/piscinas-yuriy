@@ -9,6 +9,20 @@
     U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* Display serif for headings and eyebrows, from the 2026-09 mockup (see
+   docs/redesign-mockup-tokens.md). Subset to the Spanish charset, opsz pinned to
+   32 and the weight axis clipped to 400-700, so the file is 31 kB. */
+@font-face {
+  font-family: 'Source Serif 4';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../assets/fonts/source-serif-4-latin-var.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
+    U+2010-2015, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030,
+    U+2039-203A, U+20AC, U+2122;
+}
+
 :root {
   /* Brand anchors (unchanged) */
   --color-primary: #37c1d4; /* step-500 */
@@ -41,6 +55,17 @@
 
   --font-base:
     'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display:
+    'Source Serif 4', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia,
+    'Times New Roman', serif;
+
+  /* Display palette — mockup navy, added as its own token family rather than
+     replacing the logo-derived brand anchors above. Headings and eyebrows only;
+     buttons, links and icons stay on --color-accent / --tone-*. */
+  --display-ink: #193361;
+  --display-accent: #426eb5;
+  --display-band: #eaf3fb;
+  --display-tracking: -0.025em;
   --max-width: 1140px;
   --nav-height: 68px;
   --radius-pill: 999px;
@@ -109,29 +134,37 @@ a {
 h1,
 h2,
 h3 {
-  font-weight: 800;
-  line-height: 1.15;
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: var(--display-tracking);
+  color: var(--display-ink);
   margin: 0 0 1rem;
 }
 
 h1 {
   font-size: clamp(2.25rem, 5vw, 3.5rem);
+  text-transform: uppercase;
 }
 
 h2 {
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+main h2 {
+  text-transform: uppercase;
 }
 
 .eyebrow {
   display: block;
+  font-family: var(--font-base);
   font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
+  font-weight: 400;
+  letter-spacing: var(--display-tracking);
   text-transform: uppercase;
-  color: var(--tone-700);
+  color: var(--display-accent);
   margin-bottom: 0.5rem;
 }
-
 /* ---------- Header / nav ---------- */
 
 /* Always opaque: a transparent-over-hero header made the type flip colour
@@ -257,7 +290,7 @@ header.site-header .container {
 }
 
 .header-actions .nav-cta {
-  display: none;
+  display: inline-flex;
 }
 
 .nav-toggle {
@@ -488,6 +521,27 @@ section {
   margin-bottom: 2.5rem;
 }
 
+/* Light-blue layout bands from the redesign mockup. They frame sections only;
+   photography remains direct, unfiltered source imagery. */
+#confianza,
+#galeria,
+#preguntas-frecuentes,
+#zona {
+  background: var(--display-band);
+}
+
+#zona {
+  color: var(--color-text);
+}
+
+#zona h2 {
+  color: var(--display-ink);
+}
+
+#zona .eyebrow {
+  color: var(--display-accent);
+}
+
 /* ---------- Hero ---------- */
 
 #hero {
@@ -499,7 +553,7 @@ section {
   display: flex;
   align-items: flex-end;
   padding-bottom: calc(clamp(3rem, 8vw, 5.5rem) + var(--cookie-banner-h));
-  color: var(--text-on-dark);
+  color: var(--display-ink);
   background: var(--tone-700);
 }
 
@@ -521,15 +575,9 @@ section {
   object-fit: cover;
 }
 
+/* Hero photography stays unprocessed. */
 .hero-photo::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    120deg,
-    rgba(0, 119, 182, 0.4),
-    rgba(0, 119, 182, 0.08)
-  );
+  display: none;
 }
 
 .hero-content {
@@ -556,24 +604,41 @@ section {
   margin-bottom: 1.75rem;
 }
 
-.hero-cta-row {
-  display: flex;
-  flex-wrap: wrap;
+#hero {
+  min-height: min(calc(100svh - var(--nav-height)), 950px);
+  max-height: 950px;
+  padding: 0;
   align-items: center;
-  gap: 1rem;
+  justify-content: center;
 }
 
-.hero-contact-inline {
-  display: flex;
-  gap: 1rem;
-  color: var(--text-on-dark);
-  font-weight: 600;
+.hero-content {
+  max-width: 62rem;
+  text-align: center;
 }
 
-.hero-contact-inline a {
-  color: var(--text-on-dark);
-  text-decoration: none;
+.hero-content h1 {
+  font-size: clamp(2.375rem, calc(5vw + 2px), 3.625rem);
 }
+
+.hero-content p {
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+@media (min-width: 44rem) {
+  .hero-content p {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 43.99rem) {
+  .hero-content h1 {
+    font-size: 1.5625rem;
+  }
+}
+
+
 
 /* ---------- Services ---------- */
 
@@ -586,6 +651,21 @@ section {
 @media (min-width: 40rem) {
   .services-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 70rem) {
+  .services-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+
+  .service-card-body {
+    padding: 1rem;
+  }
+
+  section {
+    padding-block: clamp(3.5rem, 5vw, 4.5rem);
   }
 }
 
@@ -832,6 +912,29 @@ details.faq-item summary {
   aspect-ratio: 4 / 3;
   border: 0;
   display: block;
+}
+@media (min-width: 70rem) {
+  .contact-layout {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 3rem;
+  }
+
+  .contact-form {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .contact-form > label:nth-of-type(4),
+  .contact-form > label:nth-of-type(5),
+  .contact-form > .consent-field,
+  .contact-form > .field-error,
+  .contact-form > .form-status {
+    grid-column: 1 / -1;
+  }
+
+  .contact-form > button {
+    grid-column: 3;
+    justify-self: end;
+  }
 }
 
 /* ---------- Contact ---------- */

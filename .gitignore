@@ -8,3 +8,7 @@ Website services and costs.md
 .DS_Store
 Pego y Alicante
 .DS_Store
+
+# Redesign working folder (33 MB PSD, exported layers) and PSD tooling venv.
+/00-html-layers/
+.venv-psd/
