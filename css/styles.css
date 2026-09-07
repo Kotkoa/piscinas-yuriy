@@ -4,9 +4,10 @@
   font-weight: 400 800;
   font-display: swap;
   src: url('../assets/fonts/inter-latin-var.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
-    U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
 }
 
 /* Display serif for headings and eyebrows, from the 2026-09 mockup (see
@@ -18,9 +19,10 @@
   font-weight: 400 700;
   font-display: swap;
   src: url('../assets/fonts/source-serif-4-latin-var.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
-    U+2010-2015, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030,
-    U+2039-203A, U+20AC, U+2122;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2010-2015,
+    U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+20AC,
+    U+2122;
 }
 
 :root {
@@ -531,6 +533,7 @@ section {
 
 #zona {
   color: var(--color-text);
+  background: #ffffff;
 }
 
 #zona h2 {
@@ -628,7 +631,8 @@ section {
 @media (min-width: 96rem) {
   #hero,
   #galeria,
-  #confianza {
+  #confianza,
+  #zona {
     width: 100%;
     max-width: var(--layout-wide-width);
     margin-inline: auto;
@@ -646,8 +650,6 @@ section {
     font-size: 1.5625rem;
   }
 }
-
-
 
 /* ---------- Services ---------- */
 
@@ -842,14 +844,13 @@ section {
 #preguntas-frecuentes .faq-copy {
   padding-left: max(
     clamp(2rem, 8vw, 9rem),
-    calc(
-      (100vw - var(--layout-wide-width)) / 2 + clamp(2rem, 8vw, 9rem)
-    )
+    calc((100vw - var(--layout-wide-width)) / 2 + clamp(2rem, 8vw, 9rem))
   );
 }
 @media (min-width: 96rem) {
   #galeria .gallery-copy,
-  #confianza .confianza-copy {
+  #confianza .confianza-copy,
+  #zona .confianza-copy {
     padding-left: clamp(2rem, 8vw, 9rem);
   }
 }
@@ -1075,9 +1076,7 @@ section {
   padding: 2.5rem 2.5rem 2rem;
   padding-right: max(
     clamp(2rem, 8vw, 9rem),
-    calc(
-      (100vw - var(--layout-wide-width)) / 2 + clamp(2rem, 8vw, 9rem)
-    )
+    calc((100vw - var(--layout-wide-width)) / 2 + clamp(2rem, 8vw, 9rem))
   );
 }
 
@@ -1276,7 +1275,7 @@ details.faq-item p {
   }
 
   .process-number::after {
-    content: ".";
+    content: '.';
   }
 
   .process-card h3 {
@@ -1457,33 +1456,31 @@ details.faq-item p {
     margin-top: 0.2rem;
   }
 }
-/* ---------- Local area + map ---------- */
+/* ---------- Local area ---------- */
 
-.area-layout {
-  display: grid;
-  gap: 2.5rem;
+#zona {
+  height: 240px;
+  max-height: 240px;
+  overflow: hidden;
+  padding: 0;
 }
 
-@media (min-width: 800px) {
-  .area-layout {
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
+#zona .confianza-layout {
+  height: 100%;
+}
+
+@media (min-width: 48rem) {
+  #zona {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 }
 
-
-.map-card {
-  background: #fff;
-  border-radius: var(--radius-card);
-  overflow: hidden;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
-}
-
-.map-card iframe {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  border: 0;
-  display: block;
+@media (max-width: 47.99rem) {
+  #zona {
+    height: auto;
+    max-height: none;
+  }
 }
 @media (min-width: 70rem) {
   .contact-layout {
