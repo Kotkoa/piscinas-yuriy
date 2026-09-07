@@ -1376,13 +1376,21 @@ details.faq-item p {
 }
 
 .trust-point-mark {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 3.5rem;
   height: 3.5rem;
   margin: 0 auto 1.5rem;
   border: 1px solid var(--tone-200);
   border-radius: 50%;
   background: rgb(255 255 255 / 0.55);
+  color: var(--display-accent);
+}
+
+.trust-point-mark svg {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .trust-point h3 {
