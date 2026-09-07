@@ -213,23 +213,6 @@ document.addEventListener("DOMContentLoaded", () => {
     revealTargets.forEach((el) => el.classList.add("is-visible"));
   }
 
-  const processSteps = document.querySelectorAll(".process-step");
-  if (processSteps.length && "IntersectionObserver" in window) {
-    const processObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            processObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.35 }
-    );
-    processSteps.forEach((el) => processObserver.observe(el));
-  } else {
-    processSteps.forEach((el) => el.classList.add("is-visible"));
-  }
 });
 
 function initContactForm(form) {
@@ -381,5 +364,41 @@ function initContactForm(form) {
     } finally {
       submitButton?.removeAttribute("disabled");
     }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initGallerySlider);
+
+function initGallerySlider() {
+  const slider = document.querySelector(".gallery-slider");
+
+  if (!slider) return;
+
+  const slides = [...slider.querySelectorAll(".gallery-slide")];
+  const title = slider.querySelector(".gallery-slider-title");
+  const description = slider.querySelector(".gallery-slider-description");
+  const count = slider.querySelector(".gallery-slider-count");
+  const controls = slider.querySelectorAll("[data-gallery-direction]");
+  let activeIndex = 0;
+
+  const showSlide = (index) => {
+    activeIndex = (index + slides.length) % slides.length;
+
+    slides.forEach((slide, slideIndex) => {
+      const isActive = slideIndex === activeIndex;
+      slide.classList.toggle("is-active", isActive);
+      slide.setAttribute("aria-hidden", String(!isActive));
+    });
+
+    const activeSlide = slides[activeIndex];
+    title.textContent = activeSlide.dataset.title;
+    description.textContent = activeSlide.dataset.description;
+    count.textContent = String(activeIndex + 1) + " / " + slides.length;
+  };
+
+  controls.forEach((control) => {
+    control.addEventListener("click", () => {
+      showSlide(activeIndex + (control.dataset.galleryDirection === "next" ? 1 : -1));
+    });
   });
 }
