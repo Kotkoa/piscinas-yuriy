@@ -495,8 +495,8 @@ section {
 }
 
 .section-contact {
-  background: var(--tone-950);
-  color: var(--text-on-dark);
+  background: #fff;
+  color: var(--text-900);
 }
 
 .section-area h2,
@@ -504,9 +504,17 @@ section {
   color: var(--text-on-dark);
 }
 
+.section-contact h2 {
+  color: var(--text-900);
+}
+
 .section-area .eyebrow,
 .section-contact .eyebrow {
   color: var(--tone-300);
+}
+
+.section-contact .eyebrow {
+  color: var(--tone-600);
 }
 
 .section-header {
@@ -1321,6 +1329,10 @@ details.faq-item p {
   padding: 2rem clamp(2rem, 8vw, 9rem);
 }
 
+.confianza-copy.reveal.is-visible {
+  padding: 32px 119.36px 32px 176px;
+}
+
 .confianza-photo {
   height: 100%;
   min-height: 0;
@@ -1519,11 +1531,57 @@ details.faq-item p {
 .contact-layout {
   display: grid;
   gap: 2.5rem;
+  grid-template-columns: 1fr;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.contact-info .eyebrow {
+  color: var(--display-ink);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 3.25rem);
+  font-weight: 400;
+}
+
+.contact-info h2 {
+  color: var(--display-accent);
+  font-family: var(--font-base);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.contact-description {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  margin: 0 0 1.5rem;
+}
+
+.contact-info .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.btn-icon {
+  flex-shrink: 0;
+}
+
+.contact-form-container {
+  width: 100%;
 }
 
 @media (min-width: 800px) {
   .contact-layout {
     grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
   }
 }
 
