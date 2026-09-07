@@ -154,6 +154,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("#contact-form");
   if (form) initContactForm(form);
 
+  // Browsers without exclusive-accordion support ignore the details name
+  // attribute, so close siblings manually there.
+  if (!("name" in document.createElement("details"))) {
+    const faqItems = document.querySelectorAll("details.faq-item[name]");
+    faqItems.forEach((item) => {
+      item.addEventListener("toggle", () => {
+        if (!item.open) return;
+        faqItems.forEach((other) => {
+          if (other !== item) other.open = false;
+        });
+      });
+    });
+  }
+
   const navToggle = document.querySelector("#nav-toggle");
   const siteNav = document.querySelector("#site-nav");
   if (navToggle && siteNav) {
