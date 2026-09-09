@@ -589,3 +589,46 @@ is delegated to agents; judgement is not.
 5. Batch mechanical work — meta tags, schema, a11y, images are four parallel tasks, not four
    sessions.
 6. Verify claimed changes by looking at the rendered page, not at the agent's summary.
+
+---
+
+## ADR-021 — Two typefaces only: STIXGeneral (display) and Myriad Pro (text), both local
+
+**Status:** Accepted · 2026-09-08 · supersedes the font clause of ADR-020 (point 1)
+
+**Context.** The design source (`docs/redesign-mockup-tokens.md`) specifies exactly two faces:
+`STIXGeneral-Regular` for display and `MyriadPro-Regular` for eyebrows and body. The shipped CSS
+approximated them with two self-hosted webfonts — `Inter` (48 432 B) and a `Source Serif 4` subset
+(31 kB) — so four families were effectively in play between design and implementation.
+
+**Decision.** `--font-base` is `'Myriad Pro', 'Myriad Set Pro', Myriad, 'Segoe UI', system-ui,
+-apple-system, 'Helvetica Neue', Arial, sans-serif` and `--font-display` is `'STIXGeneral',
+'STIX Two Text', 'Times New Roman', Times, Georgia, serif`. No other family may appear anywhere in
+the CSS. Both `@font-face` rules, both `woff2` files (`assets/fonts/` is deleted) and the font
+`preload` in all four HTML pages are removed. Myriad Pro is Adobe-licensed and may not be
+self-hosted; STIXGeneral would be redistributable under the OFL, but shipping one webfont and not
+the other would reintroduce a mixed setup, so neither is shipped.
+
+**Consequences.** Zero font bytes and zero render-blocking font requests — the ADR-020 goal is met
+more strongly than before, and CSS is now the only render-blocking resource. Rendering is
+platform-dependent: macOS has STIXGeneral system-wide, and Myriad Pro wherever Adobe apps are
+installed; Windows and Android visitors fall through to Times New Roman / Segoe UI or Arial, which
+keeps the serif-vs-sans contrast of the design but not its exact letterforms. Accepted as the price
+of the two-face rule. Bold headings use synthetic weight where only Regular/Bold exist.
+
+---
+
+## ADR-022 — Source Sans 3 loads from Google Fonts
+
+**Status:** Accepted · 2026-09-08 · supersedes ADR-021’s Myriad Pro and no-webfont decision
+
+**Decision.** By explicit owner instruction, the body/UI font is Google Fonts **Source Sans 3**
+(weights 400, 600, 700 and 800), loaded from fonts.googleapis.com and fonts.gstatic.com on all
+HTML pages. STIXGeneral remains the display serif, with local/system fallbacks. This knowingly
+reintroduces the external Google connection prohibited by ADR-020 and ADR-021.
+
+**Consequences.** Source Sans 3 renders consistently on all visitor devices and is the closest
+open-source replacement for Myriad Pro; it is designed by the same type designer, Paul D. Hunt.
+The Google request happens before analytics consent, so legal/privacidad.html names Google Fonts
+as a technical provider. The extra third-party connection and visitor-IP disclosure are accepted.
+
