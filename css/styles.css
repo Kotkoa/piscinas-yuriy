@@ -32,20 +32,23 @@
   --text-muted-on-dark: var(--tone-300);
   --text-muted: #667085;
 
-  --font-base: 'Source Sans 3', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial,
-    sans-serif;
+  --font-base:
+    'Source Sans 3', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue',
+    Arial, sans-serif;
   --font-display:
     'STIXGeneral', 'STIX Two Text', 'Times New Roman', Times, Georgia, serif;
 
   /* Display palette — mockup navy, added as its own token family rather than
      replacing the logo-derived brand anchors above. Headings and eyebrows only;
      buttons, links and icons stay on --color-accent / --tone-*. */
-  --display-ink: #193361;
-  --display-accent: #426eb5;
+  --display-ink: #406791;
+  --display-accent: #48748b;
   --display-band: #ebf8f9;
+  --card-band: #f2f9ff;
   --display-tracking: -0.025em;
-  --max-width: 1140px;
-  --layout-wide-width: calc(var(--max-width) + clamp(4rem, 16vw, 18rem));
+  --max-width: 1284px;
+  --container-gutter: clamp(1.25rem, 3vw, 2.5rem);
+  --layout-wide-width: calc(var(--max-width) + 2 * var(--container-gutter));
   --nav-height: 68px;
   --radius-pill: 999px;
   --radius-card: 1rem;
@@ -100,7 +103,7 @@ a {
   width: 100%;
   max-width: var(--layout-wide-width);
   margin-inline: auto;
-  padding-inline: clamp(2rem, 8vw, 9rem);
+  padding-inline: var(--container-gutter);
 }
 
 /* ---------- Typography ---------- */
@@ -118,7 +121,6 @@ h3 {
 
 h1 {
   font-size: clamp(2.25rem, 5vw, 3.5rem);
-  text-transform: uppercase;
 }
 
 h2 {
@@ -151,18 +153,15 @@ header.site-header {
   height: var(--nav-height);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background: rgba(242, 251, 252, 0.98);
-  backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(33, 60, 64, 0.12);
+  background: #fff;
 }
 
 header.site-header .container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: nowrap;
-  gap: 0.75rem;
+  gap: clamp(1.5rem, 6vw, 5rem);
   width: 100%;
 }
 
@@ -175,7 +174,8 @@ header.site-header .container {
 
 .logo-img {
   width: auto;
-  height: clamp(1.75rem, 6vw, 2.25rem);
+  height: clamp(2.25rem, 5vw, 4.25rem);
+  transform: translateY(-15%); /* Do not move vertical alignment of logo */
 }
 
 .logo-footer .logo-img {
@@ -195,9 +195,7 @@ header.site-header .container {
   padding: 0.5rem 1.25rem 1rem;
   list-style: none;
   gap: 0;
-  background: rgba(242, 251, 252, 0.98);
-  backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(33, 60, 64, 0.12);
+  background: #fff;
   box-shadow: 0 16px 32px rgba(3, 4, 94, 0.14);
   pointer-events: none;
   opacity: 0;
@@ -220,10 +218,10 @@ header.site-header .container {
   display: flex;
   align-items: center;
   min-height: 44px;
-  color: var(--color-text);
+  color: var(--display-accent);
   text-decoration: none;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 400;
   padding: 0.375rem 0.25rem;
   border-radius: 0.5rem;
   transition:
@@ -233,38 +231,8 @@ header.site-header .container {
 
 .site-nav a:hover,
 .site-nav a:focus-visible {
-  color: var(--tone-500);
-  background: var(--tone-50);
-}
-
-.site-nav-cta {
-  margin-top: 0.375rem;
-}
-
-.site-nav-cta .btn {
-  display: flex;
-  justify-content: center;
-  min-height: 48px;
-  padding-inline: 1rem;
-  width: 100%;
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.header-phone {
-  display: none;
-  font-weight: 700;
-  color: var(--color-text);
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.header-actions .nav-cta {
-  display: inline-flex;
+  color: var(--display-ink);
+  background: none;
 }
 
 .nav-toggle {
@@ -282,6 +250,7 @@ header.site-header .container {
   cursor: pointer;
   touch-action: manipulation;
   flex-shrink: 0;
+  margin-left: auto;
 }
 
 .nav-toggle:focus:not(:focus-visible) {
@@ -318,15 +287,17 @@ header.site-header .container {
 }
 
 @media (min-width: 860px) {
+  :root {
+    --nav-height: clamp(84px, 8.8vw, 120px);
+  }
+
   .site-nav {
     position: static;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: 1.25rem;
+    gap: clamp(1.25rem, 5.1vw, 4.375rem);
     padding: 0;
     background: none;
-    backdrop-filter: none;
-    border-bottom: none;
     box-shadow: none;
     opacity: 1;
     visibility: visible;
@@ -338,27 +309,16 @@ header.site-header .container {
   .site-nav a {
     padding: 0;
     border-radius: 0;
-    font-size: 0.875rem;
+    min-height: 0;
     white-space: nowrap;
-    color: var(--color-text);
-  }
-
-  .site-nav-cta {
-    display: none;
-  }
-
-  .header-actions .nav-cta {
-    display: inline-flex;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    font-size: clamp(0.9375rem, 1.76vw, 1.5rem);
+    color: var(--display-accent);
   }
 
   .nav-toggle {
     display: none;
-  }
-}
-
-@media (min-width: 1150px) {
-  .header-phone {
-    display: inline;
   }
 }
 
@@ -386,22 +346,6 @@ header.site-header .container {
     box-shadow 0.2s ease,
     background 0.2s ease,
     opacity 0.2s ease;
-}
-
-.header-actions .btn {
-  padding-inline: 0.875rem;
-  font-size: 0.8125rem;
-}
-
-@media (min-width: 480px) {
-  .header-actions .btn {
-    padding-inline: 1.5rem;
-    font-size: 0.9375rem;
-  }
-}
-
-.nav-cta.is-hidden {
-  display: none;
 }
 
 .btn:hover {
@@ -549,48 +493,51 @@ section {
   display: none;
 }
 
-.hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: 62rem;
-  text-align: center;
-  padding-left: clamp(1.25rem, 6vw, 4.5rem);
-  padding-right: 1.25rem;
-}
-
-@media (max-width: 859px) {
-  #hero {
-    padding-bottom: calc(clamp(4rem, 8vw, 5rem) + var(--cookie-banner-h));
-  }
-
-  .hero-content {
-    width: 100%;
-    padding-inline: clamp(1.5rem, 6vw, 3rem);
-  }
-}
-
-.hero-content p {
-  font-size: 1rem;
-  margin-bottom: 0;
-}
-
 #hero {
   position: relative;
-  /* starts below the opaque header instead of running under it */
   margin-top: var(--nav-height);
-  min-height: calc(100vh - var(--nav-height));
-  min-height: min(calc(100svh - var(--nav-height)), 950px);
-  max-height: 950px;
+  height: clamp(30rem, 53.2vw, 45.5rem);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
+  align-items: flex-end;
+  padding: 0 0 1.5rem;
   color: var(--display-ink);
   background: var(--tone-700);
 }
 
+@media (max-width: 859px) {
+  #hero {
+    padding-bottom: calc(2.5rem + var(--cookie-banner-h));
+  }
+}
+
+.hero-content {
+  position: relative;
+  width: 100%;
+  max-width: var(--layout-wide-width);
+  text-align: left;
+}
+
 .hero-content h1 {
-  font-size: clamp(2.375rem, calc(5vw + 2px), 3.625rem);
+  font-size: clamp(2.25rem, 5.8vw, 4rem);
+  line-height: 0.945;
+  letter-spacing: 0.015em;
+  margin: 0 0 0.75rem;
+}
+
+.hero-title-alt {
+  display: block;
+  font-style: italic;
+  font-size: clamp(1.75rem, 3.8vw, 3rem);
+  line-height: 1.2;
+}
+
+.hero-content p {
+  max-width: 20rem;
+  margin: 0;
+  font-size: clamp(1.25rem, 1.9vw, 1.640625rem);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--display-ink);
 }
 
 @media (min-width: 96rem) {
@@ -604,64 +551,17 @@ section {
   }
 }
 
-@media (min-width: 44rem) {
-  .hero-content p {
-    white-space: nowrap;
-  }
-}
-
-@media (max-width: 43.99rem) {
-  .hero-content h1 {
-    font-size: 1.5625rem;
-  }
-}
-
 /* ---------- Services ---------- */
 
-@media (min-width: 40rem) {
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 @media (min-width: 70rem) {
-  .services-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.25rem;
-  }
-
-  .service-card-body {
-    padding: 1rem;
-  }
-
   section {
     padding-block: clamp(3.5rem, 5vw, 4.5rem);
   }
 }
 
-.service-card {
-  display: flex;
-  flex-direction: column;
-  width: auto;
-  background: #fff;
-  border: 0;
-  border-radius: 0;
-  overflow: hidden;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
 .service-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 28px rgba(33, 60, 64, 0.12);
-}
-
-.service-card img {
-  width: 100%;
-  height: 175px;
-  aspect-ratio: auto;
-  object-fit: cover;
 }
 
 .service-list {
@@ -693,73 +593,91 @@ section {
 /* ---------- Services redesign ---------- */
 #servicios {
   background: #fff;
+  padding-block: clamp(2.5rem, 3.5vw, 3rem) clamp(3rem, 4vw, 3.5rem);
 }
 
 .services-heading-row {
   display: grid;
   width: 100%;
   gap: 1rem;
-  margin-bottom: 1.25rem;
-}
-
-.services-heading-row h2 {
-  margin: 0 0 0.25rem;
-  white-space: nowrap;
+  margin-bottom: 2.5rem;
 }
 
 .services-heading-row .eyebrow {
-  font-size: 1rem;
+  font-size: clamp(0.9375rem, 1.76vw, 1.5rem);
   margin-bottom: 0;
+}
+
+.services-heading-row h2 {
+  margin: -0.25rem 0 0;
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  line-height: 1;
 }
 
 .services-intro {
   margin: 0;
-  color: var(--text-muted);
-  font-size: 1rem;
-  line-height: 1.45;
+  color: var(--display-ink);
+  font-size: clamp(1.2rem, 1.75vw, 1.5rem); /* do not touch font size */
+  line-height: 1.2;
+}
+
+.service-card {
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.service-card img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 0.875rem 0.875rem 0 0;
 }
 
 .service-card-body {
   flex: 1;
-  background: var(--display-band);
-  padding: 1rem;
+  background: var(--card-band);
+  padding: 1.8125rem 1.5rem 1.6875rem;
+  text-align: center;
 }
 
 .service-card h3 {
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: clamp(1.125rem, 1.76vw, 1.5rem);
   font-weight: 600;
+  text-transform: uppercase;
   letter-spacing: var(--display-tracking);
   line-height: 1.1;
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.5rem;
+  text-wrap: balance;
 }
 
 .service-card p {
-  color: var(--text-muted);
-  font-family: var(--font-base);
-  font-size: 1rem;
-  line-height: 1.4;
   margin: 0;
+  color: var(--display-ink);
+  font-family: var(--font-base);
+  font-size: clamp(0.9375rem, 1.25vw, 1.0625rem);
+  line-height: 1.45;
 }
 
 @media (min-width: 70rem) {
-  #servicios {
-    height: 500px;
-    max-height: 500px;
-    overflow: hidden;
-    padding-block: 1.5rem;
-  }
-
   .services-heading-row {
-    grid-template-columns: 1fr 25rem;
-    align-items: center;
-    gap: 2rem;
-    margin-bottom: 1rem;
+    grid-template-columns: 40% 1fr;
+    align-items: end;
+    gap: 2.625rem;
   }
-}
 
-#servicios .container {
-  container-type: inline-size;
+  .services-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.8125rem;
+  }
 }
 
 .services-grid {
@@ -1262,7 +1180,6 @@ details.faq-item p {
   padding: 32px 119.36px 32px 176px;
 }
 
-
 .confianza-photo {
   height: 100%;
   min-height: 0;
@@ -1476,7 +1393,6 @@ details.faq-item p {
     align-items: start;
   }
 }
-
 
 .contact-card {
   background: var(--display-band);

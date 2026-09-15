@@ -195,20 +195,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const heroCta = document.querySelector(".hero-cta");
-  const navCta = document.querySelector(".nav-cta");
-  if (heroCta && navCta && "IntersectionObserver" in window) {
-    const ctaObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          navCta.classList.toggle("is-hidden", entry.isIntersecting);
-        });
-      },
-      { threshold: 0 }
-    );
-    ctaObserver.observe(heroCta);
-  }
-
   const revealTargets = document.querySelectorAll(".reveal");
   if (revealTargets.length && "IntersectionObserver" in window) {
     const revealObserver = new IntersectionObserver(
