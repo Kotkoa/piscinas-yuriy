@@ -370,35 +370,21 @@ function initContactForm(form) {
 document.addEventListener("DOMContentLoaded", initGallerySlider);
 
 function initGallerySlider() {
-  const slider = document.querySelector(".gallery-slider");
+  const grid = document.querySelector(".gallery-grid");
 
-  if (!slider) return;
+  if (!grid) return;
 
-  const slides = [...slider.querySelectorAll(".gallery-slide")];
-  const title = slider.querySelector(".gallery-slider-title");
-  const description = slider.querySelector(".gallery-slider-description");
-  const count = slider.querySelector(".gallery-slider-count");
-  const controls = slider.querySelectorAll("[data-gallery-direction]");
-  let activeIndex = 0;
-
-  const showSlide = (index) => {
-    activeIndex = (index + slides.length) % slides.length;
-
-    slides.forEach((slide, slideIndex) => {
-      const isActive = slideIndex === activeIndex;
-      slide.classList.toggle("is-active", isActive);
-      slide.setAttribute("aria-hidden", String(!isActive));
-    });
-
-    const activeSlide = slides[activeIndex];
-    title.textContent = activeSlide.dataset.title;
-    description.textContent = activeSlide.dataset.description;
-    count.textContent = String(activeIndex + 1) + " / " + slides.length;
-  };
+  const controls = document.querySelectorAll(
+    ".gallery-carousel [data-gallery-direction]"
+  );
 
   controls.forEach((control) => {
     control.addEventListener("click", () => {
-      showSlide(activeIndex + (control.dataset.galleryDirection === "next" ? 1 : -1));
+      if (control.dataset.galleryDirection === "next") {
+        grid.appendChild(grid.firstElementChild);
+      } else {
+        grid.insertBefore(grid.lastElementChild, grid.firstElementChild);
+      }
     });
   });
 }

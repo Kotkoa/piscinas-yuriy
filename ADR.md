@@ -632,3 +632,43 @@ open-source replacement for Myriad Pro; it is designed by the same type designer
 The Google request happens before analytics consent, so legal/privacidad.html names Google Fonts
 as a technical provider. The extra third-party connection and visitor-IP disclosure are accepted.
 
+---
+
+## ADR-023 — Header, hero and services block re-markup to the 2026-09-15 mockups
+
+**Status:** Accepted · 2026-09-15
+
+**Context.** The owner supplied three desktop mockups (1366 px) and asked for the header, hero
+and "Qué hacemos" (`#servicios`) sections to be re-verified against them, one block at a time with
+an approval gate after each. The mockups are an AI re-render of the live page — they reuse the real
+client photos and reproduce the page's own map/zone overflow glitch — so they were treated as a
+visual specification (geometry, type, colour), not a source of copy: existing Spanish copy shipped
+unchanged.
+
+**Decision.**
+- Header drops the phone link and the `Solicitar presupuesto` button; nav is five links, uppercase,
+  on a plain white bar. `click_call` still fires from the contact block and footer.
+- Hero photo is replaced with the owner-supplied terrace/sea image
+  (`assets/img/hero-piscina-terraza-mediterranea-*`); the prior `hero-piscina-jardin-atardecer-*`
+  set stays in place because `#confianza` still references it.
+- `#servicios`: the `QUÉ HACEMOS` eyebrow now precedes `NUESTROS SERVICIOS`; cards centre their
+  copy on a light band with a 3∶2 photo, matching the mockup's card layout.
+- Container content width grows from 1140 px to 1284 px (`--max-width`, `--container-gutter`),
+  applied globally — every section below the three gated blocks widens by design, matching the
+  mockups' gutters.
+- Display palette changes globally: `--display-ink: #1e64af`, `--display-accent: #48748b`,
+  refined twice more after owner review (measured mockup ink, then an explicit
+  `rgb(48,87,129)` value, then a final "more blue" pass) — the owner's live-eye judgement on the
+  rendered page is the source of truth here, not the mockup pixel probe.
+
+**Consequences.**
+- Colour and container-width changes are global tokens, so sections outside the three gated blocks
+  (galería, proceso, confianza, FAQ, zona, contacto, footer) changed appearance too, without a
+  separate approval pass — accepted because the mockups showed the same treatment there.
+- Two hero image sets now ship (`terraza-mediterranea-*` for the hero, `jardin-atardecer-*` for
+  `#confianza`) until a future pass unifies or replaces the trust-section photo.
+- Fine typographic tuning (hero H1 line-height, letter-spacing, paragraph line-wrap, eyebrow/heading
+  spacing, an exact px gap on the services intro column) was done by iterative pixel measurement
+  against live screenshots rather than against the mockup once the owner started giving direct
+  pixel/colour feedback — the mockup is the starting spec, the owner's review of the rendered page
+  is the final word.

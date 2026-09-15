@@ -71,7 +71,7 @@
       imagesizes="100vw"
       fetchpriority="high"
     />
-    <link rel="stylesheet" href="css/styles.css?v=20260908-1" />
+    <link rel="stylesheet" href="css/styles.css?v=20260915-1" />
     <link
       rel="icon"
       href="/assets/favicon.svg?v=20260905-3"
@@ -451,7 +451,7 @@
                 />
               </picture>
               <div class="service-card-body">
-                <h3>Reparación y renovación de piscinas</h3>
+                <h3>Reparación y renovación</h3>
                 <p>
                   Reformamos piscinas existentes: reparación de fugas,
                   impermeabilización y renovación de revestimientos.
@@ -478,7 +478,7 @@
                 />
               </picture>
               <div class="service-card-body">
-                <h3>Instalación fontanería de piscinas</h3>
+                <h3>Instalación fontanería</h3>
                 <p>
                   Instalación de filtros y bombas, equipos de cloradores salinos
                   y control de pH, y bombas de calor.
@@ -505,7 +505,7 @@
                 />
               </picture>
               <div class="service-card-body">
-                <h3>Instalación electricidad de piscinas</h3>
+                <h3>Instalación electricidad</h3>
                 <p>
                   Cuadros eléctricos e iluminación de piscinas para una
                   instalación segura.
@@ -515,27 +515,33 @@
           </div>
         </div>
       </section>
-      <section id="galeria" class="section-white">
-        <div class="gallery-layout">
-          <div class="gallery-copy reveal">
-            <span class="eyebrow">Trabajos realizados</span>
-            <h2>Galería de proyectos</h2>
-            <p>
+      <section id="galeria">
+        <div class="container">
+          <div class="gallery-heading-row reveal">
+            <div>
+              <span class="eyebrow">Galería de proyectos</span>
+              <h2>Trabajos realizados</h2>
+            </div>
+            <p class="gallery-intro">
               Cada piscina cuenta una historia. Descubre algunos de nuestros
               proyectos en la Costa Blanca y déjate inspirar.
             </p>
           </div>
           <div
-            class="gallery-slider reveal"
+            class="gallery-carousel reveal"
             aria-roledescription="carrusel"
             aria-label="Galería de proyectos"
           >
-            <div class="gallery-slider-viewport">
-              <figure
-                class="gallery-slide is-active"
-                data-title="Piscina terminada en Pego"
-                data-description="Construcción a medida con acabado en piedra clara."
-              >
+            <button
+              class="gallery-nav gallery-nav-prev"
+              type="button"
+              data-gallery-direction="previous"
+              aria-label="Proyecto anterior"
+            >
+              ←
+            </button>
+            <div class="gallery-grid">
+              <article class="gallery-card">
                 <picture>
                   <source
                     type="image/webp"
@@ -543,7 +549,7 @@
                       assets/img/galeria-01-piscina-agua-turquesa-480.webp 480w,
                       assets/img/galeria-01-piscina-agua-turquesa-681.webp 681w
                     "
-                    sizes="(min-width: 48rem) 55vw, 100vw"
+                    sizes="(min-width: 70rem) 30vw, (min-width: 40rem) 45vw, 100vw"
                   />
                   <img
                     src="assets/img/galeria-01-piscina-agua-turquesa-681.jpg"
@@ -552,13 +558,9 @@
                     height="511"
                   />
                 </picture>
-              </figure>
-              <figure
-                class="gallery-slide"
-                data-title="Piscina con gresite azul en Dénia"
-                data-description="Proyecto terminado junto a palmeras, con revestimiento de gresite."
-                aria-hidden="true"
-              >
+                <p class="gallery-card-caption">Piscina terminada en Pego</p>
+              </article>
+              <article class="gallery-card">
                 <picture>
                   <source
                     type="image/webp"
@@ -566,7 +568,7 @@
                       assets/img/galeria-02-piscina-gresite-azul-palmeras-480.webp 480w,
                       assets/img/galeria-02-piscina-gresite-azul-palmeras-800.webp 800w
                     "
-                    sizes="(min-width: 48rem) 55vw, 100vw"
+                    sizes="(min-width: 70rem) 30vw, (min-width: 40rem) 45vw, 100vw"
                   />
                   <img
                     src="assets/img/galeria-02-piscina-gresite-azul-palmeras-800.jpg"
@@ -576,13 +578,11 @@
                     loading="lazy"
                   />
                 </picture>
-              </figure>
-              <figure
-                class="gallery-slide"
-                data-title="Cascada de acero en Xàbia"
-                data-description="Lámina de agua integrada para dar movimiento a la piscina."
-                aria-hidden="true"
-              >
+                <p class="gallery-card-caption">
+                  Piscina con gresite azul en Dénia
+                </p>
+              </article>
+              <article class="gallery-card">
                 <picture>
                   <source
                     type="image/webp"
@@ -590,7 +590,7 @@
                       assets/img/galeria-03-cascada-lamina-agua-480.webp 480w,
                       assets/img/galeria-03-cascada-lamina-agua-800.webp 800w
                     "
-                    sizes="(min-width: 48rem) 55vw, 100vw"
+                    sizes="(min-width: 70rem) 30vw, (min-width: 40rem) 45vw, 100vw"
                   />
                   <img
                     src="assets/img/galeria-03-cascada-lamina-agua-800.jpg"
@@ -600,13 +600,9 @@
                     loading="lazy"
                   />
                 </picture>
-              </figure>
-              <figure
-                class="gallery-slide"
-                data-title="Escalera curva iluminada en Ondara"
-                data-description="Acceso integrado con gresite oscuro e iluminación LED."
-                aria-hidden="true"
-              >
+                <p class="gallery-card-caption">Cascada de acero en Xàbia</p>
+              </article>
+              <article class="gallery-card">
                 <picture>
                   <source
                     type="image/webp"
@@ -614,50 +610,29 @@
                       assets/img/galeria-04-escalera-curva-iluminada-480.webp 480w,
                       assets/img/galeria-04-escalera-curva-iluminada-645.webp 645w
                     "
-                    sizes="(min-width: 48rem) 55vw, 100vw"
+                    sizes="(min-width: 70rem) 30vw, (min-width: 40rem) 45vw, 100vw"
                   />
                   <img
                     src="assets/img/galeria-04-escalera-curva-iluminada-645.jpg"
                     alt="Escalera curva de piscina con gresite oscuro e iluminación LED"
                     width="645"
-                    height="484"
+                    height="438"
                     loading="lazy"
                   />
                 </picture>
-              </figure>
-            </div>
-            <div class="gallery-slider-footer">
-              <div class="gallery-slider-caption" aria-live="polite">
-                <p class="gallery-slider-title">Piscina terminada en Pego</p>
-                <p class="gallery-slider-description">
-                  Construcción a medida con acabado en piedra clara.
+                <p class="gallery-card-caption">
+                  Escalera curva iluminada en Ondara
                 </p>
-              </div>
-              <div
-                class="gallery-slider-controls"
-                aria-label="Navegación de la galería"
-              >
-                <button
-                  class="gallery-nav"
-                  type="button"
-                  data-gallery-direction="previous"
-                  aria-label="Proyecto anterior"
-                >
-                  ←
-                </button>
-                <span class="gallery-slider-count" aria-live="polite"
-                  >1 / 4</span
-                >
-                <button
-                  class="gallery-nav"
-                  type="button"
-                  data-gallery-direction="next"
-                  aria-label="Proyecto siguiente"
-                >
-                  →
-                </button>
-              </div>
+              </article>
             </div>
+            <button
+              class="gallery-nav gallery-nav-next"
+              type="button"
+              data-gallery-direction="next"
+              aria-label="Proyecto siguiente"
+            >
+              →
+            </button>
           </div>
         </div>
       </section>
@@ -869,7 +844,7 @@
       </section>
       <section id="preguntas-frecuentes" class="section-light">
         <div class="faq-layout">
-          <div class="gallery-copy faq-copy reveal">
+          <div class="faq-copy reveal">
             <span class="eyebrow">Preguntas frecuentes</span>
             <h2>RESPUESTAS CLARAS PARA TU PROYECTO</h2>
             <p>
