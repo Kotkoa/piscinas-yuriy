@@ -672,3 +672,28 @@ unchanged.
   against live screenshots rather than against the mockup once the owner started giving direct
   pixel/colour feedback — the mockup is the starting spec, the owner's review of the rendered page
   is the final word.
+
+## ADR-024 — Source Sans 3 is self-hosted; AVIF is the first source wherever it is smaller
+
+**Status:** Proposed · 2026-09-17 · supersedes ADR-022's delivery mechanism (the typeface itself is unchanged)
+
+**Context.** Measured on production at 412×915 @DPR 3, Slow 4G, 4x CPU: LCP 2300 ms (hero AVIF,
+response ends 2255 ms), CLS 0.0107 from a single shift whose sources are the hero and services text
+— the `fonts.gstatic.com` woff2 arrives at 1936 ms, well after FCP at 716 ms, and reflows the page.
+The same page over HTTP/1.1 shifts 0.1064. Worst interaction latency is 48 ms at 4x CPU, so INP
+needs no work. Below-fold WebP (≈300 KB) and a 592 KB PNG map compete with the hero for bandwidth.
+
+**Decision.**
+1. Source Sans 3 stays the body/UI typeface (ADR-022, owner instruction) but ships from the repo:
+   `assets/fonts/source-sans-3-latin-var.woff2` (28 792 B, latin subset, `wght 400..800`),
+   declared with `font-display: swap` in `css/styles.css` and preloaded by all four HTML pages.
+   No page references `fonts.googleapis.com` or `fonts.gstatic.com` — ADR-020's rule again.
+   `legal/privacidad.html` no longer lists Google Fonts as a processor.
+2. Every raster `<picture>` leads with AVIF when the AVIF is smaller than its WebP sibling at
+   `avifenc -q 50 -s 6`. `galeria-03-cascada-lamina-agua` is the measured exception and stays
+   WebP-only. The coverage map ships 640/1240 w AVIF+WebP instead of a 592 KB PNG.
+
+**Consequences.** Sandbox re-measurement of the full site with these changes: LCP 1476–1516 ms
+(from 2388–3484 ms locally), CLS 0.000, desktop page weight 589 KB → 467 KB, zero third-party
+requests before consent. Font updates remain a manual re-download of the subset URL (no build step,
+ADR-001). One more binary asset lives in git, as with ADR-020.

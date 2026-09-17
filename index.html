@@ -50,11 +50,12 @@
       content="https://piscinasyuriy.es/assets/og-image.jpg?v=20260905-4"
     />
     <!-- head-meta:end -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="/assets/fonts/source-sans-3-latin-var.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
 
     <link
@@ -71,7 +72,7 @@
       imagesizes="100vw"
       fetchpriority="high"
     />
-    <link rel="stylesheet" href="css/styles.css?v=20260915-1" />
+    <link rel="stylesheet" href="css/styles.css?v=20260917-1" />
     <link
       rel="icon"
       href="/assets/favicon.svg?v=20260905-3"
@@ -407,6 +408,14 @@
             <article class="service-card reveal">
               <picture>
                 <source
+                  type="image/avif"
+                  sizes="(min-width: 40rem) 45vw, 100vw"
+                  srcset="
+                    assets/img/servicio-construccion-gunitado-480.avif 480w,
+                    assets/img/servicio-construccion-gunitado-800.avif 800w
+                  "
+                />
+                <source
                   type="image/webp"
                   sizes="(min-width: 40rem) 45vw, 100vw"
                   srcset="
@@ -421,6 +430,7 @@
                   height="600"
                   loading="lazy"
                   decoding="async"
+                  fetchpriority="low"
                 />
               </picture>
               <div class="service-card-body">
@@ -433,6 +443,14 @@
             </article>
             <article class="service-card reveal">
               <picture>
+                <source
+                  type="image/avif"
+                  sizes="(min-width: 40rem) 45vw, 100vw"
+                  srcset="
+                    assets/img/servicio-reforma-revestimiento-480.avif 480w,
+                    assets/img/servicio-reforma-revestimiento-800.avif 800w
+                  "
+                />
                 <source
                   type="image/webp"
                   sizes="(min-width: 40rem) 45vw, 100vw"
@@ -448,6 +466,7 @@
                   height="600"
                   loading="lazy"
                   decoding="async"
+                  fetchpriority="low"
                 />
               </picture>
               <div class="service-card-body">
@@ -460,6 +479,14 @@
             </article>
             <article class="service-card reveal">
               <picture>
+                <source
+                  type="image/avif"
+                  sizes="(min-width: 40rem) 45vw, 100vw"
+                  srcset="
+                    assets/img/servicio-fontaneria-tomas-480.avif 480w,
+                    assets/img/servicio-fontaneria-tomas-800.avif 800w
+                  "
+                />
                 <source
                   type="image/webp"
                   sizes="(min-width: 40rem) 45vw, 100vw"
@@ -475,6 +502,7 @@
                   height="600"
                   loading="lazy"
                   decoding="async"
+                  fetchpriority="low"
                 />
               </picture>
               <div class="service-card-body">
@@ -487,6 +515,14 @@
             </article>
             <article class="service-card reveal">
               <picture>
+                <source
+                  type="image/avif"
+                  sizes="(min-width: 40rem) 45vw, 100vw"
+                  srcset="
+                    assets/img/servicio-clima-cuadro-electrico-480.avif 480w,
+                    assets/img/servicio-clima-cuadro-electrico-800.avif 800w
+                  "
+                />
                 <source
                   type="image/webp"
                   sizes="(min-width: 40rem) 45vw, 100vw"
@@ -502,6 +538,7 @@
                   height="600"
                   loading="lazy"
                   decoding="async"
+                  fetchpriority="low"
                 />
               </picture>
               <div class="service-card-body">
@@ -544,6 +581,14 @@
               <article class="gallery-card">
                 <picture>
                   <source
+                    type="image/avif"
+                    srcset="
+                      assets/img/galeria-01-piscina-agua-turquesa-480.avif 480w,
+                      assets/img/galeria-01-piscina-agua-turquesa-681.avif 681w
+                    "
+                    sizes="(min-width: 70rem) 30vw, (min-width: 40rem) 45vw, 100vw"
+                  />
+                  <source
                     type="image/webp"
                     srcset="
                       assets/img/galeria-01-piscina-agua-turquesa-480.webp 480w,
@@ -556,12 +601,23 @@
                     alt="Piscina terminada con agua turquesa y playa de piedra clara"
                     width="681"
                     height="511"
+                    loading="lazy"
+                    decoding="async"
+                    fetchpriority="low"
                   />
                 </picture>
                 <p class="gallery-card-caption">Piscina terminada en Pego</p>
               </article>
               <article class="gallery-card">
                 <picture>
+                  <source
+                    type="image/avif"
+                    srcset="
+                      assets/img/galeria-02-piscina-gresite-azul-palmeras-480.avif 480w,
+                      assets/img/galeria-02-piscina-gresite-azul-palmeras-800.avif 800w
+                    "
+                    sizes="(min-width: 70rem) 30vw, (min-width: 40rem) 45vw, 100vw"
+                  />
                   <source
                     type="image/webp"
                     srcset="
@@ -576,6 +632,7 @@
                     width="800"
                     height="600"
                     loading="lazy"
+                    fetchpriority="low"
                   />
                 </picture>
                 <p class="gallery-card-caption">
@@ -598,12 +655,21 @@
                     width="800"
                     height="600"
                     loading="lazy"
+                    fetchpriority="low"
                   />
                 </picture>
                 <p class="gallery-card-caption">Cascada de acero en Xàbia</p>
               </article>
               <article class="gallery-card">
                 <picture>
+                  <source
+                    type="image/avif"
+                    srcset="
+                      assets/img/galeria-04-escalera-curva-iluminada-480.avif 480w,
+                      assets/img/galeria-04-escalera-curva-iluminada-645.avif 645w
+                    "
+                    sizes="(min-width: 70rem) 30vw, (min-width: 40rem) 45vw, 100vw"
+                  />
                   <source
                     type="image/webp"
                     srcset="
@@ -618,6 +684,7 @@
                     width="645"
                     height="438"
                     loading="lazy"
+                    fetchpriority="low"
                   />
                 </picture>
                 <p class="gallery-card-caption">
@@ -667,7 +734,7 @@
               <picture>
                 <source type="image/avif" sizes="(min-width: 48rem) 50vw, 100vw" srcset="assets/img/hero-piscina-jardin-atardecer-480.avif 480w, assets/img/hero-piscina-jardin-atardecer-768.avif 768w, assets/img/hero-piscina-jardin-atardecer-1024.avif 1024w" />
                 <source type="image/webp" sizes="(min-width: 48rem) 50vw, 100vw" srcset="assets/img/hero-piscina-jardin-atardecer-480.webp 480w, assets/img/hero-piscina-jardin-atardecer-768.webp 768w, assets/img/hero-piscina-jardin-atardecer-1024.webp 1024w" />
-                <img src="assets/img/hero-piscina-jardin-atardecer-1024.jpg" alt="Terraza de piscina con palmeras y vistas a la sierra en la Costa Blanca" width="1024" height="768" loading="lazy" decoding="async" />
+                <img src="assets/img/hero-piscina-jardin-atardecer-1024.jpg" alt="Terraza de piscina con palmeras y vistas a la sierra en la Costa Blanca" width="1024" height="768" loading="lazy" decoding="async" fetchpriority="low" />
               </picture>
             </div>
           </div>
@@ -841,7 +908,11 @@
                 <p>Cubrimos toda la Comunidad Valenciana, desde el área de Valencia hasta Alicante.</p>
               </div>
               <div class="zona-map reveal">
-                <img src="assets/img/zona-valencia-alicante.png" alt="Zona de trabajo de Piscinas Yuriy: Valencia, Pego, Marina Alta y Alicante" width="1430" height="432" loading="lazy" decoding="async" />
+                <picture>
+                  <source type="image/avif" sizes="(min-width: 48rem) 40vw, 100vw" srcset="assets/img/zona-valencia-alicante-640.avif 640w, assets/img/zona-valencia-alicante-1240.avif 1240w" />
+                  <source type="image/webp" sizes="(min-width: 48rem) 40vw, 100vw" srcset="assets/img/zona-valencia-alicante-640.webp 640w, assets/img/zona-valencia-alicante-1240.webp 1240w" />
+                  <img src="assets/img/zona-valencia-alicante.png" alt="Zona de trabajo de Piscinas Yuriy: Valencia, Pego, Marina Alta y Alicante" width="1430" height="432" loading="lazy" decoding="async" fetchpriority="low" />
+                </picture>
               </div>
             </div>
           </div>
