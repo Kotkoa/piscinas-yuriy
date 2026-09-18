@@ -653,7 +653,7 @@ section {
   .services-heading-row {
     grid-template-columns: 40% 1fr;
     align-items: end;
-    gap: 2.625rem;
+    gap: 8.625rem;
   }
 
   .services-grid {
@@ -703,7 +703,7 @@ section {
   .gallery-heading-row {
     grid-template-columns: 40% 1fr;
     align-items: end;
-    gap: 2.625rem;
+    gap: 8.625rem;
   }
 }
 
