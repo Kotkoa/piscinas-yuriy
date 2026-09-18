@@ -41,8 +41,6 @@
   --display-ink: #406791;
   --display-accent: #48748b;
   --display-band: #ebf8f9;
-  --band-blue: #dff1ff;
-  --card-band: #f2f9ff;
   --display-tracking: -0.025em;
   --max-width: 1284px;
   --container-gutter: clamp(1.25rem, 3vw, 2.5rem);
@@ -441,7 +439,7 @@ section {
   background: var(--display-band);
 }
 #confianza {
-  background: var(--band-blue);
+  background: var(--display-band);
 }
 #preguntas-frecuentes {
   background: #fff;
@@ -607,7 +605,7 @@ section {
 .service-card {
   display: flex;
   flex-direction: column;
-  background: var(--card-band);
+  background: var(--display-band);
   border-radius: 0.875rem 0.875rem 0 0;
   border: 0;
   overflow: visible;
@@ -678,7 +676,7 @@ section {
   display: grid;
   width: 100%;
   gap: 1rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 24px;
 }
 
 .gallery-heading-row .eyebrow {
@@ -749,6 +747,9 @@ section {
   font-size: 28px;
   line-height: 1.05;
 }
+.faq-copy h2 {
+  margin-top: -2px;
+}
 .faq-copy p,
 .zona-copy p {
   margin: 0;
@@ -817,7 +818,7 @@ section {
   color: var(--display-ink);
   font-family: var(--font-base);
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
   text-align: center;
 }
 
@@ -876,7 +877,7 @@ section {
   padding: 0;
 }
 details.faq-item {
-  background: var(--band-blue);
+  background: var(--display-band);
   border-radius: 0.25rem;
   padding: 0.625rem 1rem 0.625rem 0.75rem;
 }
