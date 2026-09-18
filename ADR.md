@@ -808,3 +808,52 @@ display text (Georgia), though neither gained `text-transform: uppercase` — th
 here and their existing case (sentence case for captions, question-mark sentences for FAQ) stays as
 authored. Remaining Georgia elements: `h1`, `h2`, `.contact-info h2`, `.process-number`, CTA
 buttons.
+
+---
+
+## ADR-030 — Header nav flush-aligned to the container's right edge
+
+**Context.** Owner screenshot showed `CONTACTO`, the last nav link, ending short of the right
+edge that photos/grids in the sections below reach — the header content wasn't visually flush with
+the rest of the page's right margin. `header.site-header .container` used
+`justify-content: flex-start` with a `gap`, so the flex pair (`.logo`, `.site-nav`) packed from the
+left and `.site-nav`'s right edge landed wherever its own content happened to end, with no relation
+to the container's right edge.
+
+**Decision.** `header.site-header .container` switches to `justify-content: space-between`.
+`.logo` stays pinned left; `.site-nav` (the only other flex participant at the ≥860px breakpoint,
+since `.nav-toggle` is `display: none` there) is pushed flush against the container's right inner
+edge — the same edge every section's `.container` uses.
+
+**Consequences.** `CONTACTO`'s right edge now equals every other section's right content edge
+(confirmed at 1280/1440/1728/1920px viewports); the residual few px is normal glyph right-side
+bearing, not a layout gap. Mobile (<860px) is unaffected: `.site-nav` is `position: absolute` there
+and removed from the flex flow, so `.nav-toggle` (still `margin-left: auto`) keeps sitting at the
+far right as before.
+
+---
+
+## ADR-031 — Desktop nav is an elastic flex item; ADR-030's diagnosis was wrong
+
+**Status:** Accepted · 2026-09-18 · corrects ADR-030
+
+**Context.** ADR-030 assumed the nav simply wasn't right-aligned and that `justify-content:
+space-between` would fix it. Measurement at 1512px proved otherwise: `.logo` 289.6px +
+`header .container` gap 80px + `.site-nav` 946.8px = **1316.4px** against the container's 1284px
+content width, so the flex line overflowed by **32.4px**. The nav's right edge sat at 1430.3px
+while all page content (`.process-steps`, `.services-grid`, `.confianza-photo`) ended at 1398px —
+the nav was spilling into the container's 40px right padding. `space-between` cannot fix an
+overflowing line: the excess simply spills past the end.
+
+**Decision.** At the ≥860px breakpoint `.site-nav` becomes `flex: 1; min-width: 0;
+justify-content: space-between;` and its fixed `gap: clamp(1.25rem, 5.1vw, 4.375rem)` becomes
+`clamp(0.75rem, 2.5vw, 4.375rem)` — a *minimum* spacing rather than a hard 70px. The nav now
+consumes exactly the space left after the logo and distributes its five links inside it, so the
+last link's right edge is the nav box's right edge, which is the container's content edge.
+
+**Consequences.** Measured `navRight − contentRight = 0.0` at 900/1024/1280/1440/1512/1728/1920/
+2200px, and `navRight` equals `.process-steps`' right edge at every one of those widths. Inter-item
+spacing is now viewport-dependent (it absorbs the slack) instead of fixed, which is the intended
+behaviour for a justified nav bar. Mobile is untouched — verified at 390px: `.site-nav` stays
+`position: absolute`, `visibility: hidden`, `.nav-toggle` still ends at 370px, no horizontal
+overflow (`scrollWidth === innerWidth`).
