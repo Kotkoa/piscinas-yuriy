@@ -600,7 +600,7 @@ section {
 .services-intro {
   margin: 0;
   color: var(--display-ink);
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.2;
 }
 
@@ -645,7 +645,7 @@ section {
   margin: 0;
   color: var(--display-ink);
   font-family: var(--font-base);
-  font-size: clamp(0.9375rem, 1.25vw, 1.0625rem);
+  font-size: 18px;
   line-height: 1.45;
 }
 
@@ -695,7 +695,7 @@ section {
 .gallery-intro {
   margin: 0;
   color: var(--display-ink);
-  font-size: clamp(1rem, 1.7vw, 1.25rem);
+  font-size: 18px;
   line-height: 1.4;
 }
 
@@ -729,7 +729,7 @@ section {
 }
 .contact-info p {
   color: var(--text-muted);
-  font-size: 1rem;
+  font-size: 18px;
   line-height: 1.45;
   margin: 0 0 1.5rem;
   max-width: 25rem;
@@ -760,7 +760,7 @@ section {
 .confianza-copy p {
   margin: 0;
   color: var(--display-ink);
-  font-size: clamp(1rem, 1.7vw, 1.25rem);
+  font-size: 18px;
   line-height: 1.4;
   max-width: 34rem;
 }
@@ -816,7 +816,7 @@ section {
   padding: 1rem 1.25rem;
   color: var(--display-ink);
   font-family: var(--font-base);
-  font-size: clamp(1rem, 1.25vw, 1.125rem);
+  font-size: 18px;
   font-weight: 600;
   text-align: center;
 }
@@ -920,7 +920,7 @@ details.faq-item p {
   max-width: 40rem;
   margin: 0.5rem 0 0;
   color: var(--text-muted);
-  font-size: 1rem;
+  font-size: 18px;
   line-height: 1.5;
 }
 .zona-map {
@@ -954,7 +954,7 @@ details.faq-item p {
 .process-subline {
   margin: 0;
   color: var(--display-accent);
-  font-size: 1.35rem;
+  font-size: 18px;
   line-height: 1.35;
 }
 .process-steps {
