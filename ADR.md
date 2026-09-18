@@ -697,3 +697,114 @@ needs no work. Below-fold WebP (≈300 KB) and a 592 KB PNG map compete with the
 (from 2388–3484 ms locally), CLS 0.000, desktop page weight 589 KB → 467 KB, zero third-party
 requests before consent. Font updates remain a manual re-download of the subset URL (no build step,
 ADR-001). One more binary asset lives in git, as with ADR-020.
+
+---
+
+## ADR-025 — Display typeface switched to Georgia
+
+**Status:** Accepted · 2026-09-18 · supersedes ADR-021's `--font-display` value
+
+**Context.** Owner instruction: replace the STIXGeneral display stack with Georgia. STIXGeneral
+only renders on macOS/iOS; most visitors (Windows, Android) already fell through to Times New
+Roman or Georgia itself, so the rendered result changes less than the token edit suggests.
+
+**Decision.** `--font-display` becomes `'Georgia', 'Times New Roman', Times, serif`. Georgia is a
+widely pre-installed system font (Windows since XP, macOS, most Linux distros via metric-compatible
+substitutes), so no `@font-face`, no webfont file, no preload. `h1`/`h2`/`h3` and every element
+bound to `--font-display` (hero title, `Nuestros servicios`, service-card titles, stat numbers,
+etc.) pick it up automatically through the existing variable.
+
+**Consequences.** Zero new font requests or bytes. Georgia renders consistently across far more
+devices than STIXGeneral did, at the cost of the more distinctive STIX letterforms. Two typefaces
+remain in play (Source Sans 3 body, Georgia display), keeping the ADR-021 two-face rule intact.
+
+---
+
+## ADR-026 — Body/UI typeface switched to Helvetica; Source Sans 3 removed
+
+**Status:** Accepted · 2026-09-18 · supersedes ADR-022 and ADR-024's Source Sans 3 decision
+
+**Context.** Owner instruction: replace Source Sans 3 with Helvetica for `--font-base`.
+
+**Decision.** `--font-base` becomes `Helvetica, 'Helvetica Neue', Arial, sans-serif`. Helvetica is
+a system font (native on macOS/iOS; Windows/Linux/Android fall through to Helvetica Neue or Arial,
+metric-compatible), so the self-hosted `@font-face` rule, `assets/fonts/source-sans-3-latin-var.woff2`
+(28 792 B) and its `assets/fonts/` directory (incl. `OFL.txt`) are deleted, along with the
+`rel="preload"` link on all four HTML pages (`index.html`, `404.html`, `legal/aviso-legal.html`,
+`legal/privacidad.html`).
+
+**Consequences.** Zero self-hosted font bytes and zero font preload requests — CSS is again the
+only render-blocking resource, matching the ADR-020 goal. `--font-display` stays Georgia (ADR-025),
+so both faces in the two-face rule (ADR-021) are now system fonts with no webfont dependency at all.
+Rendering is platform-dependent (true Helvetica only where licensed, e.g. macOS; Helvetica
+Neue/Arial elsewhere), accepted as the tradeoff for zero font weight.
+
+---
+
+## ADR-027 — `h1`/`h3` headings set in Helvetica uppercase; `h2` and other display text stay Georgia
+
+**Status:** Accepted · 2026-09-18 · refines ADR-025 (Georgia display) and ADR-026 (Helvetica base)
+
+**Context.** Owner instruction, given incrementally by naming individual headings: the hero title
+(`Construcción de piscinas en Alicante y Valencia`), the matching service-card title, the process
+steps (`Consulta`, `Visita y medición`, `Presupuesto`, `Ejecución y entrega`) and the trust-point
+titles (`Empresa registrada` and its four siblings) should render in Helvetica, uppercase — not
+Georgia. An earlier pass over-applied this by repointing the shared `--font-display` token to
+Helvetica globally, which also flattened `h2` (`Nuestros servicios`, legal-page section headings,
+`Pide tu presupuesto`, FAQ questions, stat numbers, buttons) to Helvetica/uppercase; the owner
+flagged this as changing headings that were never named and it was reverted.
+
+**Decision.** `--font-display` stays Georgia (ADR-025), used by the shared `h1, h2, h3` rule and
+by every element that already had its own `font-family: var(--font-display)` override (`h2`,
+`.contact-info h2`, `.gallery-card-caption`, `details.faq-item summary`, `.process-number`,
+`button`-style CTAs). A second, more specific rule sets `h1, h3 { font-family: var(--font-base);
+font-weight: 700; text-transform: uppercase; }`, and the three component-level `h3` overrides that
+previously repeated `font-family: var(--font-display)` — `.service-card h3`, `.process-step h3`,
+`.trust-point h3` — now use `var(--font-base)` with `font-weight: 700` and
+`text-transform: uppercase` instead of their prior `text-transform: none`. `h2` keeps its own rule
+(`main h2 { text-transform: uppercase }` with the Georgia font) unchanged.
+
+**Consequences.** Every bare `h1` and `h3` across all four pages — including `404.html`'s
+`Página no encontrada` and the legal pages' `h3` subheadings — is now Helvetica uppercase, since the
+rule targets the tag, not a page-specific class; this is accepted as consistent with the named
+examples being plain `h1`/`h3` tags. `h2` and the explicitly-overridden display elements (contact
+CTA heading, gallery captions, FAQ questions, process step numbers, buttons) remain Georgia,
+preserving the two-typeface contrast the owner did not ask to remove.
+
+---
+
+## ADR-028 — `h1` reverted to Georgia; Helvetica-uppercase scope narrows to `h3` only
+
+**Status:** Accepted · 2026-09-18 · corrects ADR-027
+
+**Decision.** Owner clarified the hero title (`Construcción de piscinas en Alicante y Valencia`,
+markup: `h1` + `.hero-title-alt`) should stay Georgia after all. `h1` is dropped from the
+Helvetica/uppercase override; only `h3` keeps `font-family: var(--font-base); font-weight: 700;
+text-transform: uppercase`. `h1` now falls through to the shared `h1, h2, h3 { font-family:
+var(--font-display) }` rule, matching `h2`: Georgia, regular weight, mixed case (the hero's
+`.hero-title-alt` italic sub-line is unaffected, since it never set its own `font-family`).
+
+**Consequences.** Every `h1` site-wide (hero, `404.html`'s `Página no encontrada`, both legal
+pages' page titles) is Georgia again, restoring the pre-ADR-027 rendering for that tag. `h3`
+headings named across the two prior turns — service-card titles, process steps (`Consulta`,
+`Visita y medición`, …), trust points (`Empresa registrada`, …) — stay Helvetica uppercase per
+ADR-027; `h2` was never changed and remains Georgia throughout.
+
+---
+
+## ADR-029 — Gallery captions and FAQ questions switched to Helvetica
+
+**Status:** Accepted · 2026-09-18 · extends ADR-027's Helvetica scope
+
+**Decision.** Owner named the gallery card captions (`Piscina terminada en Pego`, `Piscina con
+gresite azul en Dénia`, `Cascada de acero en Xàbia`) and the FAQ question text (`¿Cuánto cuesta
+construir una piscina?` and its three siblings) as further headings that should render in
+Helvetica. `.gallery-card-caption` and `details.faq-item summary` drop their
+`font-family: var(--font-display)` override in favour of `var(--font-base)`; weight, size, colour
+and layout are unchanged.
+
+**Consequences.** Both elements now match the `h3` treatment (Helvetica) rather than the `h2`/body
+display text (Georgia), though neither gained `text-transform: uppercase` — that was not requested
+here and their existing case (sentence case for captions, question-mark sentences for FAQ) stays as
+authored. Remaining Georgia elements: `h1`, `h2`, `.contact-info h2`, `.process-number`, CTA
+buttons.
