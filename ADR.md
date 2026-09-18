@@ -857,3 +857,26 @@ spacing is now viewport-dependent (it absorbs the slack) instead of fixed, which
 behaviour for a justified nav bar. Mobile is untouched — verified at 390px: `.site-nav` stays
 `position: absolute`, `visibility: hidden`, `.nav-toggle` still ends at 370px, no horizontal
 overflow (`scrollWidth === innerWidth`).
+
+---
+
+## ADR-032 — Section headings fixed at 36px; zona map re-encoded for retina
+
+**Status:** Accepted · 2026-09-18
+
+**Decision.**
+1. `.confianza-copy h2`, `.faq-copy h2`, `.zona-copy h2` (`Por qué confiar en nosotros`,
+   `Preguntas frecuentes`, `Trabajamos de Valencia a Alicante`) share one rule at a fixed
+   `font-size: 36px`, replacing `clamp(1.5rem, 3vw, 2.85rem)`. `.contact-info h2`
+   (`Pide tu presupuesto`) likewise drops `clamp(2rem, 3vw, 3.25rem)` for `36px`. Owner-specified
+   size; the four headings now match each other exactly at every viewport.
+2. The coverage map derivatives are regenerated. ADR-024 encoded them at `avifenc -q 50`, which
+   left the map's serif place-names mushy (the 640w AVIF was only 7 122 B). They are now
+   `avifenc -q 82 -s 4` / `cwebp -q 88 -sharp_yuv`, and a native-resolution **1430w** pair is added
+   to both `<source srcset>`s so DPR-2 screens get true pixel density instead of upscaling 1240w.
+
+**Consequences.** Map bytes rise from 7.1/14.2 KB to 12.0/23.5 KB (640w/1240w AVIF) plus a new
+28.8 KB 1430w AVIF and 31.0 KB 1430w WebP — only ever one of them is fetched, and the 1430w
+candidate is chosen only above ~1240 CSS px of layout width at DPR 1 or ~620 px at DPR 2. Verified
+at 1512px/DPR 2: the browser selects `zona-valencia-alicante-1240.avif` and the place-name labels
+render sharp. The 592 KB PNG stays as the `<img src>` fallback, unchanged, per ADR-024.
