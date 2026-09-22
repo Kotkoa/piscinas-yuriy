@@ -127,12 +127,13 @@ Only `404.html` still carries `noindex`. Re-closing indexing or formally superse
 owner decision.
 
 The page is no longer a skeleton. Shipped 2026-08-31: hero, 4 service blocks, trust block,
-6-photo gallery carousel (buttons + touch swipe) with towns, 4 FAQ answers, 4-step process,
-coverage block with a click-to-load
-Google Maps embed, contact block with a validated Web3Forms-ready form, cookie consent banner with
+6-photo gallery carousel (buttons + touch swipe), 4 FAQ answers, 4-step process, coverage block
+with a static SVG map (no Google Maps embed anywhere on the site since ADR-033), contact block
+with a validated Web3Forms-ready form, cookie consent banner with
 Consent Mode v2 and a footer "Preferencias de cookies" control that reopens it,
 `404.html`, `legal/aviso-legal.html`, `legal/privacidad.html`, `assets/og-image.jpg`, one
-JSON-LD `@graph`, `sitemap.xml` and `llms.txt`.
+JSON-LD `@graph`, `sitemap.xml` and `llms.txt`. The Spanish copy was proofread on 2026-09-22
+(ADR-034): no unverified figure, term or town is published anywhere on the site.
 
 The contact form is **live**: `WEB3FORMS_ACCESS_KEY` in `js/main.js` holds the real Web3Forms key
 and a real submission was verified end to end on 2026-08-31 (`HTTP 200`, `success: true`).
@@ -157,12 +158,13 @@ originals carry no EXIF at all — WhatsApp stripped it — so no photo has GPS 
 ## Pending from the client
 - Guarantee terms: the LOE statutory tiers are 1 / 3 / 10 years; confirm whether the company
   offers anything beyond that before any guarantee claim is published.
-- Confirmation of the per-project towns currently shipped as a template on the gallery cards.
+- Per-project towns for the 6 gallery photos — captions ship without towns until confirmed.
 - Confirmation that the materials list is complete (gunitado, gresite/porcelánico, cloración
   salina, bombas de calor — no liner, poliéster or prefabricated shells?).
 - Confirmation that 8–12 weeks matches the real average build time, and whether licence
   processing is inside that figure.
-- Business hours (needed before `openingHoursSpecification` may enter the JSON-LD).
+- Business hours — removed from the JSON-LD (ADR-034); needed before `openingHoursSpecification`
+  may return.
 - Years in business / number of finished pools — only if a real number exists.
 - Text review of the final Spanish copy, including the two legal pages.
 - Client's GitHub username or email (to grant repo collaborator access).

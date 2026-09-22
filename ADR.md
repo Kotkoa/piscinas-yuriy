@@ -922,3 +922,45 @@ paths (buttons, swipe, and any future keyboard handler) all funneled through the
 helper, so DOM order stays the single source of truth. Touch-only swipe is an accepted limitation:
 desktop pointer/mouse dragging is out of scope per owner instruction, and the two nav buttons cover
 non-touch input.
+
+---
+
+## ADR-034 — Copy audit: unverified claims removed, legal pages cut to what is true
+
+**Status:** Accepted · 2026-09-22 · supersedes ADR-007's Google Maps mention in the legal texts
+
+**Context.** A full proofread of the Spanish copy found hard language errors (`Mas de 20 anos
+experiencia`, `Instalación fontanería`, `Instalación electricidad`, `Abrir menu`), one FAQ answer
+in `usted` while the rest of the site uses `tú`, several claims the client has never confirmed,
+service names that disagreed between the visible cards, the contact form and the JSON-LD, no head
+keyword in any `<h2>`, town names present only in `alt` attributes, and two legal pages describing
+a Google Maps embed that no longer exists anywhere in the codebase.
+
+**Decision.** Three sequential commits, owner-approved:
+1. **Language and facts.** Grammar fixed; the FAQ answer moved to `tú` in both the visible text
+   and the JSON-LD (they must stay byte-identical). Every unconfirmed claim deleted rather than
+   softened: the "20 years" sentence, `una larga trayectoria`, `openingHoursSpecification`
+   (hours are pending from the client and were never displayed) and the per-project towns on the
+   six gallery captions. Service naming unified across the four `<h3>`, the form's
+   `select[name="servicio"]` and the four JSON-LD `Service` nodes; `bombas de calor` moved from
+   the plumbing card to the climate card so cards and structured data agree.
+2. **Local SEO.** Four `<h2>` now carry `piscinas`, one of them with the geo pair; the `#zona`
+   block lists the service-area towns in indexable body text instead of only in `alt`;
+   `Costa Blanca` (an Alicante-only coast) leaves the body copy for `Alicante y Valencia` and
+   survives only in image alts; toponymy unified to Castilian (`Comunidad Valenciana`, `Calpe`);
+   `meta description` leads with the geo keyword at 151 characters; `sitemap.xml` `lastmod` and
+   `llms.txt` (6 works, not 12; no town labels) brought back in sync.
+3. **Legal pages rewritten shorter.** `aviso-legal.html` goes from eight sections to six and
+   `privacidad.html` from nine to five, keeping every LSSI-CE art. 10 and RGPD/LOPDGDD element
+   (titular, finalidad, base jurídica, datos, conservación, destinatarios, transferencias,
+   derechos, AEPD, cookie table, consent withdrawal) and dropping the boilerplate around them.
+   Google Maps is removed from both pages: the coverage block is a static SVG since ADR-033, so
+   naming Google Ireland as a recipient of visitor IPs described a data transfer that does not
+   happen. Owner rule: fewer words, fewer errors — and nothing stated that reality cannot back.
+
+**Consequences.** The site no longer publishes any figure or term the client has not confirmed,
+so the "Pending from the client" list in `CLAUDE.md` is the only place those questions live. The
+legal pages are roughly half their previous length and describe exactly the four processors that
+actually receive data. Gallery captions lost their towns, so per-project locality can only return
+once the client confirms them; the coverage towns now carry the local-SEO weight from the `#zona`
+block instead.
