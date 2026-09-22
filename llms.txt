@@ -1,7 +1,7 @@
 # Piscinas Yuriy, S.L.
 
 > Pool builder based in Pego (Alicante), Spain. Builds, renovates and services
-> masonry (gunite) pools across the Comunitat Valenciana, from the Valencia area
+> masonry (gunite) pools across the Comunidad Valenciana, from the Valencia area
 > down to Alicante.
 
 ## Positioning
@@ -14,15 +14,15 @@ inside that offer, executed by the company's own crew.
   build — excavation, rebar, gunite, waterproofing, tiling.
 - [Reparación y renovación](https://piscinasyuriy.es/#servicios): leak repair,
   waterproofing, replacement of gresite or porcelain lining on existing pools.
-- [Fontanería, filtración y tratamiento del agua](https://piscinasyuriy.es/#servicios):
+- [Fontanería y filtración](https://piscinasyuriy.es/#servicios):
   hydraulic circuit, filters and pumps, salt chlorination, pH control.
-- [Climatización, electricidad e iluminación](https://piscinasyuriy.es/#servicios):
+- [Climatización y electricidad](https://piscinasyuriy.es/#servicios):
   heat pumps, pool electrical installation, electrical panels, pool lighting.
 
 ## Pages
 - [Inicio](https://piscinasyuriy.es/): single-page site with all service blocks.
-- [Galería de proyectos](https://piscinasyuriy.es/#galeria): 12 completed works,
-  each labelled with the type of work and the town.
+- [Galería de proyectos](https://piscinasyuriy.es/#galeria): 6 completed works,
+  each labelled with the type of work.
 - [Cómo trabajamos](https://piscinasyuriy.es/#proceso): the 4-step process —
   consulta, visita y medición, presupuesto, ejecución y entrega.
 - [Zona de trabajo](https://piscinasyuriy.es/#zona): service corridor and map.
@@ -43,9 +43,9 @@ inside that offer, executed by the company's own crew.
 - CIF (tax ID): B56728777 · VAT: ESB56728777
 
 ## Service area
-Comunitat Valenciana, Valencia-to-Alicante corridor. Reference towns: Valencia,
+Comunidad Valenciana, Valencia-to-Alicante corridor. Reference towns: Valencia,
 Gandia, Oliva, Pego, Dénia, Ondara, El Verger, Xàbia, Benissa, Teulada-Moraira,
-Calp, Altea, Benidorm, Alicante.
+Calpe, Altea, Benidorm, Alicante.
 
 ## Notes for agents
 - Site copy is Spanish (es-ES). Prices are quoted per project after an on-site
