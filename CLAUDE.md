@@ -133,7 +133,8 @@ with a validated Web3Forms-ready form, cookie consent banner with
 Consent Mode v2 and a footer "Preferencias de cookies" control that reopens it,
 `404.html`, `legal/aviso-legal.html`, `legal/privacidad.html`, `assets/og-image.jpg`, one
 JSON-LD `@graph`, `sitemap.xml` and `llms.txt`. The Spanish copy was proofread on 2026-09-22
-(ADR-034): no unverified figure, term or town is published anywhere on the site.
+(ADR-034): the unverified years-in-business, business-hours, build-duration and per-project-town
+claims were all removed, so nothing published on the site is waiting on client confirmation.
 
 The contact form is **live**: `WEB3FORMS_ACCESS_KEY` in `js/main.js` holds the real Web3Forms key
 and a real submission was verified end to end on 2026-08-31 (`HTTP 200`, `success: true`).
@@ -161,8 +162,9 @@ originals carry no EXIF at all — WhatsApp stripped it — so no photo has GPS 
 - Per-project towns for the 6 gallery photos — captions ship without towns until confirmed.
 - Confirmation that the materials list is complete (gunitado, gresite/porcelánico, cloración
   salina, bombas de calor — no liner, poliéster or prefabricated shells?).
-- Confirmation that 8–12 weeks matches the real average build time, and whether licence
-  processing is inside that figure.
+- Real average build time — the 8–12-week figure was removed from the FAQ and the JSON-LD
+  (ADR-034); confirm the real range, and whether licence processing is inside it, before any
+  duration is published again.
 - Business hours — removed from the JSON-LD (ADR-034); needed before `openingHoursSpecification`
   may return.
 - Years in business / number of finished pools — only if a real number exists.
@@ -170,6 +172,11 @@ originals carry no EXIF at all — WhatsApp stripped it — so no photo has GPS 
 - Client's GitHub username or email (to grant repo collaborator access).
 - **Competitor references:** `rppool.es` (Spain) and `tecnigunita2.com` — use as a style/structure
   reference, do not copy content.
+- **Registro Mercantil entry** (tomo, folio, hoja, inscripción) — LSSI-CE art. 10.1.b requires it
+  in `legal/aviso-legal.html` for an S.L.; it is not published because it cannot be verified from
+  this repo.
+- **GA4 data retention setting** (`Admin → Data collection and modification → Data retention`) —
+  `legal/privacidad.html` currently states the 14-month ceiling; replace it with the real value.
 
 ## Commands
 - Local preview: open `index.html` in a browser, or `python3 -m http.server` at the repo root.
