@@ -971,3 +971,40 @@ art. 10.1.b for an S.L., and the exact GA4 data-retention setting (the policy st
 ceiling until the property setting is confirmed). Gallery captions lost their towns, so
 per-project locality can only return once the client confirms them; the coverage towns now carry
 the local-SEO weight from the `#zona` block instead.
+
+---
+
+## ADR-035 — The claims ADR-034 pulled are confirmed by the owner and republished
+
+**Status:** Accepted · 2026-09-22 · reverses ADR-034's removals, keeps its language fixes
+
+**Context.** ADR-034 deleted four claims because the repo could not verify them and `CLAUDE.md`
+listed them as pending. The owner then confirmed all four directly, so the caution no longer
+applies: the removals were costing real trust and ranking signals (`Costa Blanca` is a keyword
+the target market actually searches, and the towns were the only per-project locality on the
+page). The AEAT tax card (`TARJETA DE IDENTIFICACIÓN FISCAL.pdf`, NIF definitivo 15-12-2023)
+confirms the CIF `B56728777`, the company name and the Pego address, but carries no Registro
+Mercantil entry.
+
+**Decision.**
+1. `más de 20 años de experiencia` returns to the trust card and the `#confianza` paragraph,
+   spelled correctly. It describes the crew's experience; the S.L. itself is younger (NIF 2023).
+2. `openingHoursSpecification` (Mon–Fri 09:00–18:00) returns to the `LocalBusiness` node **and**
+   the hours are now printed in the footer contact list — structured data must have a visible
+   counterpart, which is why the original pairing was incomplete.
+3. The six gallery captions carry their towns again: Pego, Dénia, Jávea, Ondara, Calpe, Altea.
+   `Xàbia` is spelled `Jávea` to match the Castilian toponymy ADR-034 unified across the site.
+4. `Costa Blanca` returns to the hero, the gallery intro and the trust copy, alongside — not
+   instead of — `Alicante y Valencia`, so both the brand-name coast and the two provinces are
+   indexable.
+5. The build-time answer is `Unas 8 semanas` (owner's figure), identical in the FAQ and the
+   JSON-LD `FAQPage`.
+6. The GA4 retention wording stays as ADR-034 left it (`como máximo 14 meses`), per owner
+   instruction.
+
+**Consequences.** ADR-034's grammar, register, service-naming, SEO and legal-page decisions all
+stand; only its four factual removals are undone. `CLAUDE.md`'s "Pending from the client" list
+drops to guarantee terms, finished-pool count, the materials list, the Registro Mercantil entry
+and the two access/review items. The published claims now rest on the owner's confirmation of
+2026-09-22 rather than on repository evidence — if any of them changes, both `index.html` and the
+JSON-LD must change together.

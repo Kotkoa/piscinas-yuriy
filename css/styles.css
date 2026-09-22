@@ -1245,6 +1245,7 @@ footer.site-footer {
   gap: 0.625rem;
 }
 
+.footer-grid li,
 .footer-grid a {
   color: var(--tone-300);
   text-decoration: none;
