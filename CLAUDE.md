@@ -126,9 +126,9 @@ Repo `Kotkoa/piscinas-yuriy` on GitHub Pages, live on the custom domain `piscina
 Only `404.html` still carries `noindex`. Re-closing indexing or formally superseding ADR-004 is an
 owner decision.
 
-The page is no longer a skeleton. Shipped 2026-08-31: hero, 4 service blocks, trust block, 10-card
-gallery with towns (12 originally; two photos were dropped in `444783e`, so the 3-column desktop
-grid ends in an orphan row), 4 FAQ answers, 4-step process, coverage block with a click-to-load
+The page is no longer a skeleton. Shipped 2026-08-31: hero, 4 service blocks, trust block,
+6-photo gallery carousel (buttons + touch swipe) with towns, 4 FAQ answers, 4-step process,
+coverage block with a click-to-load
 Google Maps embed, contact block with a validated Web3Forms-ready form, cookie consent banner with
 Consent Mode v2 and a footer "Preferencias de cookies" control that reopens it,
 `404.html`, `legal/aviso-legal.html`, `legal/privacidad.html`, `assets/og-image.jpg`, one

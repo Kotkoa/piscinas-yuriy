@@ -775,6 +775,7 @@ section {
   gap: 2.8125rem;
   overflow: hidden;
   width: 100%;
+  touch-action: pan-y;
 }
 
 .gallery-card {

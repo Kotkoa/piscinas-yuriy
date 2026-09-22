@@ -374,17 +374,51 @@ function initGallerySlider() {
 
   if (!grid) return;
 
-  const controls = document.querySelectorAll(
-    ".gallery-carousel [data-gallery-direction]"
+  const SWIPE_THRESHOLD_PX = 40;
+
+  const rotate = (direction) => {
+    if (direction === "next") {
+      grid.appendChild(grid.firstElementChild);
+    } else {
+      grid.insertBefore(grid.lastElementChild, grid.firstElementChild);
+    }
+  };
+
+  document
+    .querySelectorAll(".gallery-carousel [data-gallery-direction]")
+    .forEach((control) => {
+      control.addEventListener("click", () =>
+        rotate(control.dataset.galleryDirection)
+      );
+    });
+
+  let touchStart = null;
+
+  grid.addEventListener(
+    "touchstart",
+    (event) => {
+      const { clientX, clientY } = event.touches[0];
+      touchStart = { x: clientX, y: clientY };
+    },
+    { passive: true }
   );
 
-  controls.forEach((control) => {
-    control.addEventListener("click", () => {
-      if (control.dataset.galleryDirection === "next") {
-        grid.appendChild(grid.firstElementChild);
-      } else {
-        grid.insertBefore(grid.lastElementChild, grid.firstElementChild);
-      }
-    });
+  grid.addEventListener("touchcancel", () => {
+    touchStart = null;
   });
+
+  grid.addEventListener(
+    "touchend",
+    (event) => {
+      if (!touchStart) return;
+      const { clientX, clientY } = event.changedTouches[0];
+      const dx = clientX - touchStart.x;
+      const dy = clientY - touchStart.y;
+      touchStart = null;
+      if (Math.abs(dx) >= SWIPE_THRESHOLD_PX && Math.abs(dx) > Math.abs(dy)) {
+        rotate(dx < 0 ? "next" : "previous");
+      }
+    },
+    { passive: true }
+  );
 }

@@ -880,3 +880,45 @@ overflow (`scrollWidth === innerWidth`).
 candidate is chosen only above ~1240 CSS px of layout width at DPR 1 or ~620 px at DPR 2. Verified
 at 1512px/DPR 2: the browser selects `zona-valencia-alicante-1240.avif` and the place-name labels
 render sharp. The 592 KB PNG stays as the `<img src>` fallback, unchanged, per ADR-024.
+
+---
+
+## ADR-033 — Gallery swipe; coverage map ships as SVG
+
+**Status:** Accepted · 2026-09-22 · supersedes ADR-032 point 2 and ADR-024's map clause
+
+**Context.** Owner requests: (1) the gallery carousel must also respond to a horizontal finger
+swipe on touch devices, not just the ←/→ buttons; (2) all four gallery photos are replaced with six
+new project photos; (3) the coverage map ships from the owner's vector source file instead of the
+AVIF/WebP/PNG raster pipeline.
+
+**Decision.**
+1. `initGallerySlider()` (`js/main.js`) keeps its click-driven `rotate()` for the existing
+   `data-gallery-direction` buttons and adds `touchstart`/`touchend` listeners on `.gallery-grid`.
+   A swipe rotates the carousel only when the horizontal delta is ≥ 40 px and exceeds the vertical
+   delta; `touchcancel` resets state. Listeners are `{ passive: true }` and use touch events, not
+   pointer events, so mouse drags on desktop never rotate and page scroll through the gallery is
+   unaffected. `.gallery-grid` gets `touch-action: pan-y` so the browser never claims the gesture
+   for its own horizontal panning before the handler runs.
+2. The gallery ships six photos in fixed order (`assets/img/galeria-01`…`06-*`), each with the
+   existing AVIF/WebP/JPG-480/800w pattern; captions carry the owner-given towns Pego, Dénia,
+   Xàbia, Ondara, Calpe, Altea. All six AVIF-800w files beat their WebP-800w sibling under
+   `avifenc -q 50 -s 6` (ADR-024's rule), so every card keeps its AVIF `<source>`. The four old
+   `galeria-01`…`04-*` files and the five already-unreferenced `galeria-05/07/08/10/11/12-*` files
+   are deleted; originals remain recoverable from git history (as with the `1910c9d` photo drop).
+3. `.zona-map` drops its `<picture>` (AVIF/WebP/PNG triplet) for a single
+   `assets/img/zona-valencia-alicante.svg` (141 368 B, optimized from the owner's 214 130 B source
+   with `svgo@3 --multipass`; fidelity checked by rasterizing both at 1622px and comparing with
+   `magick compare -metric RMSE`, normalized RMSE 0.00115). All seven place-name labels
+   (València, Gandia, Dénia, Xàbia, Alcoy, Benidorm, Alicante) are outlined paths with no
+   `<text>`/`<font-family>`/`<image>`, so the map renders identically and pixel-sharp at any DPR
+   with a single request, instead of six raster candidates behind two `<source>` breakpoints. The
+   six `zona-valencia-alicante-{640,1240,1430}.{avif,webp}` files and the PNG fallback are deleted.
+
+**Consequences.** Coverage-map requests drop from up to three candidate fetches (AVIF or WebP at
+one of three widths) to exactly one 141 KB SVG fetch, sharp at every zoom level and DPR — no more
+per-breakpoint re-encoding when the map needs updating. Gallery navigation now has three input
+paths (buttons, swipe, and any future keyboard handler) all funneled through the same `rotate()`
+helper, so DOM order stays the single source of truth. Touch-only swipe is an accepted limitation:
+desktop pointer/mouse dragging is out of scope per owner instruction, and the two nav buttons cover
+non-touch input.
